@@ -1,0 +1,28 @@
+{
+  "name": "",
+  "css_prefix_text": "icon-",
+  "css_use_suffix": false,
+  "hinting": true,
+  "units_per_em": 1000,
+  "ascent": 850,
+  "glyphs": [
+    {
+      "uid": "fhpup8jff2yw9kmuwavhyqxogczcbbhj",
+      "css": "dollar",
+      "code": 59392,
+      "src": "modernpics"
+    },
+    {
+      "uid": "212ab54aac31030950fec3e2448ebee9",
+      "css": "money",
+      "code": 59393,
+      "src": "modernpics"
+    },
+    {
+      "uid": "026007bd17bfc67f3fe013199676f620",
+      "css": "dollar-1",
+      "code": 61781,
+      "src": "fontawesome"
+    }
+  ]
+}
