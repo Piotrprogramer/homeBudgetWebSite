@@ -5,8 +5,6 @@ body
 	font-family: 'Lato', sans-serif;
 }
 
-
-
 /* Style do Logowania i Rejestracji */
 #container
 {
@@ -47,6 +45,7 @@ input[type=password]:focus
 	color: #00D1FF; 
 }
 
+input[type=reset],
 input[type=submit]
 {
 	width: 300px;
@@ -69,6 +68,7 @@ input[type=submit]:focus
 	box-shadow: 0px 0px 15px 5px rgba(35, 209, 255,0.9);
 }
 
+input[type=reset]:hover,
 input[type=submit]:hover
 {
 	background-color: #60E1FF;
@@ -136,9 +136,9 @@ input:focus:-ms-input-placeholder
 	background-color: #00AAFF;
 	margin-top: 20px;
 	color: #ffffff;
-	margin-left: auto;
-    margin-right: auto;
 	margin-bottom: 10px;
+	border: none;
+	font-size: 0;
 }
 
 .option
@@ -156,17 +156,49 @@ input:focus:-ms-input-placeholder
 	background-color: #60E1FF;
 	cursor: pointer;
 	opacity: 1;
-	-webkit-box-shadow: 3px 3px 30px 5px rgba(35, 209, 255,0.9);
-	-moz-box-shadow: 3px 3px 30px 5px rgba(35, 209, 255,0.9);
-	box-shadow: 3px 3px 30px 5px rgba(35, 209, 255,0.9);
+}
+
+.chosedOption
+{
+	min-width: 50px;
+	height: 25px;
+	font-size: 18px;
+	padding: 20px;
+	display: inline-block;
+	background-color: #60E1FF;
 }
 
 #content
 {
-	padding: 40px;
-	width: 920px;
+	width: 1000px;
 	background-color: #dedede;
-	min-height: 580px;
 	text-align: justify;
+	padding-bottom: 20px;
+
 }
 
+#leftMenu
+{
+	width: 300px;
+	background-color: #dedede;
+	text-align: justify;
+	float: left;
+}
+
+#rightMenu
+{
+	width: 700px;
+	background-color: #dedede;
+	text-align: justify;
+	float: left;
+}
+
+.row
+{
+	margin: 20px 10px;
+}
+
+.r-menu
+{
+	margin: 10px 10px;
+}
