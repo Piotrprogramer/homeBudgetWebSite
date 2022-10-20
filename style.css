@@ -9,6 +9,7 @@ body{
 	background-color: #454545;
 	width: 300px;
 	padding: 50px;
+	padding-bottom: 30px;
 	margin-left: auto;
 	margin-right: auto;
 	margin-top: 100px;
@@ -17,9 +18,27 @@ body{
 	box-shadow: 3px 3px 30px 5px rgba(35, 209, 255,0.9);
 }
 
+.login{
+	width: 100px;
+	padding: 4px;
+	margin-left:192px;
+	margin-top: 20px;
+	background-color: #00AAFF;
+	color: white;
+	text-align:center;
+	border-radius: 5px;
+	font-size: 12px;
+	display: inline-block;
+	opacity: 0.8;
+}
+
+.login:hover{
+	background-color: #60E1FF;
+	opacity: 1;
+}
+
 input[type=text],
-input[type=password]
-{
+input[type=password]{
 	width: 300px;
 	background-color: #efefef;
 	color: #666;
@@ -33,8 +52,7 @@ input[type=password]
 }
 
 input[type=text]:focus,
-input[type=password]:focus
-{
+input[type=password]:focus{
 	-webkit-box-shadow: 0px 0px 10px 2px rgba(35, 209, 255,0.9);
 	-moz-box-shadow: 0px 0px 10px 2px rgba(35, 209, 255,0.9);
 	box-shadow: 0px 0px 10px 2px rgba(35, 209, 255,0.9);
@@ -44,8 +62,7 @@ input[type=password]:focus
 }
 
 input[type=reset],
-input[type=submit]
-{
+input[type=submit]{
 	width: 300px;
 	background-color: #00AAFF;
 	font-size:20px;
@@ -60,16 +77,14 @@ input[type=submit]
 }
 
 input[type=reset]:focus,
-input[type=submit]:focus
-{
+input[type=submit]:focus{
 	-webkit-box-shadow: 0px 0px 15px 5px rgba(35, 209, 255,0.9);
 	-moz-box-shadow: 0px 0px 15px 5px rgba(35, 209, 255,0.9);
 	box-shadow: 0px 0px 15px 5px rgba(35, 209, 255,0.9);
 }
 
 input[type=reset]:hover,
-input[type=submit]:hover
-{
+input[type=submit]:hover{
 	background-color: #60E1FF;
 }
 
@@ -101,8 +116,6 @@ input:focus:-ms-input-placeholder{
     color: #428C42;
 }
 
-
-
 /* Style do Menu główne */
 #main_menu_container{
 	width: 1000px;
@@ -130,6 +143,7 @@ input:focus:-ms-input-placeholder{
 }
 
 .option{
+	color: white;
 	min-width: 50px;
 	height: 25px;
 	font-size: 18px;
@@ -216,8 +230,6 @@ input:focus:-ms-input-placeholder{
 	min-height: 30px;
 }
 
-
-/* date Button */
 .date
 {
 	background-color: #00AAFF;
