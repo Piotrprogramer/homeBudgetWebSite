@@ -1,0 +1,81 @@
+<!DOCTYPE HTML>
+<html lang="pl">
+<head>
+	<meta charset="utf-8" />
+	<title>Przeglądaj bilans</title>
+	<meta name="description" content="Zadbaj o swój budżet" />
+	<meta name="keywords" content="Budżet" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	
+	<link rel="stylesheet" href="style.css" type="text/css" />
+	
+	<link href='http://fonts.googleapis.com/css?family=Lato:400,900&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+	
+	
+	<link href="css/fontello.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>				
+	<div id="main_menu_container">			
+		<div id="topText">
+			<i class="icon-money"></i>Bądź kowalem włąsnego portfela<i class="icon-money"></i>
+		</div>
+		
+		<div id="menu">
+			<div class="option">Strona główna</div>
+			<div class="option">Dodaj przychód</div>
+			<div class="option">Dodaj wydatek</div>
+			<div class="chosedOption">Przeglądaj bilans</div>
+			<div class="option">Ustawienia</div>
+			<div class="option">Wyloguj się</div>
+		</div>
+
+		<div id="content">
+			<div id="diagrams">
+				<div id="balanceMenu">
+					<div style="margin-top:10px; margin-left:10px" >Przychody</div>
+
+				</div>
+				
+				<div id="balanceMenu">
+					<div style="margin-top:10px; margin-left:10px">Wydatki</div>
+				</div>
+				
+				<div id="balanceOptionMenu">
+					<div style="margin:10px">Wybierz datę</div>
+					
+					
+					
+
+<!-- -->
+					
+<!-- <label for="date" style="margin-top:10px; margin-left:10px">wybierz date</label> -->
+
+
+<select name="date" class="date">
+  <option value="1" selected >	bieżący miesiąc		</option>
+  <option value="2">		poprzedni miesiąc	</option>
+  <option value="3">	bieżący rok			</option>
+  <option value="4">		niestandardowy		</option>
+</select>
+					
+					
+					
+				</div>
+				<div style="clear:both"></div>
+				<div id="results"  >
+
+				</div>				
+			</div>
+			
+			<div class="row"  style="text-align:center" >
+				<input type="submit" value="Pokaż bilans">
+				<input type="reset" value="Wyczyść formularz">
+			</div>
+			
+		</div>	
+	</div>	
+	
+	
+</body>
+</html>
