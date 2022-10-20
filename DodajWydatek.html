@@ -1,0 +1,111 @@
+<!DOCTYPE HTML>
+<html lang="pl">
+<head>
+	<meta charset="utf-8" />
+	<title>Dodaj wydatek</title>
+	<meta name="description" content="Zadbaj o swój budżet" />
+	<meta name="keywords" content="Budżet" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	
+	<link rel="stylesheet" href="style.css" type="text/css" />
+	
+	<link href='http://fonts.googleapis.com/css?family=Lato:400,900&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+	
+	
+	<link href="css/fontello.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>				
+	<div id="main_menu_container">			
+		<div id="topText">
+			<i class="icon-money"></i>Bądź kowalem włąsnego portfela<i class="icon-money"></i>
+		</div>
+		
+		<div id="menu">
+			<a href="#"><div class="option">Dodaj przychód</div> </a>
+			<a href="dodajWydatek.html"><div class="option">Dodaj wydatek</div> </a>
+			<a href="przegladajBilans.html"><div class="option">Przeglądaj bilans</div> </a>
+			<a href="#"><div class="option">Ustawienia</div> </a>
+			<a href="logowanie.html"><div class="option">Wyloguj się</div> </a>
+		</div>
+
+		<div id="content">
+			<div id="leftMenu">
+				<div class="row">
+					<div class="row">
+			
+						<div><label for="kwota">Kwota: </label>
+							<input type="number" name="kluczyk" step="0.01"></label>
+						</div>
+					</div>
+				
+					<div class="row">	
+						<div> Data wydatku <input type="date" name="dzien"></div>
+					</div>
+				
+					<div class="row">			
+						Sposób płatności:
+						<div><label><input type="radio" value="1"  name="platosc"> Gotówka </label></div>
+						<div><label><input type="radio" value="2"  name="platosc" checked > Karta debetowa </label></div>
+						<div><label><input type="radio" value="3"  name="platosc"> Karta kredytowa </label></div>
+					</div>	
+				</div>
+			</div>
+			
+			<div id="rightMenu">
+				<div class="row">
+				
+				<div >	Kategoria: </div>
+				
+					<div class="r-menu" style="float:left;">	
+						<div><label><input type="radio" value="1"  name="wydatek" checked> Jedzenie </label></div>
+						<div><label><input type="radio" value="2"  name="wydatek"> Mieszkanie </label></div>
+						<div><label><input type="radio" value="3"  name="wydatek"> Transport </label></div>
+						<div><label><input type="radio" value="4"  name="wydatek"> Telekomunikacja </label></div>
+						<div><label><input type="radio" value="5"  name="wydatek"> Opieka zdrowotna </label></div>
+						<div><label><input type="radio" value="6"  name="wydatek"> Ubranie </label></div>
+					</div>
+					
+					<div class="r-menu" style="float:left;">	
+						<div><label><input type="radio" value="7"  name="wydatek"> Higiena </label></div>
+						<div><label><input type="radio" value="8"  name="wydatek"> Dzieci </label></div>
+						<div><label><input type="radio" value="9"  name="wydatek"> Rozrywka </label></div>
+						<div><label><input type="radio" value="10" name="wydatek"> Wycieczka </label></div>
+						<div><label><input type="radio" value="11" name="wydatek"> Szkolenia </label></div>
+						<div><label><input type="radio" value="12" name="wydatek"> Książki </label></div>
+					</div>
+					
+					<div class="r-menu" style="float:left;">	
+						<div><label><input type="radio" value="13" name="wydatek"> Oszczędności </label></div>
+						<div><label><input type="radio" value="14" name="wydatek"> Na złotą jesień, czyli emeryturę </label></div>
+						<div><label><input type="radio" value="15" name="wydatek"> Spłata długów </label></div>
+						<div><label><input type="radio" value="16" name="wydatek"> Darowizna </label></div>
+						<div><label><input type="radio" value="17" name="wydatek"> Inne wydatki </label></div>
+					</div>
+					<div style="clear:both;"></div>
+				</div>
+				
+				
+				<div class="row">	
+					<div class="row" style="float:left;"><label for="komentarz">Komentarz (opcjonalnie) </label></div>
+						
+					<div class="row" style="float:left"><textarea name="komentarz" id="komentarz" rows="2" cols="40" maxlength="80"  style="resize:none" ></textarea></div>
+				</div>	
+				<div style="clear:both;"></div>
+				
+			</div>
+			<div style="clear:both;"></div>
+			
+
+				
+				<div class="row"  style="text-align:center" >
+					<input type="submit" value="Dodaj wydatek">
+					<input type="reset" value="Wyczyść formularz">
+				</div>
+			</div>	
+		</div>	
+	</div>	
+	
+	
+</body>
+</html>
