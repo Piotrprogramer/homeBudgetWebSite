@@ -8,29 +8,46 @@
 	<meta name="author" content="Piotr Wasilewski">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" >
 		
+	<link rel="stylesheet" href="css_bootstrap/bootstrap.min.css">
 	<link rel="stylesheet" href="style.css" type="text/css" >
 	<link href='http://fonts.googleapis.com/css?family=Lato:400,900&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+	<link href="css/fontello.css" rel="stylesheet" type="text/css" >
 	
 </head>
 
 <body>
 
-	<div id="container">
-		<form>
-			
-			<input type="text" placeholder="login" onfocus="this.placeholder=''" onblur="this.placeholder='login'" required>
-			
-			<input type="password" placeholder="hasło" onfocus="this.placeholder=''" onblur="this.placeholder='hasło'" required>
-			
-			<input type="password" placeholder="powtórz hasło" onfocus="this.placeholder=''" onblur="this.placeholder='powtórz hasło'" required>
-			
-			<input type="submit" value="Zarejestruj się">
-			
-		</form>
+	<div "row justify-content-center">
+		<div class="row justify-content-center">
+			<i class="icon-money"></i> 
+		</div>
+		<div class="row justify-content-center" >
+			<div class="col-10 col-md-8 col-xl-6 title">
+				Bądź kowalem włąsnego portfela
+			</div>
+		</div>
+		<div class="row justify-content-center">
+			<div id="register_frame" >
+				
+				<input type="text" placeholder="login" onfocus="this.placeholder=''" onblur="this.placeholder='login'" required>
+				
+				<input type="password" placeholder="hasło" onfocus="this.placeholder=''" onblur="this.placeholder='hasło'" required>
+				
+				<input type="password" placeholder="powtórz hasło" onfocus="this.placeholder=''" onblur="this.placeholder='powtórz hasło'" required>
+				
+				<input type="submit" value="Zaloguj się">
+				
+				<a href="Index.html"><div class="log_button" style="margin-top:10px">Powrót</div> </a>
+			</div>
+		</div>
 		
-			<a href="menuGlowne.html"><div class="login">Powrót</div> </a>
-			
 	</div>
+	
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+	
+	<script src="js/bootstrap.min.js"></script>
 	
 </body>
 </html>
