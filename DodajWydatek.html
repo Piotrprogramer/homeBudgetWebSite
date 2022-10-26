@@ -23,6 +23,7 @@
 		</div>
 		
 		<div id="menu">
+			<a href="MenuGlowne.html"><div class="option">Menu główne</div> </a>
 			<a href="#"><div class="option">Dodaj przychód</div> </a>
 			<a href="dodajWydatek.html"><div class="option">Dodaj wydatek</div> </a>
 			<a href="przegladajBilans.html"><div class="option">Przeglądaj bilans</div> </a>
@@ -44,11 +45,13 @@
 						<div> Data wydatku <input type="date" name="dzien" value="2022-01-01" min="2020-01-01"></div>
 					</div>
 				
-					<div class="row">			
+					<div class="row" style="text-align:left">			
 						Sposób płatności:
-						<div><label><input type="radio" value="1"  name="platosc"> Gotówka </label></div>
-						<div><label><input type="radio" value="2"  name="platosc" checked > Karta debetowa </label></div>
-						<div><label><input type="radio" value="3"  name="platosc"> Karta kredytowa </label></div>
+						<select name="platnosc" id="platnosc">
+						  <option value="1"  name="platosc"> Gotówka 					</option>
+						  <option value="2"  name="platosc" selected > Karta debetowa 	</option>
+						  <option value="3"  name="platosc"> Karta kredytowa 			</option>
+						</select>
 					</div>	
 				</div>
 			</div>
@@ -57,33 +60,29 @@
 				<div class="row">
 				
 				<div >	Kategoria: </div>
-				
-					<div class="r-menu" style="float:left;">	
-						<div><label><input type="radio" value="1"  name="wydatek" checked> Jedzenie </label></div>
-						<div><label><input type="radio" value="2"  name="wydatek"> Mieszkanie </label></div>
-						<div><label><input type="radio" value="3"  name="wydatek"> Transport </label></div>
-						<div><label><input type="radio" value="4"  name="wydatek"> Telekomunikacja </label></div>
-						<div><label><input type="radio" value="5"  name="wydatek"> Opieka zdrowotna </label></div>
-						<div><label><input type="radio" value="6"  name="wydatek"> Ubranie </label></div>
-					</div>
-					
-					<div class="r-menu" style="float:left;">	
-						<div><label><input type="radio" value="7"  name="wydatek"> Higiena </label></div>
-						<div><label><input type="radio" value="8"  name="wydatek"> Dzieci </label></div>
-						<div><label><input type="radio" value="9"  name="wydatek"> Rozrywka </label></div>
-						<div><label><input type="radio" value="10" name="wydatek"> Wycieczka </label></div>
-						<div><label><input type="radio" value="11" name="wydatek"> Szkolenia </label></div>
-						<div><label><input type="radio" value="12" name="wydatek"> Książki </label></div>
-					</div>
-					
-					<div class="r-menu" style="float:left;">	
-						<div><label><input type="radio" value="13" name="wydatek"> Oszczędności </label></div>
-						<div><label><input type="radio" value="14" name="wydatek"> Na złotą jesień, czyli emeryturę </label></div>
-						<div><label><input type="radio" value="15" name="wydatek"> Spłata długów </label></div>
-						<div><label><input type="radio" value="16" name="wydatek"> Darowizna </label></div>
-						<div><label><input type="radio" value="17" name="wydatek"> Inne wydatki </label></div>
-					</div>
-					<div style="clear:both;"></div>
+					<select name="wydatek" id="wydatek">
+
+						<option value="1"  name="wydatek" selected> Jedzenie 	</option>
+						<option value="2"  name="wydatek"> Mieszkanie 			</option>
+						<option value="3"  name="wydatek"> Transport 			</option>
+						<option value="4"  name="wydatek"> Telekomunikacja 		</option>
+						<option value="5"  name="wydatek"> Opieka zdrowotna 	</option>
+						<option value="6"  name="wydatek"> Ubranie 				</option>
+
+						<option value="7"  name="wydatek"> Higiena 				</option>
+						<option value="8"  name="wydatek"> Dzieci 				</option>
+						<option value="9"  name="wydatek"> Rozrywka 			</option>
+						<option value="10" name="wydatek"> Wycieczka 			</option>
+						<option value="11" name="wydatek"> Szkolenia 			</option>
+						<option value="12" name="wydatek"> Książki 				</option>
+	
+						<option value="13" name="wydatek"> Oszczędności 		</option>
+						<option value="14" name="wydatek"> Na złotą jesień, czyli emeryturę </option>
+						<option value="15" name="wydatek"> Spłata długów 		</option>
+						<option value="16" name="wydatek"> Darowizna 			</option>
+						<option value="17" name="wydatek"> Inne wydatki 		</option>
+					    
+					</select>
 				</div>
 					
 					
