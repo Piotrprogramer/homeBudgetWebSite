@@ -54,25 +54,11 @@
   /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
 }
 
-.icon-dollar:before { content: '\e800'; } /* '' */
 .icon-money:before { content: '\e801'; } /* '' */
-.icon-dollar-1:before { content: '\f155'; } /* '' */
-
-
-
-.icon-dollar
-{
-	font-size: 60px;
-}
 
 .icon-money
 {
-	font-size: 60px;
+	font-size: 50px;
 	color: #00AAFF;
 }
 
-.icon-dollar-1
-{
-	font-size: 60px;
-	color: green;
-}
