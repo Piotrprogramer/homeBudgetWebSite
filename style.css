@@ -140,9 +140,7 @@ input:focus:-ms-input-placeholder{
 
 /* ogolne */
 #container{
-	width: 100%;
-	margin-left: auto;
-	margin-right: auto;
+	margin: auto;
 	margin-top: 10px;
 	border: none;
 }
@@ -241,16 +239,18 @@ input[type=submit]{
 	background-color: #00AAFF;
 	text-align: center;
 	margin-bottom: 10px;
+	border-radius: 5px;
 }
 
 #content{
 	max-width: 1000px;
-	min-height: 450px;
+	min-height: 400px;
 	background-color: #dedede;
-	text-align: justify;
-	padding-bottom: 20px;
+	
+	margin-top: 5px;
 	margin-left: auto;
 	margin-right: auto;
+	border-radius: 5px;
 
 }
 
@@ -273,7 +273,25 @@ input[type=submit]{
 	opacity: 1;
 }
 
-​a:visited, a:link, a:hover
-{
+.active {
+	opacity: 1;
+}
+
+​a:visited, a:link, a:hover{
     text-decoration: none;
+}
+
+
+
+
+/* Style do dodaj wydatek */
+.choose_bill{
+	margin-top: 15px;
+}
+
+.subbmit_button{
+	max-width: 250px;
+	font-size: 10px;
+	margin-left: 15px;
+	margin-right: 15px;
 }
