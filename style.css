@@ -243,10 +243,11 @@ input[type=submit]{
 }
 
 #content{
-	max-width: 1000px;
-	min-height: 400px;
-	background-color: #dedede;
 	
+	max-width: 600px;
+	min-height: 30px;
+	padding: 25px;
+	background-color: #dedede;
 	margin-top: 5px;
 	margin-left: auto;
 	margin-right: auto;
@@ -294,4 +295,12 @@ input[type=submit]{
 	font-size: 10px;
 	margin-left: 15px;
 	margin-right: 15px;
+}
+
+.statistics{
+	msx-width:200px;
+	border: 2px solid #c9c9c9;
+	border-radius: 5px;
+	padding: 5px;
+
 }
