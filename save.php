@@ -2,37 +2,53 @@
 
 session_start();
 
+unset($_SESSION['existing_login']);
+
 if (isset($_POST['login']) && isset($_POST['password']) && isset($_POST['repeatPassword'])) {
 	$login = $_POST['login'];
 	$password = $_POST['password'];
 	$repeatPassword = $_POST['repeatPassword'];
-	//$email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
-	
-	//if (empty($email)) {
-		
-	//	$_SESSION['given_email'] = $_POST['email'];
-	//	header('Location: index.php');
-		
-	//} else {
+
+	require_once 'database.php';
+
+	$newLogin = true;
+	$sql = 'SELECT login FROM uzytkownicy';
+	$stmt = $db->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
+	$stmt->execute();
+	while ($row = $stmt->fetch(PDO::FETCH_NUM, PDO::FETCH_ORI_NEXT)) {
+		$checkingLogin = $row[0];
+		if($_POST['login']==$checkingLogin){
+			$newLogin = false;
+			$_SESSION['existing_login'] = true;
+			break;
+		}
+	}
+
 	if($password == $repeatPassword){
-		require_once 'database.php';
-		
-		$query = $db->prepare('INSERT INTO uzytkownicy VALUES (NULL, :login, :password)');
-		$query->bindValue(':login', $login, PDO::PARAM_STR);
-		$query->bindValue(':password', $password, PDO::PARAM_STR);
-		$query->execute();
+
+		if($newLogin){
+			$query = $db->prepare('INSERT INTO uzytkownicy VALUES (NULL, :login, :password)');
+			$query->bindValue(':login', $login, PDO::PARAM_STR);
+			$query->bindValue(':password', $password, PDO::PARAM_STR);
+			$query->execute();
+
+		} else{
+			$_SESSION['given_login'] = $_POST['login'];
+			$_SESSION['existing_login'] = true;
+			header('Location: Rejestracja.php');
+			exit();
+		}
 	}
 	else {
 		$_SESSION['given_login'] = $_POST['login'];
-		header('Location: Rejestracja.html');
+		$_SESSION['difrent_password'] = true;
+		header('Location: Rejestracja.php');
 		exit();
 	}
-	//}
-	
-	
+
 } else {
 	
-	header('Location: Rejestracja.html');
+	header('Location: Rejestracja.php');
 	exit();
 }
 
@@ -68,7 +84,7 @@ if (isset($_POST['login']) && isset($_POST['password']) && isset($_POST['repeatP
 		</div>
 		<div class="row justify-content-center" id="content">
 			<div >
-				<div >Gratulacje, konto założone pomyślnie!</div>	
+				<div >Gratulacje, konto założone pomyślnie!</div>
 				<a href="Index.html"><div class="log_button" style="margin-top:10px">Powrót</div> </a>
 			</div>	
 		</div>

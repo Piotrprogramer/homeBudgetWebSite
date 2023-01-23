@@ -36,18 +36,29 @@
 		<div class="row justify-content-center">
 		
 			<div id="register_frame">
-				<form method="post" action="save.php">
-					<input type="text" name="login" placeholder="login" onfocus="this.placeholder=''" onblur="this.placeholder='login'" required>
-
-
-					<?php if(  isset($_SESSION['given_login']) echo $_SESSION['given_login'] ?>
-
-
-
-					<input type="password" name="password" placeholder="hasło" onfocus="this.placeholder=''" onblur="this.placeholder='hasło'" required>
-					
-					<input type="password" name="repeatPassword" placeholder="powtórz hasło" onfocus="this.placeholder=''" onblur="this.placeholder='powtórz hasło'" required>
-					
+				<form method="post" action="save.php"  <!-- action="save.php"--> >
+					<input type="text" name="login" placeholder="login" onfocus="this.placeholder=''" onblur="this.placeholder='login'" required
+						value=
+						"<?php
+							if (isset($_SESSION['given_login'])){
+							echo $_SESSION['given_login'];
+							unset($_SESSION['given_login']);}
+						?>" >
+						<?php
+							if (isset($_SESSION['existing_login'])){
+							echo '<div style="color: red">Dany login jest już zajęty</div>';
+							unset($_SESSION['existing_login']);
+							}
+						?>
+						<input type="password" name="password" placeholder="hasło" onfocus="this.placeholder=''" onblur="this.placeholder='hasło'" required>
+						
+						<input type="password" name="repeatPassword" placeholder="powtórz hasło" onfocus="this.placeholder=''" onblur="this.placeholder='powtórz hasło'" required>
+						<?php
+							if (isset($_SESSION['difrent_password'])){
+							echo '<div style="color: red">Hasła nie są te same</div>';
+							unset($_SESSION['difrent_password']);
+							}
+						?>
 					<input type="submit" value="Zarejestruj się">
 					
 					<a href="Index.html"><div class="log_button" style="margin-top:10px">Powrót</div> </a>
