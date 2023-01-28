@@ -1,8 +1,17 @@
+<?php
+session_start();
+
+if(!isset($_SESSION['id'])) {
+	header('Location: Index.html');
+	exit();
+}
+?>
+
 <!DOCTYPE HTML>
 <html lang="pl">
 <head>
 	<meta charset="utf-8" >
-	<title>Przeglądaj bilans</title>
+	<title>Menu główne</title>
 	<meta name="description" content="Zadbaj o swój budżet" >
 	<meta name="keywords" content="Budżet" >
 	<meta name="author" content="Piotr Wasilewski">
@@ -15,7 +24,8 @@
 </head>
 
 <body>				
-	<div id="container">		
+	<div id="container">
+		
 		<div class="row justify-content-center">
 			<i class="icon-money"></i> 
 		</div>
@@ -28,43 +38,23 @@
 			
 				<div class="collapse navbar-collapse " id="mainmenu">
 					<ul class="navbar-nav mr-auto nav justify-content-center" style="margin:auto">
-						<li><a href="MenuGlowne.html"><div class="option">Menu główne</div> </a>			</li>
-						<li><a href="DodajPrzychod.html"><div class="option">Dodaj przychód</div> </a>						</li>
-						<li><a href="dodajWydatek.html"><div class="option">Dodaj wydatek</div> </a>		</li>
-						<li><a href="przegladajBilans.html"><div class="option active">Przeglądaj bilans</div> </a></li>
-						<li><a href="#"><div class="option">Ustawienia</div> </a>							</li>
-						<li><a href="Index.html"><div class="option">Wyloguj się</div> </a>			</li>
+						<li><a href="MenuGlowne.php"><div class="option active">Menu główne</div> </a></li>
+						<li><a href="DodajPrzychod.php"><div class="option">Dodaj przychód</div> </a></li>
+						<li><a href="dodajWydatek.php"><div class="option">Dodaj wydatek</div> </a></li>
+						<li><a href="przegladajBilans.php"><div class="option">Przeglądaj bilans</div></a></li>
+						<li><a href="#"><div class="option">Ustawienia</div> </a></li>
+						<li><a href="logOut.php"><div class="option">Wyloguj się</div> </a></li>
 					</ul>
 				</div>
 			</nav>
 		</div>
 
 		<div class="row justify-content-center ">
-			<div  class="col-10  col-xl-8" id="content" style="text-align:center">
-			
-				<div class="row justify-content-center choose_bill">
-					<div>Wybierz datę</div>
-					<select  style="margin-left:10px" name="date" >
-					  <option value="1" selected >	bieżący miesiąc		</option>
-					  <option value="2">		poprzedni miesiąc	</option>
-					  <option value="3">	bieżący rok			</option>
-					  <option value="4">		niestandardowy		</option>
-					</select>
+			<div  class="col-10 col-xl-8" id="content">
+				<div>
+					<div style="font-size:20px ; text-align:center">	miejsce na coś w przyszłości	
+					</div>	
 				</div>
-				
-				<div class="choose_bill" style="font-size: 10px">
-					<input class="subbmit_button"  type="submit" style="font-size:12px; width:80%; max-width:300px" value="Pokaż bilans">
-				</div>
-				
-				<div class="row justify-content-center choose_bill">
-					<div class="col-12  col-sm-6 statistics" >Przychody
-					
-					</div>
-					
-					<div class="col-12  col-sm-6 statistics" >Wydatki
-	
-					</div>
-				</div>				
 			</div>
 		</div>	
 	</div>
@@ -73,6 +63,6 @@
 	
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 	
-	<script src="js/bootstrap.min.js"></script>	
+	<script src="js/bootstrap.min.js"></script>
 </body>
 </html>

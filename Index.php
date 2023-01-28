@@ -1,3 +1,12 @@
+<?php
+session_start();
+	if(isset($_SESSION['id'])){
+	header('Location: MenuGlowne.php');
+	exit();
+	}
+?>
+
+
 <!DOCTYPE HTML>
 <html lang="pl">
 <head>

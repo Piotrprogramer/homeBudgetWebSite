@@ -2,8 +2,6 @@
 
 session_start();
 
-unset($_SESSION['id']);
-
 if (isset($_POST['login']) && isset($_POST['password'])) {
 	$_SESSION['given_login'] = $_POST['login'];
 	$_SESSION['given_password'] = $_POST['password'];
@@ -23,6 +21,9 @@ if (isset($_POST['login']) && isset($_POST['password'])) {
 		if( $_SESSION['given_login'] == $checkingLogin){
 			if($checkingPassword == $_SESSION['given_password']){
 			$_SESSION['id'] = $checkingId;
+			unset($_SESSION['given_login']);
+			unset($_SESSION['given_password']);
+			
 			 break;
 			}
 			else break;
@@ -30,7 +31,7 @@ if (isset($_POST['login']) && isset($_POST['password'])) {
 	}
 }
 if(isset($_SESSION['id'])) {
-	header('Location: MenuGlowne.html');
+	header('Location: MenuGlowne.php');
 	exit();
 }
 else {

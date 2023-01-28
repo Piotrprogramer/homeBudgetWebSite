@@ -60,7 +60,7 @@
 						?>
 					<input type="submit" value="Zarejestruj się">
 					
-					<a href="Index.html"><div class="log_button" style="margin-top:10px">Powrót</div> </a>
+					<a href="Index.php"><div class="log_button" style="margin-top:10px">Powrót</div> </a>
 				</form>
 			</div>
 		</div>
