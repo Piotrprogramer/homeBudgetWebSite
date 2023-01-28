@@ -1,8 +1,17 @@
+<?php
+session_start();
+	if(isset($_SESSION['id'])){
+	header('Location: MenuGlowne.php');
+	exit();
+	}
+?>
+
+
 <!DOCTYPE HTML>
 <html lang="pl">
 <head>
 	<meta charset="utf-8" >
-	<title>Menu główne</title>
+	<title>Strona startowa</title>
 	<meta name="description" content="Zadbaj o swój budżet" >
 	<meta name="keywords" content="Budżet" >
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -28,18 +37,18 @@
 		</div>
 		
 		<div class="row justify-content-center">
-			<div id="register_frame" >
+			<div class="col-10 col-sm-5 col-md-4 col-xl-3 col-md-auto logMenu" >
 				
-				<input type="text" placeholder="login" onfocus="this.placeholder=''" onblur="this.placeholder='login'" required>
+				<p>Lorem ipsum dolor sit amet. Sit corrupti libero: sed inventore inventore sit debitis repellendus nam maxime dolor ut velit corrupti? 33 nihil omnis, et omnis sunt nam vero illo qui earum maxime? Ut enim ipsum: aut minima repudiandae quo omnis recusandae. </p>
 				
-				<input type="password" placeholder="hasło" onfocus="this.placeholder=''" onblur="this.placeholder='hasło'" required>
+				<a href="Logowanie.php"><div class="log_button">Zaloguj się</div> </a>
 				
-				<input type="submit" value="Zaloguj się">
-				
-				<a href="Index.html"><div class="log_button" style="margin-top:10px">Powrót</div> </a>
+			</div>
+			<div class="col-10 col-sm-5 col-md-4 col-xl-3 col-md-auto logMenu" >
+				<p>Lorem ipsum dolor sit amet. Sit corrupti libero: sed inventore inventore sit debitis repellendus nam maxime dolor ut velit corrupti? 33 nihil omnis, et omnis sunt nam vero illo qui earum maxime? Ut enim ipsum: aut minima repudiandae quo omnis recusandae. </p>
+				<a href="Rejestracja.php"><div class="log_button">Zarejestruj się</div> </a>
 			</div>
 		</div>
-		
 	</div>
 	
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

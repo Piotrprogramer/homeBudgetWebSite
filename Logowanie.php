@@ -1,8 +1,12 @@
+<?php
+	session_start();
+?>	
+	
 <!DOCTYPE HTML>
 <html lang="pl">
 <head>
 	<meta charset="utf-8" >
-	<title>Strona startowa</title>
+	<title>Menu główne</title>
 	<meta name="description" content="Zadbaj o swój budżet" >
 	<meta name="keywords" content="Budżet" >
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -28,18 +32,33 @@
 		</div>
 		
 		<div class="row justify-content-center">
-			<div class="col-10 col-sm-5 col-md-4 col-xl-3 col-md-auto logMenu" >
-				
-				<p>Lorem ipsum dolor sit amet. Sit corrupti libero: sed inventore inventore sit debitis repellendus nam maxime dolor ut velit corrupti? 33 nihil omnis, et omnis sunt nam vero illo qui earum maxime? Ut enim ipsum: aut minima repudiandae quo omnis recusandae. </p>
-				
-				<a href="Logowanie.html"><div class="log_button">Zaloguj się</div> </a>
-				
-			</div>
-			<div class="col-10 col-sm-5 col-md-4 col-xl-3 col-md-auto logMenu" >
-				<p>Lorem ipsum dolor sit amet. Sit corrupti libero: sed inventore inventore sit debitis repellendus nam maxime dolor ut velit corrupti? 33 nihil omnis, et omnis sunt nam vero illo qui earum maxime? Ut enim ipsum: aut minima repudiandae quo omnis recusandae. </p>
-				<a href="Rejestracja.html"><div class="log_button">Zarejestruj się</div> </a>
+			<div id="register_frame" >
+					<form method="post" action="load.php">
+						<input type="text" name="login" placeholder="login" onfocus="this.placeholder=''" onblur="this.placeholder='login'" required 
+						value=
+						"<?php
+							if (isset($_SESSION['given_login'])){
+							echo $_SESSION['given_login'];
+							unset($_SESSION['given_login']);}
+						?>" >
+						
+						<input type="password" name="password" placeholder="hasło" onfocus="this.placeholder=''" onblur="this.placeholder='hasło'" required>
+						
+						<?php
+							if (isset($_SESSION['wrong_pass'])){
+							echo '<div style="color: red">Podany użytkownik nie istnieje</div>';
+							unset($_SESSION['wrong_pass']);
+							}
+						?>
+						
+						<input type="submit" value="Zaloguj się">
+					
+						<a href="Index.php"><div class="log_button" style="margin-top:10px">Powrót</div> </a>
+						
+					</form>
 			</div>
 		</div>
+		
 	</div>
 	
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
