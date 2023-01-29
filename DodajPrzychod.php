@@ -50,37 +50,38 @@ if(!isset($_SESSION['id'])) {
 
 		<div class="row justify-content-center ">
 			<div  class="col-10 col-xl-8" id="content" style="text-align:center">
-		
-				<div class="choose_bill">	
-					<div > Data przychodu <input style="margin-left:10px" type="date" name="dzien" value="2022-01-01" min="2020-01-01"></div>
-				</div>
-				
-				<div class="row justify-content-center choose_bill">
-					<label for="kwota" >Kwota: </label>
-					<div style="margin-left:10px">
-						<input type="number" id="kwota" value="0.01" step="0.01" min="0.01">
+				<form method="post" action="saveIncome.php">
+					<div class="choose_bill">	
+						<div > Data przychodu <input style="margin-left:10px" type="date" name="date" value="2022-01-01" min="2020-01-01"></div>
 					</div>
-				</div>
+					
+					<div class="row justify-content-center choose_bill">
+						<label for="kwota" >Kwota: </label>
+						<div style="margin-left:10px">
+							<input type="number" name="amount" value="0.01" step="0.01" min="0.01">
+						</div>
+					</div>
+					
+					<div class="choose_bill">	Przychód:
+						<select style="margin-left:10px" name="income">
+							<option value="wynagrodzenie"   selected> Wynagrodzenie 	</option>
+							<option value="odsetki"  > Odsetki bankowe 			</option>
+							<option value="allegro"  > Sprzedaż na allegro 		</option>
+							<option value="gielda"  > Giełda 					</option>
+							<option value="Inne"  > Inne 					</option>
+						</select>
+					</div>
 				
-				<div class="choose_bill">	Kategoria:
-					<select style="margin-left:10px" name="przychod" id="przychod">
-						<option value="1"   selected> Wynagrodzenie 	</option>
-						<option value="2"  > Odsetki bankowe 			</option>
-						<option value="3"  > Sprzedaż na allegro 		</option>
-						<option value="4"  > Giełda 					</option>
-						<option value="5"  > Inne 					</option>
-					</select>
-				</div>
-			
-				<div class="choose_bill">	
-					<div><label for="komentarz">Komentarz (opcjonalnie) </label></div>
-						
-					<div ><textarea name="komentarz" id="komentarz" rows="2" cols="35" maxlength="80"  style="resize:none" ></textarea></div>
-				</div>	
-								
-				<div class="choose_bill" style="font-size: 10px">
-					<input class="subbmit_button"  type="submit" style="font-size:12px; width:80%; max-width:300px" value="Dodaj przychód">
-				</div>
+					<div class="choose_bill">	
+						<div><label for="komentarz">Komentarz (opcjonalnie) </label></div>
+							
+						<div ><textarea name="comment" rows="2" cols="35" maxlength="80"  style="resize:none" ></textarea></div>
+					</div>	
+									
+					<div class="choose_bill" style="font-size: 10px">
+						<input class="subbmit_button"  type="submit" style="font-size:12px; width:80%; max-width:300px" value="Dodaj przychód">
+					</div>
+				</form>	
 			</div>
 		</div>	
 	</div>
