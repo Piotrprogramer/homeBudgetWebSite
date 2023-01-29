@@ -49,70 +49,66 @@ if(!isset($_SESSION['id'])) {
 		</div>
 
 		<div class="row justify-content-center ">
-			<div  class="col-10 col-xl-8" id="content" style="text-align:center">
-		
-				<div class="choose_bill">	
-					<div > Data wydatku <input style="margin-left:10px" type="date" name="dzien" value="2022-01-01" min="2020-01-01"></div>
-				</div>
+			<form method="post" action="saveExpense.php">
+				<div  class="col-10 col-xl-8" id="content" style="text-align:center">
+			
+					<div class="choose_bill">	
+						<div > Data wydatku <input style="margin-left:10px" type="date" name="date" value="2022-01-01" min="2020-01-01"></div>
+					</div>
+					
+					<div class="row justify-content-center choose_bill">
+						<label for="kwota" >Kwota: </label>
+						<div style="margin-left:10px">
+							<input type="number" name="amount" value="0.01" step="0.01" min="0.01">
+						</div>
+					</div>
 				
-				<div class="row justify-content-center choose_bill">
-					<label for="kwota" >Kwota: </label>
-					<div style="margin-left:10px">
-						<input type="number" id="kwota" value="0.01" step="0.01" min="0.01">
+					<div class="choose_bill">			
+						Sposób płatności:
+						<select style="margin-left:10px" name="payment_method" id="platnosc">
+						  <option value="Gotówka" > Gotówka 					</option>
+						  <option value="Karta debetowa"  selected > Karta debetowa 	</option>
+						  <option value="Karta kredytowa" > Karta kredytowa 			</option>
+						</select>
+					</div>	
+
+					<div class="choose_bill">	Kategoria:
+						<select style="margin-left:10px" name="category" id="wydatek">
+
+							<option value="Jedzenie"  selected> Jedzenie 	</option>
+							<option value="Mieszkanie" > Mieszkanie 			</option>
+							<option value="Transport" > Transport 			</option>
+							<option value="Telekomunikacja" > Telekomunikacja 	</option>
+							<option value="Opieka zdrowotna" > Opieka zdrowotna 	</option>
+							<option value="Ubranie" > Ubranie 			</option>
+							<option value="Higiena" > Higiena 			</option>
+							<option value="Dzieci" > Dzieci 				</option>
+							<option value="Rozrywka" > Rozrywka 			</option>
+							<option value="Wycieczka"> Wycieczka 			</option>
+							<option value="Szkolenia"> Szkolenia 			</option>
+							<option value="Książki"> Książki 			</option>
+							<option value="Oszczędności"> Oszczędności 		</option>
+							<option value="Na emeryturę"> Na emeryturę 		</option>
+							<option value="Spłata długów"> Spłata długów 		</option>
+							<option value="Darowizna"> Darowizna 			</option>
+							<option value="Inne wydatki"> Inne wydatki 		</option>
+							
+						</select>
+					</div>
+				
+					<div class="choose_bill">	
+						<div><label for="komentarz">Komentarz (opcjonalnie) </label></div>
+							
+						<div ><textarea name="comment" id="komentarz" rows="2" cols="35" maxlength="80"  style="resize:none" ></textarea></div>
+					</div>	
+									
+					<div class="choose_bill" style="font-size: 10px">
+						<input class="subbmit_button"  type="submit" style="font-size:12px; width:80%; max-width:300px" value="Dodaj wydatek">
 					</div>
 				</div>
-			
-				<div class="choose_bill">			
-					Sposób płatności:
-					<select style="margin-left:10px" name="platnosc" id="platnosc">
-					  <option value="1" > Gotówka 					</option>
-					  <option value="2"  selected > Karta debetowa 	</option>
-					  <option value="3" > Karta kredytowa 			</option>
-					</select>
-				</div>	
-
-				<div class="choose_bill">	Kategoria:
-					<select style="margin-left:10px" name="wydatek" id="wydatek">
-
-						<option value="1"  selected> Jedzenie 	</option>
-						<option value="2" > Mieszkanie 			</option>
-						<option value="3" > Transport 			</option>
-						<option value="4" > Telekomunikacja 	</option>
-						<option value="5" > Opieka zdrowotna 	</option>
-						<option value="6" > Ubranie 			</option>
-						<option value="7" > Higiena 			</option>
-						<option value="8" > Dzieci 				</option>
-						<option value="9" > Rozrywka 			</option>
-						<option value="10"> Wycieczka 			</option>
-						<option value="11"> Szkolenia 			</option>
-						<option value="12"> Książki 			</option>
-						<option value="13"> Oszczędności 		</option>
-						<option value="14"> Na emeryturę 		</option>
-						<option value="15"> Spłata długów 		</option>
-						<option value="16"> Darowizna 			</option>
-						<option value="17"> Inne wydatki 		</option>
-						
-					</select>
-				</div>
-			
-				<div class="choose_bill">	
-					<div><label for="komentarz">Komentarz (opcjonalnie) </label></div>
-						
-					<div ><textarea name="komentarz" id="komentarz" rows="2" cols="35" maxlength="80"  style="resize:none" ></textarea></div>
-				</div>	
-								
-				<div class="choose_bill" style="font-size: 10px">
-					<input class="subbmit_button"  type="submit" style="font-size:12px; width:80%; max-width:300px" value="Dodaj wydatek">
-				</div>
-			</div>
+			</form>
 		</div>	
 	</div>
-
-
-
-		
-	
-	
 	
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 	

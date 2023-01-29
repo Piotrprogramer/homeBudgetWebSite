@@ -52,7 +52,17 @@ if(!isset($_SESSION['id'])) {
 		<div class="row justify-content-center ">
 			<div  class="col-10 col-xl-8" id="content">
 				<div>
-					<div style="font-size:20px ; text-align:center">	miejsce na coś w przyszłości	
+					<div style="font-size:20px ; text-align:center">
+
+
+						<?php
+							if (isset($_SESSION['display_info'])){
+							echo $_SESSION['display_info'];
+							unset($_SESSION['display_info']);
+							}
+							else echo "test"
+						?>
+
 					</div>	
 				</div>
 			</div>
