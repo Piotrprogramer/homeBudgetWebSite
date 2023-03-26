@@ -85,7 +85,7 @@ if (isset($_POST['login']) && isset($_POST['password']) && isset($_POST['repeatP
 		<div class="row justify-content-center" id="content">
 			<div >
 				<div >Gratulacje, konto założone pomyślnie!</div>
-				<a href="Index.html"><div class="log_button" style="margin-top:10px">Powrót</div> </a>
+				<a href="Index.php"><div class="log_button" style="margin-top:10px">Powrót</div> </a>
 			</div>	
 		</div>
 	</div>

@@ -51,9 +51,9 @@ if(!isset($_SESSION['id'])) {
 		<div class="row justify-content-center ">
 			<form method="post" action="saveExpense.php">
 				<div  class="col-10 col-xl-8" id="content" style="text-align:center">
-			
+					
 					<div class="choose_bill">	
-						<div > Data wydatku <input style="margin-left:10px" type="date" name="date" value="2022-01-01" min="2020-01-01"></div>
+						<div > Data wydatku <input style="margin-left:10px" type="date" name="date" value="<?php echo date("Y-m-d"); ?>" min="2020-01-01"></div>
 					</div>
 					
 					<div class="row justify-content-center choose_bill">
@@ -76,20 +76,20 @@ if(!isset($_SESSION['id'])) {
 						<select style="margin-left:10px" name="category" id="wydatek">
 
 							<option value="Jedzenie"  selected> Jedzenie 	</option>
-							<option value="Mieszkanie" > Mieszkanie 			</option>
+							<option value="Mieszkanie" > Mieszkanie 		</option>
 							<option value="Transport" > Transport 			</option>
 							<option value="Telekomunikacja" > Telekomunikacja 	</option>
-							<option value="Opieka zdrowotna" > Opieka zdrowotna 	</option>
+							<option value="Opieka zdrowotna" > Opieka zdrowotna </option>
 							<option value="Ubranie" > Ubranie 			</option>
 							<option value="Higiena" > Higiena 			</option>
-							<option value="Dzieci" > Dzieci 				</option>
-							<option value="Rozrywka" > Rozrywka 			</option>
-							<option value="Wycieczka"> Wycieczka 			</option>
-							<option value="Szkolenia"> Szkolenia 			</option>
+							<option value="Dzieci" > Dzieci 			</option>
+							<option value="Rozrywka" > Rozrywka 		</option>
+							<option value="Wycieczka"> Wycieczka 		</option>
+							<option value="Szkolenia"> Szkolenia 		</option>
 							<option value="Książki"> Książki 			</option>
-							<option value="Oszczędności"> Oszczędności 		</option>
-							<option value="Na emeryturę"> Na emeryturę 		</option>
-							<option value="Spłata długów"> Spłata długów 		</option>
+							<option value="Oszczędności"> Oszczędności 	</option>
+							<option value="Na emeryturę"> Na emeryturę 	</option>
+							<option value="Spłata długów"> Spłata długów 	</option>
 							<option value="Darowizna"> Darowizna 			</option>
 							<option value="Inne wydatki"> Inne wydatki 		</option>
 							

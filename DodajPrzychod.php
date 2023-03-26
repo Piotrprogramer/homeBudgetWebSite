@@ -52,7 +52,7 @@ if(!isset($_SESSION['id'])) {
 			<div  class="col-10 col-xl-8" id="content" style="text-align:center">
 				<form method="post" action="saveIncome.php">
 					<div class="choose_bill">	
-						<div > Data przychodu <input style="margin-left:10px" type="date" name="date" value="2022-01-01" min="2020-01-01"></div>
+						<div > Data przychodu <input style="margin-left:10px" type="date" name="date" value="<?php echo date("Y-m-d"); ?>" min="2020-01-01"></div>
 					</div>
 					
 					<div class="row justify-content-center choose_bill">

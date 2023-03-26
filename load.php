@@ -23,6 +23,7 @@ if (isset($_POST['login']) && isset($_POST['password'])) {
 			$_SESSION['id'] = $checkingId;
 			unset($_SESSION['given_login']);
 			unset($_SESSION['given_password']);
+			$_SESSION['display_balance'] = false;
 			
 			 break;
 			}

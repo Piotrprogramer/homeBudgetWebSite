@@ -1,5 +1,6 @@
 <?php
 session_start();
+require_once 'database.php';
 
 if(!isset($_SESSION['id'])) {
 	header('Location: Index.html');
@@ -21,6 +22,7 @@ if(!isset($_SESSION['id'])) {
 	<link rel="stylesheet" href="style.css" type="text/css" >
 	<link href='http://fonts.googleapis.com/css?family=Lato:400,900&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
 	<link href="css/fontello.css" rel="stylesheet" type="text/css" >
+	<script src="js/swapDiv.js"></script>
 </head>
 
 <body>				
@@ -50,30 +52,86 @@ if(!isset($_SESSION['id'])) {
 
 		<div class="row justify-content-center ">
 			<div  class="col-10  col-xl-8" id="content" style="text-align:center">
-			
-				<div class="row justify-content-center choose_bill">
-					<div>Wybierz datę</div>
-					<select  style="margin-left:10px" name="date" >
-					  <option value="1" selected >	bieżący miesiąc		</option>
-					  <option value="2">		poprzedni miesiąc	</option>
-					  <option value="3">	bieżący rok			</option>
-					  <option value="4">		niestandardowy		</option>
-					</select>
-				</div>
-				
-				<div class="choose_bill" style="font-size: 10px">
-					<input class="subbmit_button"  type="submit" style="font-size:12px; width:80%; max-width:300px" value="Pokaż bilans">
-				</div>
-				
-				<div class="row justify-content-center choose_bill">
-					<div class="col-12  col-sm-6 statistics" >Przychody
+				<form method="post" action="bilans.php">
+					<div id="standard" class="choose_bill">
+						<div>Wybierz datę</div>
+						<div >
+							<select  style="margin-left:10px" name="date" >
+							  <option value="this_month" selected >	bieżący miesiąc		</option>
+							  <option value="last_month">	poprzedni miesiąc	</option>
+							  <option value="this_year">	bieżący rok			</option>
+							</select>
+						</div>
+						
+						<div  >
+							<a href="javascript:SwapDivsWithClick('standard','precisely')">Wybierz dokłądną datę</a>
+						</div>
+						
+						<div class="choose_bill" style="font-size: 10px">
+							<input class="subbmit_button"  type="submit" style="font-size:12px; width:80%; max-width:300px" value="Pokaż bilans">
+						</div>
+						
+					</div>	
+				</form>	
+				<form method="post" action="dokladnyBilans.php">
+					<div id="precisely" class="choose_bill" style="display:none">
+						<div>Wybierz datę</div>
+						
+						<div>
+							<input name="date_start" type="date" value="<?php echo date("Y-m-01");?>">
+							<input name="date_end" 	 type="date" value="<?php echo date("Y-m-d"); ?>">
+						</div>
+						
+						<div  >
+							<a href="javascript:SwapDivsWithClick('standard','precisely')"> Wybierz datę z listy</a>
+						</div>
+						
+						<div class="choose_bill" style="font-size: 10px">
+							<input class="subbmit_button"  type="submit" style="font-size:12px; width:80%; max-width:300px" value="Pokaż bilans">
+						</div>
+						
+					</div>	
 					
+				</form>
+				<div class="row justify-content-center choose_bill" style="<?php if($_SESSION['display_balance'] == false )echo "display:none"; else {"display:block"; $_SESSION['display_balance'] = false;}?>" >
+				
+				
+					<div class="col-12  col-sm-6 statistics" >Przychody
+					<?php	
+						$sql = 'SELECT category, SUM(amount)  FROM expenses WHERE userId=75 GROUP BY category ORDER BY SUM(amount) DESC';
+						$stmt = $db->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
+						$stmt->execute();
+							
+					while ($row = $stmt->fetch(PDO::FETCH_NUM, PDO::FETCH_ORI_NEXT)) {
+						$category = $row[0];
+						$amount = $row[1];
+						
+						echo $category;
+						echo " -> ";
+						echo $amount;
+						echo "<br>";
+					}	
+					?>
 					</div>
 					
 					<div class="col-12  col-sm-6 statistics" >Wydatki
-	
+						<?php	
+						$sql = 'SELECT income, SUM(amount)  FROM incomes WHERE userId=75 GROUP BY income ORDER BY SUM(amount) DESC';
+						$stmt = $db->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
+						$stmt->execute();
+							
+						while ($row = $stmt->fetch(PDO::FETCH_NUM, PDO::FETCH_ORI_NEXT)) {
+						$category = $row[0];
+						$amount = $row[1];
+
+						echo $category;
+						echo " -> ";
+						echo $amount;
+						echo "<br>";
+					}	
+					?>
 					</div>
-				</div>				
+				</div>					
 			</div>
 		</div>	
 	</div>
