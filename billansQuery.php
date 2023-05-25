@@ -1,10 +1,5 @@
 <?php
 session_start();
-$_SESSION['date_start'] = 0;
-$_SESSION['date_end'] = 0;
-
-//require_once 'database.php';
-
 if(!isset($_SESSION['id'])) {
 	header('Location: Index.html');
 	exit();
@@ -54,52 +49,81 @@ if(!isset($_SESSION['id'])) {
 			</nav>
 		</div>
 
-		<div class="row justify-content-center ">
-			<div  class="col-10  col-xl-8" id="content" style="text-align:center">
-				<form method="post" action="billansQuery.php">
-					<div id="standard" class="choose_bill">
-						<div>Wybierz datę</div>
-						<div >
-							<select  style="margin-left:10px" name="date" >
-							  <option value="this_month" selected >	bieżący miesiąc		</option>
-							  <option value="last_month">	poprzedni miesiąc	</option>
-							  <option value="this_year">	bieżący rok			</option>
-							</select>
-						</div>
+
+			<div  class="col-10  col-xl-8 row justify-content-center" id="content"  style="text-align:center">
+				<?php
+					if (isset($_SESSION['id'])) {
+						$userId	= $_SESSION['id'];
+
+						$date_start ;
+						$date_end ;
 						
-						<div  >
-							<a href="javascript:SwapDivsWithClick('standard','precisely')">Wybierz dokłądną datę</a>
-						</div>
-						
-						<div class="choose_bill" style="font-size: 10px">
-							<input class="subbmit_button"  type="submit" style="font-size:12px; width:80%; max-width:300px" value="Pokaż bilans">
-						</div>
-						
-					</div>	
-				</form>	
-				<form method="post" action="billansQuery.php">
-					<div id="precisely" class="choose_bill" style="display:none">
-						<div>Wybierz datę</div>
-						
-						<div>
-							<input name="date_start" type="date" value="<?php echo date("Y-m-01");?>">
-							<input name="date_end" 	 type="date" value="<?php echo date("Y-m-d"); ?>">
-						</div>
-						
-						<div  >
-							<a href="javascript:SwapDivsWithClick('standard','precisely')"> Wybierz datę z listy</a>
-						</div>
-						
-						<div class="choose_bill" style="font-size: 10px">
-							<input class="subbmit_button"  type="submit" style="font-size:12px; width:80%; max-width:300px" value="Pokaż bilans">
-						</div>
-						
-					</div>	
-					
-				</form>
-				
+						if( isset($_POST['date_start']) && isset($_POST['date_end'] )){
+							$date_start = $_SESSION['date_start'];
+							$date_end = $_SESSION['date_end'];
+						}
+						else{
+							if($_POST['date'] == 'this_month'){
+								$date_start = date("Y-m-01");
+								$date_end = date("Y-m-d");
+							}
+							else if($_POST['date'] == 'last_month'){
+								$date_start = date('Y-m-01', strtotime('last month'));
+								$date_end = date("Y-m-01");
+							}
+							else if($_POST['date'] == 'this_year'){
+								$date_start = date('Y-01-01', strtotime('last month'));
+								$date_end = date("Y-12-31");	
+							}
+						}
+						require_once 'database.php';
+							$stmt = $db->prepare("SELECT category, SUM(amount)  FROM expenses WHERE userId=:userIdd AND date BETWEEN :start AND :end GROUP BY amount ORDER BY SUM(amount) DESC");
+							$stmt->bindParam(':userIdd', $_SESSION['id']);
+							$stmt->bindParam(':start', $date_start);
+							$stmt->bindParam(':end', $date_end);
+							$stmt->execute();
+								
+				?>
+							<div class="col-5  col-xl-4 statistics" >Przychody
+				<?php
+								while ($row = $stmt->fetch(PDO::FETCH_NUM, PDO::FETCH_ORI_NEXT)) {
+									$category = $row[0];
+									$amount = $row[1];
+									
+									echo $category;
+									echo " -> ";
+									echo $amount;
+									echo "<br>";
+								}	
+				?>
+							</div>
+									
+							
+							
+							<div class="col-5  col-xl-4 statistics" >Wydatki
+				<?php		
+								$stmt = $db->prepare("SELECT income, SUM(amount)  FROM incomes WHERE userId=:userIdd AND date BETWEEN :start AND :end GROUP BY income ORDER BY SUM(amount) DESC");
+								$stmt->bindParam(':userIdd', $_SESSION['id']);
+								$stmt->bindParam(':start', $date_start);
+								$stmt->bindParam(':end', $date_end);
+								$stmt->execute();
+												
+								while ($row = $stmt->fetch(PDO::FETCH_NUM, PDO::FETCH_ORI_NEXT)) {
+									$category = $row[0];
+									$amount = $row[1];
+			
+									echo $category;
+									echo " -> ";
+									echo $amount;
+									echo "<br>";
+								}
+					}
+				?>
+							</div>
+					<div class="col-5  col-xl-4" style="margin-top:20px">
+							<a href="przegladajBilans.php"><div class="log_button">Nowy Bilans</div> </a>
+					</div>
 			</div>
-		</div>	
 	</div>
 	
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -112,3 +136,7 @@ if(!isset($_SESSION['id'])) {
 	<script src="js/bootstrap.min.js"></script>	
 </body>
 </html>
+
+
+
+
