@@ -23,11 +23,11 @@ if (isset($_SESSION['id'])) {
 			$query->execute();
 			
 			$_SESSION['display_info'] = 'Wydatek dodany poprawnie';
-			header('Location: MenuGlowne.php'); 
+			header('Location: mainMenu.php'); 
 
 } else {
 	$_SESSION['display_info'] = 'Dodawanie wydatku nie powiodło się';
-	header('Location: MenuGlowne.php');
+	header('Location: mainMenu.php');
 	exit();
 }
 

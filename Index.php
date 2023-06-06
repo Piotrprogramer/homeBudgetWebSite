@@ -41,12 +41,12 @@ session_start();
 				
 				<p>Lorem ipsum dolor sit amet. Sit corrupti libero: sed inventore inventore sit debitis repellendus nam maxime dolor ut velit corrupti? 33 nihil omnis, et omnis sunt nam vero illo qui earum maxime? Ut enim ipsum: aut minima repudiandae quo omnis recusandae. </p>
 				
-				<a href="Logowanie.php"><div class="log_button">Zaloguj się</div> </a>
+				<a href="logIn.php"><div class="log_button">Zaloguj się</div> </a>
 				
 			</div>
 			<div class="col-10 col-sm-5 col-md-4 col-xl-3 col-md-auto logMenu" >
 				<p>Lorem ipsum dolor sit amet. Sit corrupti libero: sed inventore inventore sit debitis repellendus nam maxime dolor ut velit corrupti? 33 nihil omnis, et omnis sunt nam vero illo qui earum maxime? Ut enim ipsum: aut minima repudiandae quo omnis recusandae. </p>
-				<a href="Rejestracja.php"><div class="log_button">Zarejestruj się</div> </a>
+				<a href="registration.php"><div class="log_button">Zarejestruj się</div> </a>
 			</div>
 		</div>
 	</div>

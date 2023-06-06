@@ -3,8 +3,6 @@ session_start();
 $_SESSION['date_start'] = 0;
 $_SESSION['date_end'] = 0;
 
-//require_once 'database.php';
-
 if(!isset($_SESSION['id'])) {
 	header('Location: Index.html');
 	exit();
@@ -43,11 +41,11 @@ if(!isset($_SESSION['id'])) {
 			
 				<div class="collapse navbar-collapse " id="mainmenu">
 					<ul class="navbar-nav mr-auto nav justify-content-center" style="margin:auto">
-						<li><a href="MenuGlowne.php"><div class="option">Menu główne</div> </a>			</li>
-						<li><a href="DodajPrzychod.php"><div class="option">Dodaj przychód</div> </a>						</li>
-						<li><a href="dodajWydatek.php"><div class="option">Dodaj wydatek</div> </a>		</li>
-						<li><a href="przegladajBilans.php"><div class="option active">Przeglądaj bilans</div> </a></li>
-						<li><a href="#"><div class="option">Ustawienia</div> </a>							</li>
+						<li><a href="mainMenu.php"><div class="option active">Menu główne</div> </a></li>
+						<li><a href="addIncome.php"><div class="option">Dodaj przychód</div> </a></li>
+						<li><a href="addExpense.php"><div class="option">Dodaj wydatek</div> </a></li>
+						<li><a href="seeBills.php"><div class="option">Przeglądaj bilans</div></a></li>
+						<li><a href="#"><div class="option">Ustawienia</div> </a></li>
 						<li><a href="logOut.php"><div class="option">Wyloguj się</div> </a></li>
 					</ul>
 				</div>
@@ -56,7 +54,7 @@ if(!isset($_SESSION['id'])) {
 
 		<div class="row justify-content-center ">
 			<div  class="col-10  col-xl-8" id="content" style="text-align:center">
-				<form method="post" action="billansQuery.php">
+				<form method="post" action="bilans.php">
 					<div id="standard" class="choose_bill">
 						<div>Wybierz datę</div>
 						<div >
@@ -77,7 +75,7 @@ if(!isset($_SESSION['id'])) {
 						
 					</div>	
 				</form>	
-				<form method="post" action="billansQuery.php">
+				<form method="post" action="bilans.php">
 					<div id="precisely" class="choose_bill" style="display:none">
 						<div>Wybierz datę</div>
 						

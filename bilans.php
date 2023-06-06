@@ -1,60 +1,50 @@
 <?php
-
 session_start();
-
 if (isset($_SESSION['id'])) {
 	$userId	= $_SESSION['id'];
-	$dateRange = $_POST['date'];
+	$dateRange;
 	$date_start ;
 	$date_end ;
+
+	if( isset($_POST['date_start'] ) ){
+		$date_start = $_POST['date_start'];
+		$date_end = $_POST['date_end'];
+	}
 	
-	if( $_SESSION['date_start'] != 0 && $_SESSION['date_end'] != 0){
-		$date_start = $_SESSION['date_start'];
-		$date_end = $_SESSION['date_end'];
-	}
 	else{
-		if($dateRange == 'this_month'){
-			$date_start = date("Y-m-01");
-			$date_end = date("Y-m-d");
+		if($_POST['date'] == 'this_month'){
+			$date_start = date('Y-m-01', strtotime('now'));
+			$date_end = date('Y-m-t', strtotime('now'));
 		}
-		else if($dateRange == 'last_month'){
-			$date_start = date('Y-m-01', strtotime('last month'));
-			$date_end = date("Y-m-01");
+		else if($_POST['date'] == 'last_month'){
+			$date_start =  date('Y-m-01', strtotime('now -1 month'));
+			$date_end =  date('Y-m-t', strtotime('now -1 month'));
 		}
-		else if($dateRange == 'this_year'){
-			$date_start = date('Y-01-01', strtotime('last month'));
-			$date_end = date("Y-12-31");	
-		}
+		else if($_POST['date'] == 'this_year'){
+			$date_start = date('Y-m-01', strtotime('now -2 month'));
+			$date_end = date('Y-m-t', strtotime('now -2 month'));
+		}	
 	}
-	require_once 'database.php';
-			
-			$sql = 'SELECT category, SUM(amount)  FROM expenses WHERE userId=userId GROUP BY amount ORDER BY SUM(amount) DESC';
-			$stmt = $db->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
-			$stmt->execute();
-			
-	while ($row = $stmt->fetch(PDO::FETCH_NUM, PDO::FETCH_ORI_NEXT)) {
-		$category = $row[0];
-		$amount = $row[1];
+		$_SESSION['income_qry'] = 
+		"SELECT income AS category, SUM(amount) AS total_amount
+		FROM incomes WHERE userId='$userId'
+		AND date BETWEEN '$date_start' AND '$date_end'
+		GROUP BY category DESC
+		ORDER BY total_amount DESC";
 
+		$_SESSION['expense_qry'] = 
+		"SELECT category, SUM(amount) AS total_amount
+		FROM expenses WHERE userId='$userId'
+		AND date BETWEEN '$date_start' AND '$date_end'
+		GROUP BY category 
+		ORDER BY total_amount DESC";
 
-		echo $category;
-		echo " -> ";
-		echo $amount;
-		echo "<br>";
-	}		
-	$_SESSION['row'] = $row;
-			
-			
-			
-			$_SESSION['display_balance'] = true;
-			header('Location: przegladajBilans.php'); 
+	header('Location: billansDisplay.php'); 
 
 } else {
-	$_SESSION['display_info'] = 'Coś poszło nie tak :/';
-	header('Location: przegladajBilans.php');
+	header('Location: Index.php');
 	exit();
 }
-
 ?>
 
 

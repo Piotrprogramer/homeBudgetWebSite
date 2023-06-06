@@ -21,11 +21,11 @@ if (isset($_SESSION['id'])) {
 			$query->execute();
 			
 			$_SESSION['display_info'] = 'Przychód dodany poprawnie';
-			header('Location: MenuGlowne.php'); 
+			header('Location: mainMenu.php'); 
 
 } else {
 	$_SESSION['display_info'] = 'Dodawanie przychodu nie powiodło się';
-	header('Location: MenuGlowne.php');
+	header('Location: mainMenu.php');
 	exit();
 }
 

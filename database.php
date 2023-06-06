@@ -10,9 +10,7 @@ try {
 	]);
 	
 } catch (PDOException $error) {
-	
 	echo $error->getMessage();
 	exit('Database error');
-	
 }
 

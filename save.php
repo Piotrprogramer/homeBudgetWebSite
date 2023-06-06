@@ -35,20 +35,20 @@ if (isset($_POST['login']) && isset($_POST['password']) && isset($_POST['repeatP
 		} else{
 			$_SESSION['given_login'] = $_POST['login'];
 			$_SESSION['existing_login'] = true;
-			header('Location: Rejestracja.php');
+			header('Location: registration.php');
 			exit();
 		}
 	}
 	else {
 		$_SESSION['given_login'] = $_POST['login'];
 		$_SESSION['difrent_password'] = true;
-		header('Location: Rejestracja.php');
+		header('Location: registration.php');
 		exit();
 	}
 
 } else {
 	
-	header('Location: Rejestracja.php');
+	header('Location: registration.php');
 	exit();
 }
 

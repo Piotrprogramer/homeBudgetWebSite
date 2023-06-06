@@ -37,11 +37,11 @@ if(!isset($_SESSION['id'])) {
 			
 				<div class="collapse navbar-collapse " id="mainmenu">
 					<ul class="navbar-nav mr-auto nav justify-content-center" style="margin:auto">
-						<li><a href="MenuGlowne.php"><div class="option">Menu główne</div> </a>			</li>
-						<li><a href="DodajPrzychod.php"><div class="option">Dodaj przychód</div> </a>						</li>
-						<li><a href="dodajWydatek.php"><div class="option active">Dodaj wydatek</div> </a>		</li>
-						<li><a href="przegladajBilans.php"><div class="option">Przeglądaj bilans</div> </a></li>
-						<li><a href="#"><div class="option">Ustawienia</div> </a>							</li>
+						<li><a href="mainMenu.php"><div class="option active">Menu główne</div> </a></li>
+						<li><a href="addIncome.php"><div class="option">Dodaj przychód</div> </a></li>
+						<li><a href="addExpense.php"><div class="option">Dodaj wydatek</div> </a></li>
+						<li><a href="seeBills.php"><div class="option">Przeglądaj bilans</div></a></li>
+						<li><a href="#"><div class="option">Ustawienia</div> </a></li>
 						<li><a href="logOut.php"><div class="option">Wyloguj się</div> </a></li>
 					</ul>
 				</div>

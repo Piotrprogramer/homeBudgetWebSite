@@ -5,8 +5,7 @@ session_start();
 if (isset($_POST['login']) && isset($_POST['password'])) {
 	$_SESSION['given_login'] = $_POST['login'];
 	$_SESSION['given_password'] = $_POST['password'];
-	
-	
+
 	require_once 'database.php';
 
 	$correctPass = true;
@@ -15,8 +14,8 @@ if (isset($_POST['login']) && isset($_POST['password'])) {
 	$stmt->execute();
 	while ($row = $stmt->fetch(PDO::FETCH_NUM, PDO::FETCH_ORI_NEXT)) {
 		$checkingId = $row[0];
-		 $checkingLogin = $row[1];
-		 $checkingPassword = $row[2];
+		$checkingLogin = $row[1];
+		$checkingPassword = $row[2];
 
 		if( $_SESSION['given_login'] == $checkingLogin){
 			if($checkingPassword == $_SESSION['given_password']){
@@ -32,11 +31,11 @@ if (isset($_POST['login']) && isset($_POST['password'])) {
 	}
 }
 if(isset($_SESSION['id'])) {
-	header('Location: MenuGlowne.php');
+	header('Location: mainMenu.php');
 	exit();
 }
 else {
 	$_SESSION['wrong_pass'] = true;
-	header('Location: Logowanie.php');
+	header('Location: logIn.php');
 }
 ?>

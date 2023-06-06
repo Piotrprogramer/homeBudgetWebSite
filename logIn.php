@@ -33,7 +33,7 @@
 		
 		<div class="row justify-content-center">
 			<div id="register_frame" >
-					<form method="post" action="load.php">
+					<form method="post" action="checkPasses.php">
 						<input type="text" name="login" placeholder="login" onfocus="this.placeholder=''" onblur="this.placeholder='login'" required 
 						value=
 						"<?php
