@@ -1,6 +1,9 @@
 <?php
+
+require 'includes/init.php';
+
 session_start();
-	session_destroy();
-	header('Location: Index.php');
-	exit();
-?>
+
+Auth::logout();
+
+Url::redirect('/');

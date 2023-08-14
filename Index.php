@@ -1,60 +1,16 @@
-<?php
-session_start();
-	if(isset($_SESSION['id'])){
-	header('Location: MenuGlowne.php');
-	exit();
-	}
-?>
+
+<?php require 'includes/header.php'; ?>
+<?php require 'classes/Url.php'; ?>
+
+<span>
+    <?php 
+    
+
+    
+    ?>
+    <a href="/test.php">test</a>
+
+</span>
 
 
-<!DOCTYPE HTML>
-<html lang="pl">
-<head>
-	<meta charset="utf-8" >
-	<title>Strona startowa</title>
-	<meta name="description" content="Zadbaj o swój budżet" >
-	<meta name="keywords" content="Budżet" >
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<meta name="author" content="Piotr Wasilewski">
-	
-	<meta http-equiv="X-UA-Compatible" content="IE=edge" >
-	
-	<link rel="stylesheet" href="css_bootstrap/bootstrap.min.css">
-	<link rel="stylesheet" href="style.css" type="text/css" >
-	<link href='http://fonts.googleapis.com/css?family=Lato:400,900&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
-	<link href="css/fontello.css" rel="stylesheet" type="text/css" >
-</head>
-
-<body>				
-	<div id="container">
-		<div class="row justify-content-center">
-			<i class="icon-money"></i> 
-		</div>
-		<div class="row justify-content-center" >
-			<div class="col-10 col-md-8 col-xl-6 title">
-				Zadbaj o swój portfel
-			</div>
-		</div>
-		
-		<div class="row justify-content-center">
-			<div class="col-10 col-sm-5 col-md-4 col-xl-3 col-md-auto logMenu" >
-				
-				<p>Lorem ipsum dolor sit amet. Sit corrupti libero: sed inventore inventore sit debitis repellendus nam maxime dolor ut velit corrupti? 33 nihil omnis, et omnis sunt nam vero illo qui earum maxime? Ut enim ipsum: aut minima repudiandae quo omnis recusandae. </p>
-				
-				<a href="logIn.php"><div class="log_button">Zaloguj się</div> </a>
-				
-			</div>
-			<div class="col-10 col-sm-5 col-md-4 col-xl-3 col-md-auto logMenu" >
-				<p>Lorem ipsum dolor sit amet. Sit corrupti libero: sed inventore inventore sit debitis repellendus nam maxime dolor ut velit corrupti? 33 nihil omnis, et omnis sunt nam vero illo qui earum maxime? Ut enim ipsum: aut minima repudiandae quo omnis recusandae. </p>
-				<a href="registration.php"><div class="log_button">Zarejestruj się</div> </a>
-			</div>
-		</div>
-	</div>
-	
-	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-	
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-	
-	<script src="js/bootstrap.min.js"></script>
-</body>
-</html>
+<?php require 'includes/footer.php'; ?>
