@@ -56,10 +56,10 @@ class User
         if ($user = $stmt->fetch()) {
             if (password_verify($password, $user->password)) {
                 return true;
-            }
-            else return false;
-        }
-        else return false;
+            } else
+                return false;
+        } else
+            return false;
     }
 
     public static function isUserNameAvailable($conn, $username)
@@ -76,10 +76,10 @@ class User
         $stmt->execute();
 
         if ($user = $stmt->fetch()) {
-           
+
             return false;
-        }
-        else return true;
+        } else
+            return true;
     }
 
     public static function getUserIdOrNull($conn, $username, $password)
@@ -97,24 +97,25 @@ class User
 
         if ($user = $stmt->fetch()) {
             return $user->id;
-        } else return null;
+        } else
+            return null;
     }
 
     public static function registerNewUser($conn, $username, $password, $email)
     {
         $sql = "INSERT INTO users 
                     VALUES(null, :username, :password, :email)";
-    
+
         $stmt = $conn->prepare($sql);
-    
-            $stmt->bindValue(':username',   $username,  PDO::PARAM_STR);
-            $stmt->bindValue(':password',   $password,  PDO::PARAM_STR);
-            $stmt->bindValue(':email',      $email,     PDO::PARAM_STR);
-    
-            $stmt->execute();    
+
+        $stmt->bindValue(':username', $username, PDO::PARAM_STR);
+        $stmt->bindValue(':password', $password, PDO::PARAM_STR);
+        $stmt->bindValue(':email', $email, PDO::PARAM_STR);
+
+        $stmt->execute();
     }
 
-    public static function copyDefaultIncomes ($conn, $userId)
+    public static function copyDefaultIncomes($conn, $userId)
     {
         $sql = "SELECT * FROM incomes_category_default";
 
@@ -125,38 +126,34 @@ class User
         $incomes_category_defaults = $stmt->fetchAll();
 
         foreach ($incomes_category_defaults as $income) {
-            $sql =  "INSERT INTO incomes_category_assigned_to_users VALUES(null, :userId, :name)";
-            
+            $sql = "INSERT INTO incomes_category_assigned_to_users VALUES(null, :userId, :name)";
+
             $stmt = $conn->prepare($sql);
-    
-            $stmt->bindValue(':userId',     $userId,              PDO::PARAM_STR);
-            $stmt->bindValue(':name',       $income['name'],      PDO::PARAM_STR);
+
+            $stmt->bindValue(':userId', $userId, PDO::PARAM_STR);
+            $stmt->bindValue(':name', $income['name'], PDO::PARAM_STR);
 
             $stmt->execute();
         }
     }
 
-    public static function getIncomeBills ($conn, $userId, $dateStart, $dateEnd)
+    public static function getIncomeBills($conn, $userId, $dateStart, $dateEnd)
     {
-        $sql = "SELECT * FROM incomes WHERE user_id = :userId
-        AND date_of_income BETWEEN :dateStart AND :dateEnd";
+        $sql = "SELECT SUM(amount) AS total_amount, income_category_assigned_to_user_id
+                FROM incomes
+                WHERE user_id = :userId
+                AND date_of_income BETWEEN :dateStart AND :dateEnd
+                GROUP BY income_category_assigned_to_user_id
+                ORDER BY total_amount DESC";
 
         $stmt = $conn->prepare($sql);
 
-       
-    
-        $stmt->bindValue(':userId',     $userId,        PDO::PARAM_STR);
-        $stmt->bindValue(':dateStart',  $dateStart,     PDO::PARAM_STR);
-        $stmt->bindValue(':dateEnd',    $dateEnd,       PDO::PARAM_STR);
+        $stmt->bindValue(':userId', $userId, PDO::PARAM_STR);
+        $stmt->bindValue(':dateStart', $dateStart, PDO::PARAM_STR);
+        $stmt->bindValue(':dateEnd', $dateEnd, PDO::PARAM_STR);
 
         $stmt->execute();
 
         return $stmt->fetchAll();
-        /**
-       $income_bills = $stmt->fetchAll();
-        foreach ($income_bills as $income) {
-            print_r($income);
-        }
-        */
     }
 }
