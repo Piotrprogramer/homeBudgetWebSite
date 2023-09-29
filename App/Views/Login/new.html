@@ -13,8 +13,11 @@
             <input type="email" id="inputEmail" name="email" placeholder="Email address" autofocus value="{{ email }}" class="form-control" />
         </div>
         <div class="form-group">
-            <label for="inputPassword">Password</label>
+            <label for="password">Password</label>
             <input type="password" id="inputPassword" name="password" placeholder="Password" class="form-control" />
+           
+            <input type="checkbox" id="show-password">
+            <label for="show-password">Show Password</label>
         </div>
         <div class="checkbox">
             <label>
@@ -26,5 +29,5 @@
         <a href="/password/forgot">Forgot password?</a>
 
     </form>
-
+    
 {% endblock %}
