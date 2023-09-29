@@ -29,20 +29,20 @@
 
                             {% if current_user %}
 
-                            <li class="nav-item"><a class="nav-link" href="#">Dodaj przychód </a></li>
+                            <li class="nav-item"><a class="nav-link" href="/Income/new">Dodaj przychód </a></li>
                             <li class="nav-item"><a class="nav-link" href="#">Dodaj wydatek </a></li>
                             <li class="nav-item"><a class="nav-link" href="#">Przeglądaj bilans </a></li>
                             <li class="nav-item"><a class="nav-link" href="#">Ustawienia </a></li>
                         </ul>
                         <ul class="nav navbar-nav ms-auto">
-                            <li class="nav-item"><a class="nav-link" href="/logout">Log out </a></li>
+                            <li class="nav-item"><a class="nav-link" href="/logout">Wyloguj się </a></li>
 
                             {% else %}
 
                         </ul>
                         <ul class="nav navbar-nav ms-auto">
-                            <li class="nav-item"><a class="nav-link" href="/login">Log in</a></li>
-                            <li class="nav-item"><a class="nav-link" href="/signup/new">Registration</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/login">Zaloguj się</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/signup/new">Zarejestruj się</a></li>
                            
                             {% endif %}
                         </ul>
