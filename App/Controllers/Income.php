@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use \Core\View;
+use \App\Models\IncomeMenager;
 use \App\Auth;
 use \App\Flash;
 
@@ -13,30 +14,34 @@ use \App\Flash;
  */
 class Income extends Authenticated
 {
-
     /**
      * Show the login page
      *
      * @return void
      */
-    public function newAction()
+    public function newFormAction()
     {
-        View::renderTemplate('Income/new.html');
+        View::renderTemplate('Income/newForm.html');
     }
 
-
-
     /**
-     * Show a "logged out" flash message and redirect to the homepage. Necessary to use the flash messages
-     * as they use the session and at the end of the logout method (destroyAction) the session is destroyed
-     * so a new action needs to be called in order to use the session.
+     * Add income to server
      *
      * @return void
      */
-    public function showLogoutMessageAction()
+    public function addIncomeAction()
     {
-        Flash::addMessage('Logout successful');
+        $Income = new IncomeMenager($_POST);
+        //var_dump($_SESSION["user_id"]);
+        //var_dump($_POST);
+        echo "</br>";
+        echo "\n We are in public function addAction()";
+        $Income->save();
+        echo "</br>";
+        echo "\n We are after IncomeMenager::save();";
+       
 
-        $this->redirect('/');
+        exit();
     }
+
 }

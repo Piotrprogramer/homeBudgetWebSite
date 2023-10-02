@@ -19,3 +19,7 @@ $.validator.addMethod('validPassword',
     },
     'Must contain at least one letter and one number'
 );
+
+
+
+
