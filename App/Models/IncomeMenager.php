@@ -29,8 +29,6 @@ class IncomeMenager extends \Core\Model
      */
     public $data = [];
 
-   
-
     /**
      * Class constructor
      *
@@ -40,12 +38,35 @@ class IncomeMenager extends \Core\Model
      */
     public function __construct($data = [])
     {
-        $this->data = $data;
+
+        foreach ($data as $key => $value) {
+            $this->$key = $value;
+        }
+        ;
     }
 
     public function validate()
     {
+        // Amount
+        if ($this->amount == '') {
+            $this->errors[] = 'Amount is required';
+        }
 
+        if (isset($this->amount)) {
+            if (preg_match('/^\d+(\.\d+)?$/', $this->amount) == 0) {
+                $this->errors[] = 'Amount sholud be a number';
+            }
+        }
+
+        // Date
+        if ($this->date == '') {
+            $this->errors[] = 'Date is required';
+        }
+
+        // Category
+        if ($this->Category == '') {
+            $this->errors[] = 'Category is required';
+        }
     }
 
     /**
@@ -55,28 +76,24 @@ class IncomeMenager extends \Core\Model
      */
     public function save()
     {
+        $this->validate();
 
-        // $this->validate();
-
-        var_dump($this->data);
-        echo "<br>".$this->data["amount"];
-       
         if (empty($this->errors)) {
 
-             $sql = 'INSERT INTO incomes (id, user_id, income_category_assigned_to_user_id, amount, date_of_income, income_comment)
+            $sql = 'INSERT INTO incomes (id, user_id, income_category_assigned_to_user_id, amount, date_of_income, income_comment)
                      VALUES (null, :user_id, :category, :amount, :date_of_income, :income_comment)';
 
-             $db = static::getDB();
-             $stmt = $db->prepare($sql);
+            $db = static::getDB();
+            $stmt = $db->prepare($sql);
 
-             $stmt->bindValue(':user_id',  $_SESSION["user_id"], PDO::PARAM_INT);
-             $stmt->bindValue(':category', $_POST["Category"], PDO::PARAM_STR);
-             $stmt->bindValue(':amount', $_POST["amount"], PDO::PARAM_STR);
-             $stmt->bindValue(':date_of_income', $_POST["date"], PDO::PARAM_STR);
-             $stmt->bindValue(':income_comment', $_POST["coment"], PDO::PARAM_STR);
+            $stmt->bindValue(':user_id', $_SESSION["user_id"], PDO::PARAM_INT);
+            $stmt->bindValue(':category', $this->Category, PDO::PARAM_STR);
+            $stmt->bindValue(':amount', $this->amount, PDO::PARAM_STR);
+            $stmt->bindValue(':date_of_income', $this->date, PDO::PARAM_STR);
+            $stmt->bindValue(':income_comment', $this->coment, PDO::PARAM_STR);
 
-             return $stmt->execute();
-         }
+            return $stmt->execute();
+        }
         return false;
     }
 }

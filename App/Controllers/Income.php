@@ -32,14 +32,7 @@ class Income extends Authenticated
     public function addIncomeAction()
     {
         $Income = new IncomeMenager($_POST);
-        //var_dump($_SESSION["user_id"]);
-        //var_dump($_POST);
-        echo "</br>";
-        echo "\n We are in public function addAction()";
         $Income->save();
-        echo "</br>";
-        echo "\n We are after IncomeMenager::save();";
-       
 
         exit();
     }
