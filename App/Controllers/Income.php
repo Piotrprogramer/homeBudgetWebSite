@@ -32,9 +32,19 @@ class Income extends Authenticated
     public function addIncomeAction()
     {
         $Income = new IncomeMenager($_POST);
-        $Income->save();
 
-        exit();
+        if($Income->save()){
+            
+            Flash::addMessage('Przychód dodany poprawnie', Flash::SUCCESS);
+
+            View::renderTemplate('Home/index.html');
+
+        }else{
+
+            Flash::addMessage('Coś poszło nie tak', Flash::WARNING);
+
+            View::renderTemplate('Income/newForm.html');
+        }
     }
 
 }

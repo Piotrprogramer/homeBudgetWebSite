@@ -14,7 +14,6 @@ use \Core\View;
  */
 class IncomeMenager extends \Core\Model
 {
-
     /**
      * Error messages
      *
@@ -38,7 +37,6 @@ class IncomeMenager extends \Core\Model
      */
     public function __construct($data = [])
     {
-
         foreach ($data as $key => $value) {
             $this->$key = $value;
         }
