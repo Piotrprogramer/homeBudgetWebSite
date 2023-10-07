@@ -30,7 +30,10 @@ class Income extends Authenticated
      * @return void
      */
     public function getUserCategoryAction()
-    {
+    {   
+        if(IncomeMenager::isEmptyUserArray()){
+            IncomeMenager::copyDefaultCategory();
+        }
         echo IncomeMenager::incomeAsignetToUser();
     }
 
@@ -41,9 +44,12 @@ class Income extends Authenticated
      */
     public function addIncomeAction()
     {
+        //IncomeMenager::copyDefaultCategory();
+        //exit;
+
         $Income = new IncomeMenager($_POST);
         
-        $Income->incomeAsignetToUser();
+        //$Income->incomeAsignetToUser();
 
         if($Income->save()){
             

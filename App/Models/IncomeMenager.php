@@ -136,13 +136,86 @@ class IncomeMenager extends \Core\Model
 
         if ($stmt->execute()) {
 
-
             $income = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-            //return $income;
-
-            return json_encode($income);
+            
+            if(!empty($income)){
+                return json_encode($income);
+            }
+            else return false;
         } else
             return false;
     }
+
+    /**
+     * Past defoult income category to user category
+     *
+     * @return void  
+     */
+    public static function pastDefaultCategory($categorys)
+    {
+        $sql =
+            'INSERT INTO incomes_category_assigned_to_users 
+             VALUES(null, :user_id,:Wynagrodzenie),
+                (null, :user_id,:Odsetki),
+                (null, :user_id,:Allegro),
+                (null, :user_id,:Inne)';
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+
+        $stmt->bindValue(':Wynagrodzenie', $categorys[0]['name'], PDO::PARAM_STR);
+        $stmt->bindValue(':Odsetki', $categorys[1]['name'], PDO::PARAM_STR);
+        $stmt->bindValue(':Allegro', $categorys[2]['name'], PDO::PARAM_STR);
+        $stmt->bindValue(':Inne', $categorys[3]['name'], PDO::PARAM_STR);
+        $stmt->bindValue(':user_id', $_SESSION['user_id'], PDO::PARAM_INT);
+
+        $stmt->execute();
+    }
+
+    /**
+     * Getting defoult income category
+     *
+     * @return void  array with income category
+     */
+    public static function copyDefaultCategory()
+    {
+        $sql = 'SELECT name FROM incomes_category_default';
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+
+        if ($stmt->execute()) {
+
+            $categorys = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            IncomeMenager::pastDefaultCategory($categorys);
+        }   
+    }
+
+
+    /**
+     * Check category assigned to user is empty
+     *
+     * @return bool  if epmty, false otherwise
+     */
+    public static function isEmptyUserArray()
+    {
+        $sql = 'SELECT id, name FROM incomes_category_assigned_to_users WHERE user_id = :user_id';
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+
+        $stmt->bindValue(':user_id', $_SESSION['user_id'], PDO::PARAM_INT);
+
+        if ($stmt->execute()) {
+
+            $income = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            
+            if(empty($income)){
+                return true;
+            }
+            else return false;
+        } else
+            return false; 
+    }
+    
 }
