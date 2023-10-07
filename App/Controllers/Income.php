@@ -15,13 +15,23 @@ use \App\Flash;
 class Income extends Authenticated
 {
     /**
-     * Show the login page
+     * Show the new form page
      *
      * @return void
      */
     public function newFormAction()
     {
         View::renderTemplate('Income/newForm.html');
+    }
+
+    /**
+     * Show the new form page
+     *
+     * @return void
+     */
+    public function getUserCategoryAction()
+    {
+        echo IncomeMenager::incomeAsignetToUser();
     }
 
     /**
@@ -32,6 +42,8 @@ class Income extends Authenticated
     public function addIncomeAction()
     {
         $Income = new IncomeMenager($_POST);
+        
+        $Income->incomeAsignetToUser();
 
         if($Income->save()){
             

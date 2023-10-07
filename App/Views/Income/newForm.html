@@ -4,51 +4,13 @@
 
 {% block footer %}
 
-<script src="/js/app.js"></script>
-
-<script>
-    $(document).ready(function () {
-        $("#myform").validate({
-            rules: {
-                amount: {
-                    required: true,
-                    min:0.01,
-                    step: 0.01
-                },
-                date: {
-                    required: true,
-                    date: true,
-                    min: "2000-01-01", // Minimum date
-                    max: "2200-01-01" // Maximum date
-                }
-            },
-            messages: {
-                amount: {
-                    multiple: "Wprowadź wielokrotność kwoty 0.01.",
-                    min:"Podaj kwotę wiekszą niż 0,01",
-                    step:"Podaj wielokrotność kwoty 0,01",
-                    required: "To pole jest wymagane."
-                },
-                date: {
-                    required: "To pole jest wymagane.",
-                    min: "Wprowadź datę po 2000-01-01",
-                    max: "Wprowadź datę przed 2200-01-01"
-                }
-            },
-
-
-            submitHandler: function (form) {
-                // do other things for a valid form
-                form.submit();
-            }
-        });
-    });
-</script>
-
+<script src="/js/addIncome.js"></script>
 
 {% endblock %}
 
 {% block body %}
+
+
 
 <h3>Dodaj przychód</h3>
 
@@ -56,33 +18,17 @@
 
     <div class="form-group">
         <label for="amount">Kwota</label>
-        <input type="number"  min="0,01" step="0.01" id="amount" name="amount" placeholder="0,01" class="form-control" />
+        <input type="number" min="0,01" step="0.01" id="amount" name="amount" placeholder="0,01" class="form-control" />
     </div>
     <div class="form-group">
         <label for="date">Data</label>
         <input type="date" id="date" name="date" class="form-control" />
     </div>
 
-    <div class="form-group" name="cat" id="cat">
-        <label for="cat">Kategoria</label>
-
-        <div class="form-check">
-            <input class="form-check-input" type="radio" name="Category" id="Salary" value="Wynagrodzenie" checked>
-            <label class="form-check-label" for="Salary"> Wynagrodzenie </label>
-        </div>
-        <div class="form-check">
-            <input class="form-check-input" type="radio" name="Category" id="Interest" value="Odsetki">
-            <label class="form-check-label" for="Interest"> Odsetki</label>
-        </div>
-        <div class="form-check">
-            <input class="form-check-input" type="radio" name="Category" id="Allegro" value="Allegro">
-            <label class="form-check-label" for="Allegro"> Allegro </label>
-        </div>
-        <div class="form-check">
-            <input class="form-check-input" type="radio" name="Category" id="Another" value="Inne">
-            <label class="form-check-label" for="Another"> Inne </label>
-        </div>
+    <div class="form-group" name="category" id="category">
+        <label for="category">Kategoria</label>
     </div>
+
     <div class="form-group">
         <label for="coment">Komentarz</label>
         <input type="text" id="coment" name="coment" class="form-control" />
@@ -90,14 +36,6 @@
 
     <button type="submit" class="btn btn-default">Dodaj przychód</button>
 </form>
-
-
-
-
-
-<script>
-    $("#commentForm").validate();
-</script>
 
 
 {% endblock %}
