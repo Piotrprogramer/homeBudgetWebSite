@@ -49,12 +49,20 @@ document.getElementById('date').valueAsDate = new Date();
 /**
  * Add input radio button to Income form with name and id value
  */
-function addButton(id, name) {
+function addButton(id, name, isFirst) {
     const div = document.createElement("div");
     div.className = "form-check";
-    div.innerHTML = `
+    if (isFirst) {
+        div.innerHTML = `
+        <input class="form-check-input" type="radio" name="Category" id="${id}" value="${name}" checked>
+        <label class="form-check-label" for="${id}"> ${name} </label>`;
+    }
+    else {
+        div.innerHTML = `
         <input class="form-check-input" type="radio" name="Category" id="${id}" value="${name}">
         <label class="form-check-label" for="${id}"> ${name} </label>`;
+
+    }
     document.querySelector("#category").appendChild(div);
 }
 
@@ -70,6 +78,7 @@ $(document).ready(function () {
         success: function (response) {
             var id = '';
             var name = '';
+            var isFirst = true;
             for (let i = 0; i < response.length; i++) {
                 if (response[i] == String.fromCharCode(58)) {
                     i++;
@@ -88,7 +97,8 @@ $(document).ready(function () {
                             name = variable;
                         }
                         if (id != '' && name != '') {
-                            addButton(id, name);
+                            addButton(id, name, isFirst);
+                            if (isFirst) isFirst = false;
                             var id = '';
                             var name = '';
                         }
