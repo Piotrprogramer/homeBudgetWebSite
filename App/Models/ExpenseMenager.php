@@ -12,7 +12,7 @@ use \Core\View;
  *
  * PHP version 7.0
  */
-class IncomeMenager extends \Core\Model
+class ExpenseMenager extends \Core\Model
 {
     /**
      * Error messages
@@ -75,7 +75,7 @@ class IncomeMenager extends \Core\Model
      */
     public function getCategoryId()
     {
-        $sql = 'SELECT id FROM incomes_category_assigned_to_users WHERE name = :category AND user_id = :user_id';
+        $sql = 'SELECT id FROM expenses_category_assigned_to_users WHERE name = :category AND user_id = :user_id';
 
         $db = static::getDB();
         $stmt = $db->prepare($sql);
@@ -102,18 +102,19 @@ class IncomeMenager extends \Core\Model
         $this->validate();
 
         if (empty($this->errors)) {
-            $sql = 'INSERT INTO incomes (id, user_id, income_category_assigned_to_user_id, amount, date_of_income, income_comment)
-                     VALUES (null, :user_id, :category, :amount, :date_of_income, :income_comment)';
-
+            $sql = 'INSERT INTO expenses (id, user_id, expense_category_assigned_to_user_id,  payment_method_assigned_to_user_id, amount, date_of_expense, expense_comment)
+                     VALUES (null, :user_id, :expense_category_assigned_to_user_id, :payment_method_assigned_to_user_id, :amount, :date_of_expense, :expense_comment)';
+                     	
             $db = static::getDB();
 
             $stmt = $db->prepare($sql);
 
             $stmt->bindValue(':user_id', $_SESSION["user_id"], PDO::PARAM_INT);
-            $stmt->bindValue(':category', $this->getCategoryId(), PDO::PARAM_STR);
+            $stmt->bindValue(':expense_category_assigned_to_user_id', $this->getCategoryId(), PDO::PARAM_STR);
+            $stmt->bindValue(':payment_method_assigned_to_user_id', $this->coment, PDO::PARAM_STR);   //  MISSING
             $stmt->bindValue(':amount', $this->amount, PDO::PARAM_STR);
-            $stmt->bindValue(':date_of_income', $this->date, PDO::PARAM_STR);
-            $stmt->bindValue(':income_comment', $this->coment, PDO::PARAM_STR);
+            $stmt->bindValue(':date_of_expense', $this->date, PDO::PARAM_STR);
+            $stmt->bindValue(':expense_comment', $this->coment, PDO::PARAM_STR);
 
             return $stmt->execute();
         }
@@ -125,9 +126,9 @@ class IncomeMenager extends \Core\Model
      *
      * @return boolean  True if getted correctly, false otherwise
      */
-    public static function incomeAsignetToUser()
+    public static function expenseAsignetToUser()
     {
-        $sql = 'SELECT id, name FROM incomes_category_assigned_to_users WHERE user_id = :user_id';
+        $sql = 'SELECT id, name FROM expenses_category_assigned_to_users WHERE user_id = :user_id';
 
         $db = static::getDB();
         $stmt = $db->prepare($sql);
@@ -137,11 +138,11 @@ class IncomeMenager extends \Core\Model
         if ($stmt->execute()) {
 
             $income = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            
-            if(!empty($income)){
+
+            if (!empty($income)) {
                 return json_encode($income);
-            }
-            else return false;
+            } else
+                return false;
         } else
             return false;
     }
@@ -154,22 +155,46 @@ class IncomeMenager extends \Core\Model
     public static function pastDefaultCategory($categorys)
     {
         $sql =
-            'INSERT INTO incomes_category_assigned_to_users 
-             VALUES(null, :user_id,:Wynagrodzenie),
-                (null, :user_id,:Odsetki),
-                (null, :user_id,:Allegro),
-                (null, :user_id,:Inne)';
+            'INSERT INTO expenses_category_assigned_to_users 
+             VALUES(null, :user_id,:Transport),
+               (null, :user_id,:Ksiazki),
+                (null, :user_id,:Zywnosc),
+                (null, :user_id,:Mieszkanie),
+                (null, :user_id,:Telekomunikacja),
+                (null, :user_id,:Zdrowie),
+                (null, :user_id,:Odziez),         
+                (null, :user_id,:Higiena),
+                (null, :user_id,:Dzieci),
+                (null, :user_id,:Rekreacja),
+                (null, :user_id,:Wycieczka),
+                (null, :user_id,:Oszczednosci),
+                (null, :user_id,:Na_emeryture),
+                (null, :user_id,:Splata_dlugu),
+                (null, :user_id,:Prezent),
+                (null, :user_id,:Inny)';
 
         $db = static::getDB();
         $stmt = $db->prepare($sql);
 
-        $stmt->bindValue(':Wynagrodzenie', $categorys[0]['name'], PDO::PARAM_STR);
-        $stmt->bindValue(':Odsetki', $categorys[1]['name'], PDO::PARAM_STR);
-        $stmt->bindValue(':Allegro', $categorys[2]['name'], PDO::PARAM_STR);
-        $stmt->bindValue(':Inne', $categorys[3]['name'], PDO::PARAM_STR);
+       $stmt->bindValue(':Transport', $categorys[0]['name'], PDO::PARAM_STR);
+        $stmt->bindValue(':Ksiazki', $categorys[1]['name'], PDO::PARAM_STR);
+        $stmt->bindValue(':Zywnosc', $categorys[2]['name'], PDO::PARAM_STR);
+        $stmt->bindValue(':Mieszkanie', $categorys[3]['name'], PDO::PARAM_STR);
+        $stmt->bindValue(':Telekomunikacja', $categorys[4]['name'], PDO::PARAM_STR);
+        $stmt->bindValue(':Zdrowie', $categorys[5]['name'], PDO::PARAM_STR);
+        $stmt->bindValue(':Odziez', $categorys[6]['name'], PDO::PARAM_STR);
+        $stmt->bindValue(':Higiena', $categorys[7]['name'], PDO::PARAM_STR);
+        $stmt->bindValue(':Dzieci', $categorys[8]['name'], PDO::PARAM_STR);
+        $stmt->bindValue(':Rekreacja', $categorys[9]['name'], PDO::PARAM_STR);
+        $stmt->bindValue(':Wycieczka', $categorys[10]['name'], PDO::PARAM_STR);
+        $stmt->bindValue(':Oszczednosci', $categorys[11]['name'], PDO::PARAM_STR);
+        $stmt->bindValue(':Na_emeryture', $categorys[12]['name'], PDO::PARAM_STR);
+        $stmt->bindValue(':Splata_dlugu', $categorys[13]['name'], PDO::PARAM_STR);
+        $stmt->bindValue(':Prezent', $categorys[14]['name'], PDO::PARAM_STR);
+        $stmt->bindValue(':Inny', $categorys[15]['name'], PDO::PARAM_STR);
         $stmt->bindValue(':user_id', $_SESSION['user_id'], PDO::PARAM_INT);
 
-        $stmt->execute();
+       $stmt->execute();
     }
 
     /**
@@ -179,7 +204,7 @@ class IncomeMenager extends \Core\Model
      */
     public static function copyDefaultCategory()
     {
-        $sql = 'SELECT name FROM incomes_category_default';
+        $sql = 'SELECT name FROM expenses_category_default';
 
         $db = static::getDB();
         $stmt = $db->prepare($sql);
@@ -187,8 +212,8 @@ class IncomeMenager extends \Core\Model
         if ($stmt->execute()) {
 
             $categorys = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            IncomeMenager::pastDefaultCategory($categorys);
-        }   
+            ExpenseMenager::pastDefaultCategory($categorys);
+        }
     }
 
     /**
@@ -198,7 +223,7 @@ class IncomeMenager extends \Core\Model
      */
     public static function isEmptyUserArray()
     {
-        $sql = 'SELECT id, name FROM incomes_category_assigned_to_users WHERE user_id = :user_id';
+        $sql = 'SELECT id, name FROM expenses_category_assigned_to_users WHERE user_id = :user_id';
 
         $db = static::getDB();
         $stmt = $db->prepare($sql);
@@ -206,14 +231,13 @@ class IncomeMenager extends \Core\Model
         $stmt->bindValue(':user_id', $_SESSION['user_id'], PDO::PARAM_INT);
 
         if ($stmt->execute()) {
+            $expense = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-            $income = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            
-            if(empty($income)){
+            if (empty($expense)) {
                 return true;
-            }
-            else return false;
+            } else
+                return false;
         } else
-            return false; 
+            return false;
     }
 }

@@ -44,12 +44,7 @@ class Income extends Authenticated
      */
     public function addIncomeAction()
     {
-        //IncomeMenager::copyDefaultCategory();
-        //exit;
-
         $Income = new IncomeMenager($_POST);
-        
-        //$Income->incomeAsignetToUser();
 
         if($Income->save()){
             
@@ -64,5 +59,4 @@ class Income extends Authenticated
             View::renderTemplate('Income/newForm.html');
         }
     }
-
 }

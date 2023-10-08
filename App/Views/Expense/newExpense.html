@@ -1,18 +1,18 @@
 {% extends "base.html" %}
 
-{% block title %}Income{% endblock %}
+{% block title %}Expense{% endblock %}
 
 {% block footer %}
 
-<script src="/js/addIncome.js"></script>
+<script src="/js/addExpense.js"></script>
 
 {% endblock %}
 
 {% block body %}
 
-<h3>Dodaj przychód</h3>
+<h3>Dodaj wydatek</h3>
 
-<form id="myform" action="/income/addIncome" method="post">
+<form id="myform" action="/expense/addExpense" method="post">
 
     <div class="form-group">
         <label for="amount">Kwota</label>
@@ -31,7 +31,7 @@
         <input type="text" id="coment" name="coment" class="form-control" />
     </div>
 
-    <button type="submit" class="btn btn-default">Dodaj przychód</button>
+    <button type="submit" class="btn btn-default">Dodaj wydatek</button>
 </form>
 
 {% endblock %}
