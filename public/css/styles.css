@@ -1,18 +1,22 @@
 body {
-    margin-top: 3em;
+    margin-top: 2em;
+    margin-bottom: 2em;
+    background-color:  rgb(222, 222, 222);
 }
-/*
-.alert {
-    border: 1px solid #ccc;
-    padding: 6px;
+
+.form-control {
+    margin-bottom:10px;
 }
-.alert-info {
-    background-color: #d9edf7;
+#comentLabel{
+    margin-top:10px;
 }
-.alert-success {
-    background-color: #dff0d8;
+
+.row{
+    margin-bottom:10px;
 }
-.alert-warning {
-    background-color: #fcf8e3;
+
+.income-list, .expense-list,.diagram{
+    background-color: rgb(205, 205, 205);
+    min-height: 100px;
+   
 }
-*/
