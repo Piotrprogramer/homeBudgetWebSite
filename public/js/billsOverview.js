@@ -25,13 +25,28 @@ $(document).ready(function () {
  */
 document.getElementById('endDate').valueAsDate = new Date();
 
-/**
- * Show/hide date dive button
- */
 
+/**
+ * Show/hide date div button
+ */
 $(document).ready(function () {
     $(".show-calendar").click(function () {
         $("#user-date-range-calendar").toggle();
         $("#user-date-range-button").toggle();
     });
 });
+
+/**
+ * Show/hide calendar div
+ */
+$(document).ready(function () {
+    $(".btn-outline-primary").click(function () {
+        var x = document.getElementById("user-date-range-button");
+        if (x.style.display === "none") {
+            $("#user-date-range-calendar").toggle();
+            $("#user-date-range-button").toggle();
+        }
+    });
+});
+
+
