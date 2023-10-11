@@ -26,20 +26,21 @@
 
 <div class="row justify-content-center">
     <div class="col-5">
-        <div class="row billsButton">
-
-            <button type="button" class="btn btn-outline-primary">Bieżący miesiąc</button>
-
+        <div class="row billsButton" >
+            <button type="button" class="btn btn-outline-primary" id="this-month">Bieżący miesiąc</button>
         </div>
-        <div class="row billsButton"> <button type="button" class="btn btn-outline-primary">Poprzedni
-                miesiąć</button> </div>
-        <div class="row billsButton"> <button type="button" class="btn btn-outline-primary">Ostatnie 3 miesiące
-            </button> </div>
+        <div class="row billsButton" > 
+            <button type="button" class="btn btn-outline-primary" id="last-month">Poprzedni miesiąć</button>
+        </div>
+        <div class="row billsButton" > 
+            <button type="button" class="btn btn-outline-primary" id="last-three-month">Ostatnie 3 miesiące</button>
+        </div>
     </div>
 
     <div class="col-5" id="user-date-range-button">
-        <div class="row billsButton"> <button type="button" class="show-calendar btn btn-outline-dark">Data
-                niestandardowa</button> </div>
+        <div class="row billsButton"> 
+            <button type="button" class="show-calendar btn btn-outline-dark">Data niestandardowa</button> 
+        </div>
     </div>
 
     <div class="col-5" id="user-date-range-calendar" style="display:none">
@@ -50,7 +51,9 @@
             <label for="endDate">Wykres do:</label>
             <input type="date" id="endDate" name="date" class="form-control" />
         </div>
-        <div class="row billsButton"> <button type="button" class="btn btn-outline-dark">Pokaż Bilans</button> </div>
+        <div class="row billsButton"> 
+            <button type="button" class="btn btn-outline-dark" id="custom-date">Pokaż Bilans</button> 
+        </div>
     </div>
 
     <div class="d-flex justify-content-center">
@@ -60,16 +63,16 @@
     </div>
 
     <div class="row justify-content-center">
-        <div class="col border border-2 border-primary rounded income-list">
+        <div class="col border border-2 border-primary rounded income-list" id="income-list">
             <h6>Place for income-list</h6>
         </div>
-        <div class="col border border-2 border-primary rounded expense-list">
+        <div class="col border border-2 border-primary rounded expense-list" id="expense-list">
             <h6>Place for expense-list</h6>
         </div>
     </div>
 
     <div class="row justify-content-center">
-        <div class="border border-2 border-primary rounded diagram">
+        <div class="border border-2 border-primary rounded diagram" id="diagram">
             <h6>Place for diagram</h6>
         </div>
     </div>

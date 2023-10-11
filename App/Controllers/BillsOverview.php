@@ -31,7 +31,7 @@ class BillsOverview extends Authenticated
      */
     public static function incomeOverviewAction()
     {
-        $userIncomes = BillsMenager::geUserIncomes();
+        $userIncomes = BillMsenager::geUserIncomes();
 
         if (!empty($userIncomes)) {
             echo "2x chuj"; exit;

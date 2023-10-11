@@ -100,7 +100,6 @@ class ExpenseMenager extends \Core\Model
     public function save()
     {
         $this->validate();
-
         if (empty($this->errors)) {
             $sql = 'INSERT INTO expenses (id, user_id, expense_category_assigned_to_user_id,  payment_method_assigned_to_user_id, amount, date_of_expense, expense_comment)
                      VALUES (null, :user_id, :expense_category_assigned_to_user_id, :payment_method_assigned_to_user_id, :amount, :date_of_expense, :expense_comment)';
@@ -111,7 +110,7 @@ class ExpenseMenager extends \Core\Model
 
             $stmt->bindValue(':user_id', $_SESSION["user_id"], PDO::PARAM_INT);
             $stmt->bindValue(':expense_category_assigned_to_user_id', $this->getCategoryId(), PDO::PARAM_STR);
-            $stmt->bindValue(':payment_method_assigned_to_user_id', $this->coment, PDO::PARAM_STR);   //  MISSING
+            $stmt->bindValue(':payment_method_assigned_to_user_id', $this->coment, PDO::PARAM_INT);   //  MISSING
             $stmt->bindValue(':amount', $this->amount, PDO::PARAM_STR);
             $stmt->bindValue(':date_of_expense', $this->date, PDO::PARAM_STR);
             $stmt->bindValue(':expense_comment', $this->coment, PDO::PARAM_STR);
