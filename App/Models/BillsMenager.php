@@ -40,8 +40,8 @@ class BillsMenager extends \Core\Model
         foreach ($data as $key => $value) {
             $this->$key = $value;
         }
-        //var_dump($data);
-
+        // var_dump($data);
+        // exit;
         ;
     }
 
@@ -50,101 +50,76 @@ class BillsMenager extends \Core\Model
      *
      * @var array
      */
-    public static function geUserIncomes()
+    public static function getUserIncomes($date)
     {
-        $sql = 'SELECT income_category_assigned_to_user_id, SUM(amount) AS total_amount
-                FROM incomes
-                JOIN income_category_assigned_to_user_id ON incomes.income_category_assigned_to_user_id = income_category_assigned_to_user_id.id
-                WHERE user_id = :user_id
-                GROUP BY income_category_assigned_to_user_id.name
-                ORDER BY total_amount DESC';
-/*
-        $sql = 'SELECT income_category_assigned_to_user_id, SUM(amount) AS total_amount
-            FROM incomes
-            WHERE user_id = :user_id
-            GROUP BY income_category_assigned_to_user_id
-            ORDER BY total_amount DESC';*/
+        $sql =
+            'SELECT 
+                incomes_category_assigned_to_users.name,
+                SUM(incomes.amount) AS total_amount
+            FROM 
+                incomes
+            LEFT JOIN 
+                incomes_category_assigned_to_users ON 
+                incomes.income_category_assigned_to_user_id = incomes_category_assigned_to_users.id
+            WHERE
+                incomes.user_id = :user_id
+           
+            AND incomes.date_of_income BETWEEN :date_start AND :date_end
+    
+            GROUP BY 
+                incomes.income_category_assigned_to_user_id
+            ORDER BY total_amount DESC';
 
         $db = static::getDB();
         $stmt = $db->prepare($sql);
 
-        $stmt->bindValue(':user_id', $_SESSION['user_id'], PDO::PARAM_INT);
+        $stmt->bindValue(':user_id', $_SESSION["user_id"], PDO::PARAM_INT);
+        $stmt->bindValue(':date_start', $date['date_start'], PDO::PARAM_STR);
+        $stmt->bindValue(':date_end', $date['date_end'], PDO::PARAM_STR);
 
         if ($stmt->execute()) {
             $userIncomes = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            if (!empty($userIncomes)) {
 
-                return BillsMenager::getUserIncomeName($userIncomes);
-
-            } else null;
-                
-        } else
-            return null;
+            return $userIncomes;
+        }
     }
 
-    /**
-     * Geting category name from DB and including it to returning array
-     *
-     * @var array
-     */
-    public static function getUserIncomeName($userIncomes){
-
-        $sql = 'SELECT income_category_assigned_to_user_id, SUM(amount) AS total_amount
-        FROM incomes
-        WHERE user_id = :user_id
-        GROUP BY income_category_assigned_to_user_id
-        ORDER BY total_amount DESC';
-       
-/*
-        $sql = 'SELECT income_category_assigned_to_users.name AS income_category_assigned_to_user_id, SUM(amount) AS total_amount
-        FROM incomes
-        INNER JOIN incomes_category_assigned_to_users ON incomes.income_category_assigned_to_user_id = incomes_category_assigned_to_users.name
-        WHERE user_id = 7
-        GROUP BY incomes_category_assigned_to_users.name
-        ORDER BY total_amount DESC';
-        */ 
-
-    $db = static::getDB();
-    $stmt = $db->prepare($sql);
-
-    $stmt->bindValue(':user_id', $_SESSION['user_id'], PDO::PARAM_INT);
-
-    if ($stmt->execute()) {
-        if (!empty($userIncomes)) {
-            $userIncomes = IncomeMenager::getUserIncomeName($userIncomes);
-
-            var_dump($userIncomes);
-            exit;
-
-            return json_encode($userIncomes);
-        } else null;
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    } else
-        return null;
-        
-    }
-
-
-    public static function expenseAsignetToUser()
+    public static function geUserExpenses($date)
     {
-        $sql = 'SELECT id, name FROM expenses_category_assigned_to_users WHERE user_id = :user_id';
+        $sql =
+            'SELECT
+                SUM(expenses.amount) AS total_amount,
+                expenses_category_assigned_to_users.name
+            FROM
+                expenses
+            LEFT JOIN 
+                expenses_category_assigned_to_users 
+            ON 
+                expenses.expense_category_assigned_to_user_id = expenses_category_assigned_to_users.id
+            WHERE 
+                expenses.user_id = :user_id
+            AND 
+                expenses.date_of_expense BETWEEN :date_start AND :date_end
+            GROUP BY 
+                expenses.expense_category_assigned_to_user_id
+            ORDER BY 
+                total_amount DESC';
 
         $db = static::getDB();
         $stmt = $db->prepare($sql);
 
-        $stmt->bindValue(':user_id', $_SESSION['user_id'], PDO::PARAM_INT);
+        $stmt->bindValue(':user_id', $_SESSION["user_id"], PDO::PARAM_INT);
+        $stmt->bindValue(':date_start', $date['date_start'], PDO::PARAM_STR);
+        $stmt->bindValue(':date_end', $date['date_end'], PDO::PARAM_STR);
 
         if ($stmt->execute()) {
+            $userExpenses = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-            $income = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-            if (!empty($income)) {
-                return json_encode($income);
-            } else
-                return false;
-        } else
-            return false;
+            return $userExpenses;
+        }
     }
+
+
 
 
 }

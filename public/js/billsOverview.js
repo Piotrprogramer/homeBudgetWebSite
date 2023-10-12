@@ -4,37 +4,18 @@
  * make separete id and name and send it to adding button function
  */
 $(document).ready(function () {
-    $.ajax({
-        url: '/income/getUserCategory',
-        method: 'POST',
-        success: function (response) {
-            var id = '';
-            var name = '';
-            var isFirst = true;
-            for (let i = 0; i < response.length; i++) {
-
-            }
-        }, error: function () {
-            alert('error: ');
-        }
-    });
-
-
     /**
      * Set current date on defoult date value
      */
     document.getElementById('endDate').valueAsDate = new Date();
 
-
     /**
      * Show/hide date div button
      */
-
     $(".show-calendar").click(function () {
         $("#user-date-range-calendar").toggle();
         $("#user-date-range-button").toggle();
     });
-
 
     /**
      * Show/hide calendar div
@@ -47,36 +28,111 @@ $(document).ready(function () {
         }
     });
 
+    /**
+     * Creating list from date in indicate DIV
+     */
+    function createList(div_name_of_list, array_list) {
+        $(div_name_of_list).html("");
+        var data = $.parseJSON(array_list);
+        // Iterate through the data array.
+        i = 0;
+        for (let i = 0; i < data.length; i++) {
+            // Create div's with list
+            const div = document.createElement("div");
+            div.innerHTML = (i + 1) + '). ' + data[i].name + ' = ' + data[i].total_amount;
+            document.querySelector(div_name_of_list).appendChild(div);
+        }
+    }
 
     /**
-    * Get this month bils
+    * This month bils creating button
     */
     $("#this-month").button().click(function () {
-        $("#income-list").html("this month list");
-        $("#expense-list").html("this month list");
+        $.ajax({
+            url: '/billsOverview/thisMonthIncome',
+            method: 'POST',
+            success: function (response) {
+                createList("#income-list", response);
+            }, error: function () {
+                alert('error: ');
+            }
+        });
+
+        $.ajax({
+            url: '/billsOverview/thisMonthExpense',
+            method: 'POST',
+            success: function (response) {
+                createList("#expense-list", response);
+            }, error: function () {
+                alert('error: ');
+            }
+        });
+
         $("#diagram").html("this month list diagram");
+
+        $("#diagram-panel").html("Bieżący miesiąc:");
     });
 
     /**
-     * Get last month bils
+     * Last month bils creating button
      */
     $("#last-month").button().click(function () {
-        $("#income-list").html("last month list");
-        $("#expense-list").html("last month list");
+        $.ajax({
+            url: '/billsOverview/lastMonthIncome',
+            method: 'POST',
+            success: function (response) {
+                createList("#income-list", response);
+            }, error: function () {
+                alert('error: ');
+            }
+        });
+
+        $.ajax({
+            url: '/billsOverview/lastMonthExpense',
+            method: 'POST',
+            success: function (response) {
+                createList("#expense-list", response);
+            }, error: function () {
+                alert('error: ');
+            }
+        });
+
         $("#diagram").html("last month list diagram");
+
+        $("#diagram-panel").html("Poprzedni miesiąc:");
     });
 
     /**
-     * Get last there month bils
+     * Last there month bils creating button
      */
     $("#last-three-month").button().click(function () {
-        $("#income-list").html("last three month list");
-        $("#expense-list").html("last three month list");
-        $("#diagram").html("last three month list diagram");
+        $.ajax({
+            url: '/billsOverview/lastThereMonthIncome',
+            method: 'POST',
+            success: function (response) {
+                createList("#income-list", response);
+            }, error: function () {
+                alert('error: ');
+            }
+        });
+
+        $.ajax({
+            url: '/billsOverview/lastThereMonthExpense',
+            method: 'POST',
+            success: function (response) {
+                createList("#expense-list", response);
+            }, error: function () {
+                alert('error: ');
+            }
+        });
+
+        $("#diagram").html("last month list diagram");
+
+        $("#diagram-panel").html("Poprzedni miesiąc:");
     });
 
     /**
-    * Get last there month bils
+    * Custom bils creating button
     */
     $("#custom-date").button().click(function () {
         $("#income-list").html("custom date list");
@@ -84,5 +140,7 @@ $(document).ready(function () {
         $("#diagram").html("custom date diagram");
         $("#user-date-range-calendar").toggle();
         $("#user-date-range-button").toggle();
+
+        $("#diagram-panel").html("Twój zakres:");
     });
 });
