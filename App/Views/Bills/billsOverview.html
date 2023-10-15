@@ -13,8 +13,8 @@
 
 
 {% endblock %}
-
 {% block body %}
+
 
 
 <div class="d-flex justify-content-center">
@@ -27,50 +27,68 @@
 <div class="row justify-content-center">
     <div class="col-5">
         <div class="row billsButton">
-
-            <button type="button" class="btn btn-outline-primary">Bieżący miesiąc</button>
-
+            <button type="button" class="btn btn-outline-primary" id="this-month">Bieżący miesiąc</button>
         </div>
-        <div class="row billsButton"> <button type="button" class="btn btn-outline-primary">Poprzedni
-                miesiąć</button> </div>
-        <div class="row billsButton"> <button type="button" class="btn btn-outline-primary">Ostatnie 3 miesiące
-            </button> </div>
+        <div class="row billsButton">
+            <button type="button" class="btn btn-outline-primary" id="last-month">Poprzedni miesiąć</button>
+        </div>
+        <div class="row billsButton">
+            <button type="button" class="btn btn-outline-primary" id="last-three-month">Ostatnie 3 miesiące</button>
+        </div>
     </div>
 
     <div class="col-5" id="user-date-range-button">
-        <div class="row billsButton"> <button type="button" class="show-calendar btn btn-outline-dark">Data
-                niestandardowa</button> </div>
+        <div class="row billsButton">
+            <button type="button" class="show-calendar btn btn-outline-dark">Data niestandardowa</button>
+        </div>
     </div>
 
     <div class="col-5" id="user-date-range-calendar" style="display:none">
-        <div class="container-fluid container-date-range">
-            <label for="beaginingDate">Wykres od:</label>
-            <input type="date" id="beaginingDate" name="date" class="form-control" />
+        <form  id="custom_input_date" name="custom_input_date">
+            <div class="container-fluid ">
+                <label for="beaginingDate">Wykres od:</label>
+                <input type="date" id="beaginingDate" name="beaginingDate" class="form-control" required/>
 
-            <label for="endDate">Wykres do:</label>
-            <input type="date" id="endDate" name="date" class="form-control" />
-        </div>
-        <div class="row billsButton"> <button type="button" class="btn btn-outline-dark">Pokaż Bilans</button> </div>
+                <label for="endDate">Wykres do:</label>
+                <input type="date" id="endDate" name="endDate" class="form-control" required/>
+            </div>
+            <div class="row billsButton">
+                <button type="button" class="btn btn-outline-dark" id="custom-date">Pokaż Bilans</button>
+            </div>
+        </form>
     </div>
 
     <div class="d-flex justify-content-center">
         <span>
-            <h6>Bieżący misiąc</h6>
+            <h6 id="diagram-panel">Bieżący miesiąc:</h6>
         </span>
     </div>
 
     <div class="row justify-content-center">
-        <div class="col border border-2 border-primary rounded income-list">
-            <h6>Place for income-list</h6>
+
+        <div class="col-6 justify-content-center"> <label for="income-list">
+                <h6>Przychody:</h6>
+            </label> </div>
+        <div class="col-6 justify-content-center"> <label for="expense-list">
+                <h6>Wydatki:</h6>
+            </label> </div>
+
+        <div id="income-list" name="income-list" class="col border border-2 border-primary rounded income-list">
+            Miejsce na listę przychodów
         </div>
-        <div class="col border border-2 border-primary rounded expense-list">
-            <h6>Place for expense-list</h6>
+
+        <div id="expense-list" name="expense-list" class="col border border-2 border-primary rounded expense-list">
+            Miejsce na listę wydatków
         </div>
+
     </div>
 
     <div class="row justify-content-center">
-        <div class="border border-2 border-primary rounded diagram">
-            <h6>Place for diagram</h6>
+        <label for="diagram">
+            <h6>Wykres:</h6>
+        </label>
+        <div id="diagram" name="diagram" class="border border-2 border-primary rounded diagram">
+            Miejsce na listę wykres
         </div>
     </div>
 </div>

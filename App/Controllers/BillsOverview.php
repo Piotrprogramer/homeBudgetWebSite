@@ -14,6 +14,21 @@ use \App\Flash;
  */
 class BillsOverview extends Authenticated
 {
+    public function testAction()
+    {
+        
+        $date_start = date('Y-m-01 ', strtotime( '-3 month' ));
+        $date_end = date('Y-m-d');
+        
+        $date = array(
+            'date_start' => $date_start,
+            'date_end' => $date_end
+        );
+        
+        var_dump($date);
+
+        exit;
+    }
     /**
      * Show the new form page
      *
@@ -25,18 +40,147 @@ class BillsOverview extends Authenticated
     }
 
     /**
-     * Geting income statistic fom DB
+     * Geting income statistic fom DB of current month
      *
      * @return string JSON representation of the user's income statistic or null if array is empty
      */
-    public static function incomeOverviewAction()
+    public function thisMonthIncomeAction()
     {
-        $userIncomes = BillsMenager::geUserIncomes();
+        $date = array(
+            'date_start' => date('Y-m-01'),
+            'date_end' => date('Y-m-d')
+        );
 
-        if (!empty($userIncomes)) {
-            echo "2x chuj"; exit;
-            return json_encode($userIncomes);
+        $income_list = BillsMenager::getUserIncomes($date);
 
-        } else null;
+        echo json_encode($income_list);
+    }
+
+    /**
+     * Geting expenses statistic fom DB of current month
+     *
+     * @return string JSON representation of the user's income statistic or null if array is empty
+     */
+    public static function thisMonthExpenseAction(){
+        $date = array(
+            'date_start' => date('Y-m-01'),
+            'date_end' => date('Y-m-d')
+        );
+
+        $expenses_list = BillsMenager::geUserExpenses($date);
+
+        echo json_encode($expenses_list);
+    }
+
+    /**
+     * Geting income statistic fom DB of last month
+     *
+     * @return string JSON representation of the user's income statistic or null if array is empty
+     */
+    public function lastMonthIncomeAction()
+    {
+        $date_start = date('Y-m-01 ', strtotime( '-1 month' ));
+        $date_end = date("Y-m-t", strtotime($date_start));
+
+        $date = array(
+            'date_start' => $date_start,
+            'date_end' => $date_end
+        );
+
+        $income_list = BillsMenager::getUserIncomes($date);
+
+        echo json_encode($income_list);
+    }
+
+    /**
+     * Geting expenses statistic fom DB of last month
+     *
+     * @return string JSON representation of the user's income statistic or null if array is empty
+     */
+    public static function lastMonthExpenseAction(){
+        $date_start = date('Y-m-01 ', strtotime( '-1 month' ));
+        $date_end = date("Y-m-t", strtotime($date_start));
+
+        $date = array(
+            'date_start' => $date_start,
+            'date_end' => $date_end
+        );
+
+        $expenses_list = BillsMenager::geUserExpenses($date);
+
+        echo json_encode($expenses_list);
+    }
+    
+    /**
+     * Geting income statistic fom DB of last 3 month
+     *
+     * @return string JSON representation of the user's income statistic or null if array is empty
+     */
+    public function lastThereMonthIncomeAction()
+    {
+        $date_start = date('Y-m-01 ', strtotime( '-3 month' ));
+        $date_end = date('Y-m-d');
+        
+        $date = array(
+            'date_start' => $date_start,
+            'date_end' => $date_end
+        );
+
+        $income_list = BillsMenager::getUserIncomes($date);
+
+        echo json_encode($income_list);
+    }
+
+    /**
+     * Geting expenses statistic fom DB of last 3 month
+     *
+     * @return string JSON representation of the user's income statistic or null if array is empty
+     */
+    public static function lastThereMonthExpenseAction(){
+        $date_start = date('Y-m-01 ', strtotime( '-3 month' ));
+        $date_end = date('Y-m-d');
+        
+        $date = array(
+            'date_start' => $date_start,
+            'date_end' => $date_end
+        );
+
+        $expenses_list = BillsMenager::geUserExpenses($date);
+
+        echo json_encode($expenses_list);
+    }
+
+    public function customeIncomeRangeAction()
+    {
+        $data = json_encode($_POST);
+        $object = json_decode($data);
+        
+        $date = array(
+            'date_start' => $object->beaginingDate,
+            'date_end' => $object->endDate
+        );
+
+        $income_list = BillsMenager::getUserIncomes($date);
+       
+        echo json_encode($income_list);
+    }
+
+    /**
+     * Geting expenses statistic fom DB of last 3 month
+     *
+     * @return string JSON representation of the user's income statistic or null if array is empty
+     */
+    public static function customeExpenseRangeAction(){
+        $data = json_encode($_POST);
+        $object = json_decode($data);
+        
+        $date = array(
+            'date_start' => $object->beaginingDate,
+            'date_end' => $object->endDate
+        );
+
+        $expenses_list = BillsMenager::geUserExpenses($date);
+
+        echo json_encode($expenses_list);
     }
 }
