@@ -3,4 +3,5 @@ vendor
 composer.lock
 Config.php
 test.html
+Mail.php
 
