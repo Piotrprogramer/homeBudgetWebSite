@@ -7,6 +7,7 @@ $(document).ready(function () {
     /**
      * Set current date on defoult date value
      */
+    document.getElementById('beaginingDate').valueAsDate = new Date();
     document.getElementById('endDate').valueAsDate = new Date();
 
     /**
@@ -155,6 +156,7 @@ $(document).ready(function () {
     * Custom bils creating button
     */
     $("#custom-date").button().click(function () {
+   // $('#form').submit(function () {
         var formData = {
             beaginingDate: $("#beaginingDate").val(),
             endDate: $("#endDate").val(),
@@ -188,4 +190,6 @@ $(document).ready(function () {
             }
         })
     });
+
 });
+
