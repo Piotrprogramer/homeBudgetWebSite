@@ -61,7 +61,7 @@ class BillsOverview extends Authenticated
      *
      * @return string JSON representation of the user's income statistic or null if array is empty
      */
-    public static function thisMonthExpense(){
+    public static function thisMonthExpenseAction(){
         $date = array(
             'date_start' => date('Y-m-01'),
             'date_end' => date('Y-m-d')
@@ -97,7 +97,7 @@ class BillsOverview extends Authenticated
      *
      * @return string JSON representation of the user's income statistic or null if array is empty
      */
-    public static function lastMonthExpense(){
+    public static function lastMonthExpenseAction(){
         $date_start = date('Y-m-01 ', strtotime( '-1 month' ));
         $date_end = date("Y-m-t", strtotime($date_start));
 
@@ -136,13 +136,47 @@ class BillsOverview extends Authenticated
      *
      * @return string JSON representation of the user's income statistic or null if array is empty
      */
-    public static function lastThereMonthExpense(){
+    public static function lastThereMonthExpenseAction(){
         $date_start = date('Y-m-01 ', strtotime( '-3 month' ));
         $date_end = date('Y-m-d');
         
         $date = array(
             'date_start' => $date_start,
             'date_end' => $date_end
+        );
+
+        $expenses_list = BillsMenager::geUserExpenses($date);
+
+        echo json_encode($expenses_list);
+    }
+
+    public function customeIncomeRangeAction()
+    {
+        $data = json_encode($_POST);
+        $object = json_decode($data);
+        
+        $date = array(
+            'date_start' => $object->beaginingDate,
+            'date_end' => $object->endDate
+        );
+
+        $income_list = BillsMenager::getUserIncomes($date);
+       
+        echo json_encode($income_list);
+    }
+
+    /**
+     * Geting expenses statistic fom DB of last 3 month
+     *
+     * @return string JSON representation of the user's income statistic or null if array is empty
+     */
+    public static function customeExpenseRangeAction(){
+        $data = json_encode($_POST);
+        $object = json_decode($data);
+        
+        $date = array(
+            'date_start' => $object->beaginingDate,
+            'date_end' => $object->endDate
         );
 
         $expenses_list = BillsMenager::geUserExpenses($date);

@@ -15,9 +15,7 @@
 {% endblock %}
 {% block body %}
 
-<form action="/BillsOverview/test" method="post">
-    <button type="submit">test</button>
-</form>
+
 
 <div class="d-flex justify-content-center">
     <h3>Prowadzenie konta</h3>
@@ -46,16 +44,18 @@
     </div>
 
     <div class="col-5" id="user-date-range-calendar" style="display:none">
-        <div class="container-fluid container-date-range">
-            <label for="beaginingDate">Wykres od:</label>
-            <input type="date" id="beaginingDate" name="date" class="form-control" />
+        <form  id="custom_input_date" name="custom_input_date">
+            <div class="container-fluid ">
+                <label for="beaginingDate">Wykres od:</label>
+                <input type="date" id="beaginingDate" name="beaginingDate" class="form-control" required/>
 
-            <label for="endDate">Wykres do:</label>
-            <input type="date" id="endDate" name="date" class="form-control" />
-        </div>
-        <div class="row billsButton">
-            <button type="button" class="btn btn-outline-dark" id="custom-date">Pokaż Bilans</button>
-        </div>
+                <label for="endDate">Wykres do:</label>
+                <input type="date" id="endDate" name="endDate" class="form-control" required/>
+            </div>
+            <div class="row billsButton">
+                <button type="button" class="btn btn-outline-dark" id="custom-date">Pokaż Bilans</button>
+            </div>
+        </form>
     </div>
 
     <div class="d-flex justify-content-center">
@@ -66,15 +66,17 @@
 
     <div class="row justify-content-center">
 
-        <div class="col-6 justify-content-center"> <label for="income-list"><h6>Przychody:</h6></label> </div>
-        <div class="col-6 justify-content-center"> <label for="expense-list"><h6>Wydatki:</h6></label> </div>
-
-        
+        <div class="col-6 justify-content-center"> <label for="income-list">
+                <h6>Przychody:</h6>
+            </label> </div>
+        <div class="col-6 justify-content-center"> <label for="expense-list">
+                <h6>Wydatki:</h6>
+            </label> </div>
 
         <div id="income-list" name="income-list" class="col border border-2 border-primary rounded income-list">
             Place for income-list
         </div>
-    
+
         <div id="expense-list" name="expense-list" class="col border border-2 border-primary rounded expense-list">
             Place for expense-list
         </div>
@@ -82,7 +84,9 @@
     </div>
 
     <div class="row justify-content-center">
-        <label for="diagram"><h6>Wykres:</h6></label>
+        <label for="diagram">
+            <h6>Wykres:</h6>
+        </label>
         <div id="diagram" name="diagram" class="border border-2 border-primary rounded diagram">
             Place for diagram
         </div>

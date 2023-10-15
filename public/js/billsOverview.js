@@ -31,15 +31,26 @@ $(document).ready(function () {
     /**
      * Creating list from date in indicate DIV
      */
-    function createList(div_name_of_list, array_list) {
+    function createList(div_name_of_list, data) {
+
         $(div_name_of_list).html("");
-        var data = $.parseJSON(array_list);
-        // Iterate through the data array.
+
         i = 0;
         for (let i = 0; i < data.length; i++) {
-            // Create div's with list
             const div = document.createElement("div");
             div.innerHTML = (i + 1) + '). ' + data[i].name + ' = ' + data[i].total_amount;
+            document.querySelector(div_name_of_list).appendChild(div);
+        }
+
+        if ($('.income-list').is(':empty')) {
+            const div = document.createElement("div");
+            div.innerHTML = "Lista przychodów jest pusta :(";
+            document.querySelector(div_name_of_list).appendChild(div);
+        }
+
+        if ($('.expense-list').is(':empty')) {
+            const div = document.createElement("div");
+            div.innerHTML = "Lista wydatków jest pusta :)";
             document.querySelector(div_name_of_list).appendChild(div);
         }
     }
@@ -52,7 +63,7 @@ $(document).ready(function () {
             url: '/billsOverview/thisMonthIncome',
             method: 'POST',
             success: function (response) {
-                createList("#income-list", response);
+                createList("#income-list", $.parseJSON(response));
             }, error: function () {
                 alert('error: ');
             }
@@ -62,7 +73,7 @@ $(document).ready(function () {
             url: '/billsOverview/thisMonthExpense',
             method: 'POST',
             success: function (response) {
-                createList("#expense-list", response);
+                createList("#expense-list", $.parseJSON(response));
             }, error: function () {
                 alert('error: ');
             }
@@ -70,6 +81,9 @@ $(document).ready(function () {
 
         $("#diagram").html("this month list diagram");
 
+        /**
+        * Seting name of bilans panel
+        */
         $("#diagram-panel").html("Bieżący miesiąc:");
     });
 
@@ -81,7 +95,7 @@ $(document).ready(function () {
             url: '/billsOverview/lastMonthIncome',
             method: 'POST',
             success: function (response) {
-                createList("#income-list", response);
+                createList("#income-list", $.parseJSON(response));
             }, error: function () {
                 alert('error: ');
             }
@@ -91,7 +105,7 @@ $(document).ready(function () {
             url: '/billsOverview/lastMonthExpense',
             method: 'POST',
             success: function (response) {
-                createList("#expense-list", response);
+                createList("#expense-list", $.parseJSON(response));
             }, error: function () {
                 alert('error: ');
             }
@@ -99,6 +113,9 @@ $(document).ready(function () {
 
         $("#diagram").html("last month list diagram");
 
+        /**
+        * Seting name of bilans panel
+        */
         $("#diagram-panel").html("Poprzedni miesiąc:");
     });
 
@@ -110,7 +127,7 @@ $(document).ready(function () {
             url: '/billsOverview/lastThereMonthIncome',
             method: 'POST',
             success: function (response) {
-                createList("#income-list", response);
+                createList("#income-list", $.parseJSON(response));
             }, error: function () {
                 alert('error: ');
             }
@@ -120,7 +137,7 @@ $(document).ready(function () {
             url: '/billsOverview/lastThereMonthExpense',
             method: 'POST',
             success: function (response) {
-                createList("#expense-list", response);
+                createList("#expense-list", $.parseJSON(response));
             }, error: function () {
                 alert('error: ');
             }
@@ -128,19 +145,47 @@ $(document).ready(function () {
 
         $("#diagram").html("last month list diagram");
 
-        $("#diagram-panel").html("Poprzedni miesiąc:");
+        /**
+        * Seting name of bilans panel
+        */
+        $("#diagram-panel").html("Ostatnie 3 miesiące:");
     });
 
     /**
     * Custom bils creating button
     */
     $("#custom-date").button().click(function () {
-        $("#income-list").html("custom date list");
-        $("#expense-list").html("custom date list");
-        $("#diagram").html("custom date diagram");
-        $("#user-date-range-calendar").toggle();
-        $("#user-date-range-button").toggle();
+        var formData = {
+            beaginingDate: $("#beaginingDate").val(),
+            endDate: $("#endDate").val(),
+        };
 
-        $("#diagram-panel").html("Twój zakres:");
+        $.ajax({
+            url: '/billsOverview/customeIncomeRange',
+            method: "POST",
+            data: formData,
+            dataType: "json",
+            encode: true,
+
+            success: function (response) {
+                createList("#income-list", response);
+            }, error: function () {
+                alert('error: ');
+            }
+        })
+
+        $.ajax({
+            url: '/billsOverview/customeExpenseRange',
+            method: "POST",
+            data: formData,
+            dataType: "json",
+            encode: true,
+
+            success: function (response) {
+                createList("#expense-list", response);
+            }, error: function () {
+                alert('error: ');
+            }
+        })
     });
 });
