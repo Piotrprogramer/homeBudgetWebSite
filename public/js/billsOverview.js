@@ -81,6 +81,42 @@ $(document).ready(function () {
     }
 
     /**
+     * Creating list from date in indicate DIV
+     */
+        function bilsInfo(div_name_of_list, amountArray, range_date) {
+ 
+            var income = parseFloat(amountArray[0].total);
+            var expense =  parseFloat(amountArray[1].total);
+
+            var bils ;
+
+            $(div_name_of_list).html("");
+
+            const div = document.createElement("div");
+            div.innerHTML =  range_date;
+            //div.style.color = "red";
+            div.setAttribute('class', 'd-flex justify-content-center bils-inf');
+            document.querySelector(div_name_of_list).appendChild(div);
+
+            if (income > expense) {
+                bils = income - expense;
+                const div = document.createElement("div");
+                div.innerHTML =  "Udało Ci się nieco zaoszczędzić : +"+bils.toFixed(2);
+                div.style.color = "green";
+                div.setAttribute('class', 'd-flex justify-content-center bils-information');
+                document.querySelector(div_name_of_list).appendChild(div);
+            }
+            else{
+                bils = expense - income;
+                const div = document.createElement("div");
+                div.innerHTML =  "Niestety jesteś pod kreską : -"+bils.toFixed(2);
+                div.style.color = "red";
+                div.setAttribute('class', 'd-flex justify-content-center bils-information');
+                document.querySelector(div_name_of_list).appendChild(div);
+            }   
+        }
+
+    /**
     * This month bils creating button
     */
     $("#this-month").button().click(function () {
@@ -110,11 +146,16 @@ $(document).ready(function () {
             }
         });
 
+        $.ajax({
+            url: '/billsOverview/thisMonthBilans',
+            method: 'POST',
 
-        /**
-        * Seting name of bilans panel
-        */
-        $("#diagram-panel").html("Bieżący miesiąc:");
+            success: function (response) {
+                bilsInfo("#range-name",$.parseJSON(response), "W tym miesiacu");
+            }, error: function () {
+                alert('error: ');
+            }
+        });
     });
 
     /**
@@ -146,11 +187,17 @@ $(document).ready(function () {
                 alert('error: ');
             }
         });
+        
+        $.ajax({
+            url: '/billsOverview/lastMonthBilans',
+            method: 'POST',
 
-        /**
-        * Seting name of bilans panel
-        */
-        $("#diagram-panel").html("Poprzedni miesiąc:");
+            success: function (response) {
+                bilsInfo("#range-name",$.parseJSON(response), "W poprzednim miesiącu");
+            }, error: function () {
+                alert('error: ');
+            }
+        });
     });
 
     /**
@@ -183,10 +230,15 @@ $(document).ready(function () {
             }
         });
 
-        /**
-        * Seting name of bilans panel
-        */
-        $("#diagram-panel").html("Ostatnie 3 miesiące:");
+        $.ajax({
+            url: '/billsOverview/lastThereMonthBilans',
+            method: 'POST',
+            success: function (response) {
+                bilsInfo("#range-name",$.parseJSON(response), "Przez ostatnie 3 miesiące");
+            }, error: function () {
+                alert('error: ');
+            }
+        });
     });
 
     /**
@@ -197,6 +249,9 @@ $(document).ready(function () {
         if (x.style.display === "none") {
             $("#bilans-contetn").toggle();
         }
+
+        $("#user-date-range-calendar").toggle();
+        $("#user-date-range-button").toggle();
 
         // $('#form').submit(function () {
         var formData = {
@@ -233,11 +288,18 @@ $(document).ready(function () {
             }
         })
 
-        /**
-        * Seting name of bilans panel
-        */
-        $("#diagram-panel").html("Wybrane zakres przez Ciebie:");
+        $.ajax({
+            url: '/billsOverview/getBilans',
+            method: 'POST',
+            data: formData,
+            dataType: "json",
+            encode: true,
+
+            success: function (response) {
+                bilsInfo("#range-name",response, "W podanym zakresie");
+            }, error: function () {
+                alert('error: ');
+            }
+        });
     });
-
 });
-
