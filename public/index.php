@@ -11,7 +11,6 @@
  */
 require dirname(__DIR__) . '/vendor/autoload.php';
 
-
 /**
  * Error and Exception handling
  */
