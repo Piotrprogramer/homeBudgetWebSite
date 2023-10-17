@@ -57,9 +57,38 @@ $(document).ready(function () {
     }
 
     /**
+     * Creating chart pie from data
+     */
+    function createChartPie(diagramData) {
+        $("#diagram").html("");
+
+        var pie = new d3pie("diagram", {
+            header: {
+                title: {
+                    text: "Twoje wydatki:",
+                    fontSize: 30
+                }
+            },
+            data: {
+                content: diagramData.map(function (datum) {
+                    return {
+                        label: datum.name,
+                        value: parseFloat(datum.total_amount)
+                    };
+                })
+            }
+        });
+    }
+
+    /**
     * This month bils creating button
     */
     $("#this-month").button().click(function () {
+        var x = document.getElementById("bilans-contetn");
+        if (x.style.display === "none") {
+            $("#bilans-contetn").toggle();
+        }
+
         $.ajax({
             url: '/billsOverview/thisMonthIncome',
             method: 'POST',
@@ -75,12 +104,12 @@ $(document).ready(function () {
             method: 'POST',
             success: function (response) {
                 createList("#expense-list", $.parseJSON(response));
+                createChartPie($.parseJSON(response));
             }, error: function () {
                 alert('error: ');
             }
         });
 
-        $("#diagram").html("this month list diagram");
 
         /**
         * Seting name of bilans panel
@@ -92,6 +121,11 @@ $(document).ready(function () {
      * Last month bils creating button
      */
     $("#last-month").button().click(function () {
+        var x = document.getElementById("bilans-contetn");
+        if (x.style.display === "none") {
+            $("#bilans-contetn").toggle();
+        }
+
         $.ajax({
             url: '/billsOverview/lastMonthIncome',
             method: 'POST',
@@ -107,12 +141,11 @@ $(document).ready(function () {
             method: 'POST',
             success: function (response) {
                 createList("#expense-list", $.parseJSON(response));
+                createChartPie($.parseJSON(response));
             }, error: function () {
                 alert('error: ');
             }
         });
-
-        $("#diagram").html("last month list diagram");
 
         /**
         * Seting name of bilans panel
@@ -124,6 +157,11 @@ $(document).ready(function () {
      * Last there month bils creating button
      */
     $("#last-three-month").button().click(function () {
+        var x = document.getElementById("bilans-contetn");
+        if (x.style.display === "none") {
+            $("#bilans-contetn").toggle();
+        }
+
         $.ajax({
             url: '/billsOverview/lastThereMonthIncome',
             method: 'POST',
@@ -139,12 +177,11 @@ $(document).ready(function () {
             method: 'POST',
             success: function (response) {
                 createList("#expense-list", $.parseJSON(response));
+                createChartPie($.parseJSON(response));
             }, error: function () {
                 alert('error: ');
             }
         });
-
-        $("#diagram").html("last month list diagram");
 
         /**
         * Seting name of bilans panel
@@ -156,7 +193,12 @@ $(document).ready(function () {
     * Custom bils creating button
     */
     $("#custom-date").button().click(function () {
-   // $('#form').submit(function () {
+        var x = document.getElementById("bilans-contetn");
+        if (x.style.display === "none") {
+            $("#bilans-contetn").toggle();
+        }
+
+        // $('#form').submit(function () {
         var formData = {
             beaginingDate: $("#beaginingDate").val(),
             endDate: $("#endDate").val(),
@@ -185,10 +227,16 @@ $(document).ready(function () {
 
             success: function (response) {
                 createList("#expense-list", response);
+                createChartPie(response);
             }, error: function () {
                 alert('error: ');
             }
         })
+
+        /**
+        * Seting name of bilans panel
+        */
+        $("#diagram-panel").html("Wybrane zakres przez Ciebie:");
     });
 
 });

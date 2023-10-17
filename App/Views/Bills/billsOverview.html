@@ -5,12 +5,8 @@
 {% block footer %}
 
 <script src="/js/billsOverview.js"></script>
-<script>
-
-
-
-</script>
-
+<script src="//cdnjs.cloudflare.com/ajax/libs/d3/4.13.0/d3.min.js"></script>
+<script src="/js/d3pie.js"></script>
 
 {% endblock %}
 {% block body %}
@@ -44,53 +40,51 @@
     </div>
 
     <div class="col-5" id="user-date-range-calendar" style="display:none">
-        <form  id="custom_input_date" >
+        <form id="custom_input_date">
             <div class="container-fluid ">
                 <label for="beaginingDate">Wykres od:</label>
-                <input type="date" id="beaginingDate" name="beaginingDate" class="form-control" required/>
+                <input type="date" id="beaginingDate" name="beaginingDate" class="form-control" required />
 
                 <label for="endDate">Wykres do:</label>
-                <input type="date" id="endDate" name="endDate" class="form-control" required/>
+                <input type="date" id="endDate" name="endDate" class="form-control" required />
             </div>
             <div class="row billsButton">
                 <button type="button" class="btn btn-outline-dark" id="custom-date">Pokaż Bilans</button>
             </div>
         </form>
     </div>
-
-    <div class="d-flex justify-content-center">
-        <span>
-            <h6 id="diagram-panel">Bieżący miesiąc:</h6>
-        </span>
-    </div>
-
-    <div class="row justify-content-center">
-
-        <div class="col-6 justify-content-center"> <label for="income-list">
-                <h6>Przychody:</h6>
-            </label> </div>
-        <div class="col-6 justify-content-center"> <label for="expense-list">
-                <h6>Wydatki:</h6>
-            </label> </div>
-
-        <div id="income-list" name="income-list" class="col border border-2 border-primary rounded income-list">
-            Miejsce na listę przychodów
+    
+    <div id="bilans-contetn" style="display:none">
+        <div class="d-flex justify-content-center">
+            <span>
+                <h3 id="diagram-panel">Bieżący miesiąc:</h3>
+            </span>
         </div>
 
-        <div id="expense-list" name="expense-list" class="col border border-2 border-primary rounded expense-list">
-            Miejsce na listę wydatków
+        <div class="row justify-content-center">
+
+            <div class="col-6 justify-content-center"> <label for="income-list">
+                    <h6>Przychody:</h6>
+                </label> </div>
+            <div class="col-6 justify-content-center"> <label for="expense-list">
+                    <h6>Wydatki:</h6>
+                </label> </div>
+
+            <div id="income-list" name="income-list" class="col border border-2 border-primary rounded income-list">
+
+            </div>
+
+            <div id="expense-list" name="expense-list" class="col border border-2 border-primary rounded expense-list">
+
+            </div>
+
         </div>
 
-    </div>
-
-    <div class="row justify-content-center">
-        <label for="diagram">
-            <h6>Wykres:</h6>
-        </label>
-        <div id="diagram" name="diagram" class="border border-2 border-primary rounded diagram">
-            Miejsce na listę wykres
+        <div class="row justify-content-center">
+            <div id="diagram" name="diagram" class="border border-2 border-primary rounded diagram"></div>
         </div>
     </div>
+
 </div>
 
 {% endblock %}
