@@ -22,3 +22,14 @@ body {
     background-color: rgb(205, 205, 205);
     margin: 1px;
 }
+
+.bils-information{
+    margin-top:0px;
+    margin-bottom:20px;
+    font-size: large;
+}
+
+.bils-inf{
+    margin-top:5px;
+    font-size: large;
+}

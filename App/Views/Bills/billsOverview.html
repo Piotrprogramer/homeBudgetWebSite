@@ -40,7 +40,7 @@
     </div>
 
     <div class="col-5" id="user-date-range-calendar" style="display:none">
-        <form id="custom_input_date">
+        <form id="custom_input_date" method="post" action="/billsOverview/getBilans">
             <div class="container-fluid ">
                 <label for="beaginingDate">Wykres od:</label>
                 <input type="date" id="beaginingDate" name="beaginingDate" class="form-control" required />
@@ -53,34 +53,41 @@
             </div>
         </form>
     </div>
-    
+
     <div id="bilans-contetn" style="display:none">
-        <div class="d-flex justify-content-center">
+        <div id="range-name" class="row">
             <span>
-                <h3 id="diagram-panel">Bieżący miesiąc:</h3>
+                <h3 id="diagram-panel"></h3>
             </span>
         </div>
 
         <div class="row justify-content-center">
 
-            <div class="col-6 justify-content-center"> <label for="income-list">
-                    <h6>Przychody:</h6>
-                </label> </div>
-            <div class="col-6 justify-content-center"> <label for="expense-list">
-                    <h6>Wydatki:</h6>
-                </label> </div>
+            <div class="col-6">
+                <div class="d-flex justify-content-center">
+                    <label for="income-list">
+                        <h6>Przychody:</h6>
+                    </label>
+                </div>
+            </div>
+
+            <div class="col-6">
+                <div class="d-flex justify-content-center">
+                    <label for="expense-list">
+                        <h6>Wydatki:</h6>
+                    </label>
+                </div>
+            </div>
 
             <div id="income-list" name="income-list" class="col border border-2 border-primary rounded income-list">
-
             </div>
 
             <div id="expense-list" name="expense-list" class="col border border-2 border-primary rounded expense-list">
-
             </div>
 
         </div>
 
-        <div class="row justify-content-center">
+        <div class="d-flex justify-content-center">
             <div id="diagram" name="diagram" class="border border-2 border-primary rounded diagram"></div>
         </div>
     </div>

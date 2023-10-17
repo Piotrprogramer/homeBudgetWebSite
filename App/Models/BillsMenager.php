@@ -39,14 +39,11 @@ class BillsMenager extends \Core\Model
     {
         foreach ($data as $key => $value) {
             $this->$key = $value;
-        }
-        // var_dump($data);
-        // exit;
-        ;
+        };
     }
 
     /**
-     * Return array of incomes is exist, null otherwise
+     * Return array of incomes if exist, null otherwise
      *
      * @var array
      */
@@ -84,7 +81,12 @@ class BillsMenager extends \Core\Model
         }
     }
 
-    public static function geUserExpenses($date)
+    /**
+     * Return array of expenses if exist, null otherwise
+     *
+     * @var array
+     */
+    public static function getUserExpenses($date)
     {
         $sql =
             'SELECT
@@ -119,7 +121,44 @@ class BillsMenager extends \Core\Model
         }
     }
 
+    /**
+     * Return array of with sum amount of income and expense
+     * @var array
+     */
+    public static function getBilans($date)
+    {
+        $sql =
+            'SELECT 
+                SUM(incomes.amount) AS total
+            FROM 
+                incomes
+            WHERE 
+                incomes.user_id = :user_id
+            AND
+                incomes.date_of_income BETWEEN :date_start AND :date_end
+                
+            UNION
 
+            SELECT 
+                SUM(expenses.amount) AS total
+            FROM
+                expenses
+            WHERE 
+                expenses.user_id = :user_id
+            AND
+                expenses.date_of_expense BETWEEN :date_start AND :date_end';
 
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
 
+        $stmt->bindValue(':user_id', $_SESSION["user_id"], PDO::PARAM_INT);
+        $stmt->bindValue(':date_start', $date['date_start'], PDO::PARAM_STR);
+        $stmt->bindValue(':date_end', $date['date_end'], PDO::PARAM_STR);
+
+        if ($stmt->execute()) {
+            $userExpenses = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            return $userExpenses;
+        }
+    }
 }

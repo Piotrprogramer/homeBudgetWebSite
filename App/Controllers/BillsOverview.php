@@ -14,21 +14,25 @@ use \App\Flash;
  */
 class BillsOverview extends Authenticated
 {
-    public function testAction()
-    {
-        
-        $date_start = date('Y-m-01 ', strtotime( '-3 month' ));
-        $date_end = date('Y-m-d');
+    /**
+     * Get billans value 
+     *
+     * @return string JSON representation of the user's income statistic or null if array is empty
+     */
+    public static function getBilansAction(){
+        $data = json_encode($_POST);
+        $object = json_decode($data);
         
         $date = array(
-            'date_start' => $date_start,
-            'date_end' => $date_end
+            'date_start' => $object->beaginingDate,
+            'date_end' => $object->endDate
         );
-        
-        var_dump($date);
 
-        exit;
+        $bills = BillsMenager::getBilans($date);
+
+        echo json_encode($bills);
     }
+
     /**
      * Show the new form page
      *
@@ -67,9 +71,19 @@ class BillsOverview extends Authenticated
             'date_end' => date('Y-m-d')
         );
 
-        $expenses_list = BillsMenager::geUserExpenses($date);
+        $expenses_list = BillsMenager::getUserExpenses($date);
 
         echo json_encode($expenses_list);
+    }
+
+    public static function thisMonthBilansAction(){
+        $date = array(
+            'date_start' => date('Y-m-01'),
+            'date_end' => date('Y-m-d')
+        );
+        $bills = BillsMenager::getBilans($date);
+
+        echo json_encode($bills);
     }
 
     /**
@@ -106,9 +120,23 @@ class BillsOverview extends Authenticated
             'date_end' => $date_end
         );
 
-        $expenses_list = BillsMenager::geUserExpenses($date);
+        $expenses_list = BillsMenager::getUserExpenses($date);
 
         echo json_encode($expenses_list);
+    }
+
+    public static function lastMonthBilansAction(){
+        $date_start = date('Y-m-01 ', strtotime( '-1 month' ));
+        $date_end = date("Y-m-t", strtotime($date_start));
+
+        $date = array(
+            'date_start' => $date_start,
+            'date_end' => $date_end
+        );
+
+        $bills = BillsMenager::getBilans($date);
+
+        echo json_encode($bills);
     }
     
     /**
@@ -145,9 +173,23 @@ class BillsOverview extends Authenticated
             'date_end' => $date_end
         );
 
-        $expenses_list = BillsMenager::geUserExpenses($date);
+        $expenses_list = BillsMenager::getUserExpenses($date);
 
         echo json_encode($expenses_list);
+    }
+
+    public static function lastThereMonthBilansAction(){
+        $date_start = date('Y-m-01 ', strtotime( '-3 month' ));
+        $date_end = date('Y-m-d');
+        
+        $date = array(
+            'date_start' => $date_start,
+            'date_end' => $date_end
+        );
+
+        $bills = BillsMenager::getBilans($date);
+
+        echo json_encode($bills);
     }
 
     public function customeIncomeRangeAction()
@@ -179,7 +221,7 @@ class BillsOverview extends Authenticated
             'date_end' => $object->endDate
         );
 
-        $expenses_list = BillsMenager::geUserExpenses($date);
+        $expenses_list = BillsMenager::getUserExpenses($date);
 
         echo json_encode($expenses_list);
     }
