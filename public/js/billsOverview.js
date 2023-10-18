@@ -83,38 +83,49 @@ $(document).ready(function () {
     /**
      * Creating list from date in indicate DIV
      */
-        function bilsInfo(div_name_of_list, amountArray, range_date) {
- 
-            var income = parseFloat(amountArray[0].total);
-            var expense =  parseFloat(amountArray[1].total);
+    function bilsInfo(div_name_of_list, amountArray, range_date_info) {
 
-            var bils ;
+        var mydata = JSON.parse(amountArray);
 
-            $(div_name_of_list).html("");
+        var income = parseFloat(mydata["income"]);
+        if(mydata["income"] == 'null') income = 0;
 
+        var expense = parseFloat(mydata["expense"]);
+        if(mydata["expense"] == 'null') expense = 0;
+
+        var bils;
+        $(div_name_of_list).html("");
+
+        const div = document.createElement("div");
+        div.innerHTML = range_date_info;
+        div.setAttribute('class', 'd-flex justify-content-center bils-inf');
+        document.querySelector(div_name_of_list).appendChild(div);
+
+        if (Number.isNaN(income) && Number.isNaN(expense)) { 
             const div = document.createElement("div");
-            div.innerHTML =  range_date;
-            //div.style.color = "red";
-            div.setAttribute('class', 'd-flex justify-content-center bils-inf');
+            div.innerHTML = "Brak danych";
+            div.setAttribute('class', 'd-flex justify-content-center bils-information');
             document.querySelector(div_name_of_list).appendChild(div);
-
+        }
+        else {
             if (income > expense) {
                 bils = income - expense;
                 const div = document.createElement("div");
-                div.innerHTML =  "Udało Ci się nieco zaoszczędzić : +"+bils.toFixed(2);
+                div.innerHTML = "Udało Ci się nieco zaoszczędzić : +" + bils.toFixed(2);
                 div.style.color = "green";
                 div.setAttribute('class', 'd-flex justify-content-center bils-information');
                 document.querySelector(div_name_of_list).appendChild(div);
             }
-            else{
+            else if (income < expense){
                 bils = expense - income;
                 const div = document.createElement("div");
-                div.innerHTML =  "Niestety jesteś pod kreską : -"+bils.toFixed(2);
+                div.innerHTML = "Niestety jesteś pod kreską : -" + bils.toFixed(2);
                 div.style.color = "red";
                 div.setAttribute('class', 'd-flex justify-content-center bils-information');
                 document.querySelector(div_name_of_list).appendChild(div);
-            }   
+            }
         }
+    }
 
     /**
     * This month bils creating button
@@ -151,7 +162,7 @@ $(document).ready(function () {
             method: 'POST',
 
             success: function (response) {
-                bilsInfo("#range-name",$.parseJSON(response), "W tym miesiacu");
+                bilsInfo("#range-name", response, "W tym miesiacu");
             }, error: function () {
                 alert('error: ');
             }
@@ -187,13 +198,14 @@ $(document).ready(function () {
                 alert('error: ');
             }
         });
-        
+
         $.ajax({
             url: '/billsOverview/lastMonthBilans',
             method: 'POST',
 
             success: function (response) {
-                bilsInfo("#range-name",$.parseJSON(response), "W poprzednim miesiącu");
+                //alert(response);
+                bilsInfo("#range-name", response, "W poprzednim miesiącu");
             }, error: function () {
                 alert('error: ');
             }
@@ -234,7 +246,8 @@ $(document).ready(function () {
             url: '/billsOverview/lastThereMonthBilans',
             method: 'POST',
             success: function (response) {
-                bilsInfo("#range-name",$.parseJSON(response), "Przez ostatnie 3 miesiące");
+                //alert(response);
+                bilsInfo("#range-name", response, "Przez ostatnie 3 miesiące");
             }, error: function () {
                 alert('error: ');
             }
@@ -292,11 +305,11 @@ $(document).ready(function () {
             url: '/billsOverview/getBilans',
             method: 'POST',
             data: formData,
-            dataType: "json",
-            encode: true,
+            //dataType: "json",
+            //encode: true,
 
             success: function (response) {
-                bilsInfo("#range-name",response, "W podanym zakresie");
+                bilsInfo("#range-name", response, "W podanym zakresie");
             }, error: function () {
                 alert('error: ');
             }

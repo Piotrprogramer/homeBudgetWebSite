@@ -125,6 +125,11 @@ class BillsOverview extends Authenticated
         echo json_encode($expenses_list);
     }
 
+    /**
+     * Geting total amount of income and expense
+     *
+     * @return string JSON amout array
+     */
     public static function lastMonthBilansAction(){
         $date_start = date('Y-m-01 ', strtotime( '-1 month' ));
         $date_end = date("Y-m-t", strtotime($date_start));
@@ -138,6 +143,7 @@ class BillsOverview extends Authenticated
 
         echo json_encode($bills);
     }
+    
     
     /**
      * Geting income statistic fom DB of last 3 month
@@ -178,6 +184,11 @@ class BillsOverview extends Authenticated
         echo json_encode($expenses_list);
     }
 
+    /**
+     * Geting total amount of income and expense
+     *
+     * @return string JSON amout array
+     */
     public static function lastThereMonthBilansAction(){
         $date_start = date('Y-m-01 ', strtotime( '-3 month' ));
         $date_end = date('Y-m-d');
@@ -192,6 +203,11 @@ class BillsOverview extends Authenticated
         echo json_encode($bills);
     }
 
+    /**
+     * Geting total amount of income and expense
+     *
+     * @return string JSON amout array
+     */
     public function customeIncomeRangeAction()
     {
         $data = json_encode($_POST);

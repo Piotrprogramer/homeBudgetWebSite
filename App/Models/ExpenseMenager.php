@@ -93,6 +93,36 @@ class ExpenseMenager extends \Core\Model
     }
 
     /**
+     * 
+     * @return int Return id payment assigned to user, 0 otherwise
+     */
+    public function getPaymentId()
+    {
+        $sql = 'SELECT 
+                    id
+                FROM 
+                    payment_methods_assigned_to_users 
+                WHERE 
+                    user_id = :user_id
+                AND
+                    name = :payment';
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+
+        $stmt->bindValue(':user_id', $_SESSION["user_id"], PDO::PARAM_INT);
+        $stmt->bindValue(':payment', $this->payment_method, PDO::PARAM_STR);
+
+        if ($stmt->execute()) {
+            $cat_id = $stmt->fetch(PDO::FETCH_ASSOC);
+            if ($cat_id != null)
+                return $cat_id["id"];
+
+        } else
+            return false;
+    }
+
+    /**
      * Save the user model with the current property values
      *
      * @return boolean  True if the user was saved, false otherwise
@@ -110,7 +140,7 @@ class ExpenseMenager extends \Core\Model
 
             $stmt->bindValue(':user_id', $_SESSION["user_id"], PDO::PARAM_INT);
             $stmt->bindValue(':expense_category_assigned_to_user_id', $this->getCategoryId(), PDO::PARAM_STR);
-            $stmt->bindValue(':payment_method_assigned_to_user_id', $this->coment, PDO::PARAM_INT);   //  MISSING
+            $stmt->bindValue(':payment_method_assigned_to_user_id', $this->getPaymentId(), PDO::PARAM_STR);   //  MISSING
             $stmt->bindValue(':amount', $this->amount, PDO::PARAM_STR);
             $stmt->bindValue(':date_of_expense', $this->date, PDO::PARAM_STR);
             $stmt->bindValue(':expense_comment', $this->coment, PDO::PARAM_STR);
@@ -121,7 +151,7 @@ class ExpenseMenager extends \Core\Model
     }
 
     /**
-     * Getting data about user income category
+     * Getting data about user expense category
      *
      * @return boolean  True if getted correctly, false otherwise
      */
@@ -234,6 +264,104 @@ class ExpenseMenager extends \Core\Model
 
             if (empty($expense)) {
                 return true;
+            } else
+                return false;
+        } else
+            return false;
+    }
+
+
+    /**
+     * Check payment assigned to user is empty
+     *
+     * @return bool  if epmty, false otherwise
+     */
+    public static function isPaymentUserArray()
+    {
+        $sql = 'SELECT id, name FROM payment_methods_assigned_to_users WHERE user_id = :user_id';
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+
+        $stmt->bindValue(':user_id', $_SESSION['user_id'], PDO::PARAM_INT);
+
+        if ($stmt->execute()) {
+            $expense = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            if (empty($expense)) {
+                return true;
+            } else
+                return false;
+        } else
+            return false;
+    }
+
+    /**
+     * Getting defoult payment method
+     *
+     * @return void  array with income category
+     */
+    public static function copyDefaultPaymentCategory()
+    {
+        $sql = 'SELECT name FROM payment_methods_default';
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+
+        if ($stmt->execute()) {
+
+            $payment_category = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            ExpenseMenager::pastDefaultPaymentCategory($payment_category);
+        }
+    }
+
+        /**
+     * Past defoult income category to user category
+     *
+     * @return void  
+     */
+    public static function pastDefaultPaymentCategory($payment_category)
+    {
+        $sql =
+            'INSERT INTO 
+                payment_methods_assigned_to_users 
+             VALUES
+                (null, :user_id,:Cash),
+                (null, :user_id,:Debit_card),
+                (null, :user_id,:Credit_card)';
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+
+        $stmt->bindValue(':Cash', $payment_category[0]['name'], PDO::PARAM_STR);
+        $stmt->bindValue(':Debit_card', $payment_category[1]['name'], PDO::PARAM_STR);
+        $stmt->bindValue(':Credit_card', $payment_category[2]['name'], PDO::PARAM_STR);
+ 
+        $stmt->bindValue(':user_id', $_SESSION['user_id'], PDO::PARAM_INT);
+
+       $stmt->execute();
+    }
+
+        /**
+     * Getting data about user income category
+     *
+     * @return boolean  True if getted correctly, false otherwise
+     */
+    public static function paymentAsignetToUser()
+    {
+        $sql = 'SELECT id, name FROM payment_methods_assigned_to_users WHERE user_id = :user_id';
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+
+        $stmt->bindValue(':user_id', $_SESSION['user_id'], PDO::PARAM_INT);
+
+        if ($stmt->execute()) {
+
+            $payment_methods = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            if (!empty($payment_methods)) {
+                return json_encode($payment_methods);
             } else
                 return false;
         } else
