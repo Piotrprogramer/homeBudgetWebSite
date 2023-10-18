@@ -38,6 +38,19 @@ class Expense extends Authenticated
     }
 
     /**
+     * Show the new form page
+     *
+     * @return void
+     */
+    public function getUserPaymentsAction()
+    {   
+        if(ExpenseMenager::isPaymentUserArray()){
+            ExpenseMenager::copyDefaultPaymentCategory();
+        }
+        echo ExpenseMenager::paymentAsignetToUser();
+    }
+
+    /**
      * Add expense to server
      *
      * @return void

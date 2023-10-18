@@ -158,7 +158,15 @@ class BillsMenager extends \Core\Model
         if ($stmt->execute()) {
             $userExpenses = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-            return $userExpenses;
+            $data = array(
+                'income' => "null",
+                'expense' => "null"
+            ); 
+
+            if(!empty($userExpenses[0]["total"])) $data['income']= $userExpenses[0]["total"];
+            if(!empty($userExpenses[1]["total"])) $data['expense']= $userExpenses[1]["total"];
+
+            return $data;
         }
     }
 }

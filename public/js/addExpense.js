@@ -79,6 +79,7 @@ $(document).ready(function () {
             var id = '';
             var name = '';
             var isFirst = true;
+
             for (let i = 0; i < response.length; i++) {
                 if (response[i] == String.fromCharCode(58)) {
                     i++;
@@ -98,6 +99,73 @@ $(document).ready(function () {
                         }
                         if (id != '' && name != '') {
                             addButton(id, name, isFirst);
+                            if (isFirst) isFirst = false;
+                            var id = '';
+                            var name = '';
+                        }
+                    }
+                }
+            }
+        }, error: function (error) {
+            alert('error: ' + error);
+        }
+    });
+});
+
+
+/**
+ * Add input radio button to expense form with name and id value
+ */
+function addButtonPayment(id, name, isFirst) {
+    const div = document.createElement("div");
+    div.className = "form-check";
+    if (isFirst) {
+        div.innerHTML = `
+        <input class="form-check-input" type="radio" name="payment_method" id="${id}" value="${name}" checked>
+        <label class="form-check-label" for="${id}"> ${name} </label>`;
+    }
+    else {
+        div.innerHTML = `
+        <input class="form-check-input" type="radio" name="payment_method" id="${id}" value="${name}">
+        <label class="form-check-label" for="${id}"> ${name} </label>`;
+
+    }
+    document.querySelector("#payment_method").appendChild(div);
+}
+
+
+/**
+ * Getting expense id, name from DB in Json value
+ * 
+ * make separete id and name and send it to adding button function
+ */
+$(document).ready(function () {
+    $.ajax({
+        url: '/expense/getUserPayments',
+        method: 'POST',
+        success: function (response) {
+            var id = '';
+            var name = '';
+            var isFirst = true;
+            for (let i = 0; i < response.length; i++) {
+                if (response[i] == String.fromCharCode(58)) {
+                    i++;
+                    if (response[i] == String.fromCharCode(34)) {
+                        i++;
+                        var variable = '';
+                        do {
+                            variable += response[i];
+                            i++;
+                        }
+                        while (response[i] != String.fromCharCode(34))
+
+                        if (id == '') {
+                            id = variable;
+                        } else {
+                            name = variable;
+                        }
+                        if (id != '' && name != '') {
+                            addButtonPayment(id, name, isFirst);
                             if (isFirst) isFirst = false;
                             var id = '';
                             var name = '';
