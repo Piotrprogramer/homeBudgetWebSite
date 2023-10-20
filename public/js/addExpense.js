@@ -43,28 +43,19 @@ $(document).ready(function () {
     });
 });
 
+/**
+ * Add select option to expense form with name and value
+ */
+function addButton(name, isFirst, select_name) {
+    const option = document.createElement("option");
+    option.textContent = name;
+    option.setAttribute("value", name);
+    option.selected = isFirst;
+    document.querySelector(select_name).appendChild(option);
+}
+
 //Set current date on defoult date value
 document.getElementById('date').valueAsDate = new Date();
-
-/**
- * Add input radio button to expense form with name and id value
- */
-function addButton(id, name, isFirst) {
-    const div = document.createElement("div");
-    div.className = "form-check";
-    if (isFirst) {
-        div.innerHTML = `
-        <input class="form-check-input" type="radio" name="Category" id="${id}" value="${name}" checked>
-        <label class="form-check-label" for="${id}"> ${name} </label>`;
-    }
-    else {
-        div.innerHTML = `
-        <input class="form-check-input" type="radio" name="Category" id="${id}" value="${name}">
-        <label class="form-check-label" for="${id}"> ${name} </label>`;
-
-    }
-    document.querySelector("#category").appendChild(div);
-}
 
 /**
  * Getting expense id, name from DB in Json value
@@ -98,7 +89,7 @@ $(document).ready(function () {
                             name = variable;
                         }
                         if (id != '' && name != '') {
-                            addButton(id, name, isFirst);
+                            addButton(name, isFirst, "#Category");
                             if (isFirst) isFirst = false;
                             var id = '';
                             var name = '';
@@ -111,28 +102,6 @@ $(document).ready(function () {
         }
     });
 });
-
-
-/**
- * Add input radio button to expense form with name and id value
- */
-function addButtonPayment(id, name, isFirst) {
-    const div = document.createElement("div");
-    div.className = "form-check";
-    if (isFirst) {
-        div.innerHTML = `
-        <input class="form-check-input" type="radio" name="payment_method" id="${id}" value="${name}" checked>
-        <label class="form-check-label" for="${id}"> ${name} </label>`;
-    }
-    else {
-        div.innerHTML = `
-        <input class="form-check-input" type="radio" name="payment_method" id="${id}" value="${name}">
-        <label class="form-check-label" for="${id}"> ${name} </label>`;
-
-    }
-    document.querySelector("#payment_method").appendChild(div);
-}
-
 
 /**
  * Getting expense id, name from DB in Json value
@@ -165,7 +134,7 @@ $(document).ready(function () {
                             name = variable;
                         }
                         if (id != '' && name != '') {
-                            addButtonPayment(id, name, isFirst);
+                            addButton(name, isFirst, "#payment_method");
                             if (isFirst) isFirst = false;
                             var id = '';
                             var name = '';
