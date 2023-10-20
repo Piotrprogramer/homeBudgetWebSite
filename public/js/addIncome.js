@@ -47,9 +47,9 @@ $(document).ready(function () {
 document.getElementById('date').valueAsDate = new Date();
 
 /**
- * Add input radio button to Income form with name and id value
+ * Add select option to Income form with name and value
  */
-function addButton(id, name, isFirst) {
+function addButton(name, isFirst) {
     const option = document.createElement("option");
     option.textContent = name;
     option.setAttribute("value", name);
@@ -88,7 +88,7 @@ $(document).ready(function () {
                             name = variable;
                         }
                         if (id != '' && name != '') {
-                            addButton(id, name, isFirst);
+                            addButton(name, isFirst);
                             if (isFirst) isFirst = false;
                             var id = '';
                             var name = '';

@@ -22,28 +22,3 @@ body {
     background-color: rgb(205, 205, 205);
     margin: 1px;
 }
-
-.payment-method {
-    background-color: rgb(205, 205, 205);
-    margin: 1px;
-    margin-left: 10px;
-    margin-right: 1px;
-}
-
-.category-expense{
-    background-color: rgb(205, 205, 205);
-    margin: 1px;
-    margin-left: 1px;
-    margin-right: 10px;
-}
-
-.bils-information{
-    margin-top:0px;
-    margin-bottom:20px;
-    font-size: large;
-}
-
-.bils-inf{
-    margin-top:5px;
-    font-size: large;
-}
