@@ -50,20 +50,11 @@ document.getElementById('date').valueAsDate = new Date();
  * Add input radio button to Income form with name and id value
  */
 function addButton(id, name, isFirst) {
-    const div = document.createElement("div");
-    div.className = "form-check";
-    if (isFirst) {
-        div.innerHTML = `
-        <input class="form-check-input" type="radio" name="Category" id="${id}" value="${name}" checked>
-        <label class="form-check-label" for="${id}"> ${name} </label>`;
-    }
-    else {
-        div.innerHTML = `
-        <input class="form-check-input" type="radio" name="Category" id="${id}" value="${name}">
-        <label class="form-check-label" for="${id}"> ${name} </label>`;
-
-    }
-    document.querySelector("#category").appendChild(div);
+    const option = document.createElement("option");
+    option.textContent = name;
+    option.setAttribute("value", name);
+    option.selected = isFirst;
+    document.querySelector("#Category").appendChild(option);
 }
 
 /**
