@@ -26,17 +26,18 @@ class Profile extends Authenticated
         $this->user = Auth::getUser();
     }
 
-    /**
+    /** 
      * Show the profile
      *
      * @return void
-     */
+    */
     public function showAction()
     {
         View::renderTemplate('Profile/show.html', [
             'user' => $this->user
         ]);
     }
+ 
 
     /**
      * Show the form for editing the profile
@@ -61,7 +62,7 @@ class Profile extends Authenticated
 
             Flash::addMessage('Changes saved');
 
-            $this->redirect('/profile/show');
+            $this->redirect('/profile/edit');
 
         } else {
 

@@ -14,8 +14,8 @@ $(document).ready(function () {
      * Show/hide date div button
      */
     $(".show-calendar").click(function () {
-        $("#user-date-range-calendar").toggle();
-        $("#user-date-range-button").toggle();
+        $("#user-date-range-calendar").toggle(300);
+        $("#user-date-range-button").toggle(300);
     });
 
     /**
@@ -24,8 +24,8 @@ $(document).ready(function () {
     $(".btn-outline-primary").click(function () {
         var x = document.getElementById("user-date-range-button");
         if (x.style.display === "none") {
-            $("#user-date-range-calendar").toggle();
-            $("#user-date-range-button").toggle();
+            $("#user-date-range-calendar").toggle(300);
+            $("#user-date-range-button").toggle(300);
         }
     });
 
@@ -133,7 +133,7 @@ $(document).ready(function () {
     $("#this-month").button().click(function () {
         var x = document.getElementById("bilans-contetn");
         if (x.style.display === "none") {
-            $("#bilans-contetn").toggle();
+            $("#bilans-contetn").toggle(300);
         }
 
         $.ajax({
@@ -175,7 +175,7 @@ $(document).ready(function () {
     $("#last-month").button().click(function () {
         var x = document.getElementById("bilans-contetn");
         if (x.style.display === "none") {
-            $("#bilans-contetn").toggle();
+            $("#bilans-contetn").toggle(300);
         }
 
         $.ajax({
@@ -218,7 +218,7 @@ $(document).ready(function () {
     $("#last-three-month").button().click(function () {
         var x = document.getElementById("bilans-contetn");
         if (x.style.display === "none") {
-            $("#bilans-contetn").toggle();
+            $("#bilans-contetn").toggle(300);
         }
 
         $.ajax({
@@ -260,11 +260,11 @@ $(document).ready(function () {
     $("#custom-date").button().click(function () {
         var x = document.getElementById("bilans-contetn");
         if (x.style.display === "none") {
-            $("#bilans-contetn").toggle();
+            $("#bilans-contetn").toggle(300);
         }
 
-        $("#user-date-range-calendar").toggle();
-        $("#user-date-range-button").toggle();
+        $("#user-date-range-calendar").toggle(300);
+        $("#user-date-range-button").toggle(300);
 
         // $('#form').submit(function () {
         var formData = {

@@ -22,3 +22,8 @@ body {
     background-color: rgb(205, 205, 205);
     margin: 1px;
 }
+
+#edit-profile, #edit-income, #edit-expense, #edit-payment{
+    margin-top:5px;
+    margin-bottom:5px;
+}
