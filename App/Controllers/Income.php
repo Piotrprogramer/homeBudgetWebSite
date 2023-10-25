@@ -59,4 +59,20 @@ class Income extends Authenticated
             View::renderTemplate('Income/newForm.html');
         }
     }
+
+    /**
+     * Get the current income list, from the session
+     *
+     * @return mixed The income model 
+     */
+    public static function getIncome()
+    {
+        if (isset($_SESSION['user_id'])) {
+            //return IncomeMenager::getIncomeList($_SESSION['user_id']);
+            //var_dump(IncomeMenager::getIncomeList($_SESSION['user_id']));
+
+            echo json_encode(IncomeMenager::getIncomeList($_SESSION['user_id']));
+            //exit;
+        }
+    }
 }

@@ -5,6 +5,7 @@ namespace App\Controllers;
 use \Core\View;
 use \App\Auth;
 use \App\Flash;
+use \App\Controllers\Income;
 
 /**
  * Profile controller
@@ -38,7 +39,6 @@ class Profile extends Authenticated
         ]);
     }
  
-
     /**
      * Show the form for editing the profile
      *
@@ -69,7 +69,6 @@ class Profile extends Authenticated
             View::renderTemplate('Profile/edit.html', [
                 'user' => $this->user
             ]);
-
         }
     }
 }
