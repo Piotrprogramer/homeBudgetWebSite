@@ -48,7 +48,7 @@
 
 {% block body %}
 
-<h1>Zarejestruj się</h1>
+<h3><i class='fas fa-user-plus fa-fw me-2'></i>Zarejestruj się</h3>
 
 {% if user.errors is not empty %}
 <p>Errors:</p>
@@ -62,17 +62,17 @@
 <form method="post" action="/signup/create" id="formSignup">
 
     <div class="form-group">
-        <label for="inputName">Name</label>
+        <label for="inputName">Imię</label>
         <input id="inputName" name="name" placeholder="Name" autofocus value="{{ user.name }}" required
             class="form-control" />
     </div>
     <div class="form-group">
-        <label for="inputEmail">Email address</label>
+        <label for="inputEmail">Email addres</label>
         <input id="inputEmail" name="email" placeholder="email address" value="{{ user.email }}" required type="email"
             class="form-control" />
     </div>
     <div class="form-group">
-        <label for="inputPassword">Password</label>
+        <label for="inputPassword">Hasło</label>
         <input type="password" id="inputPassword" name="password" placeholder="Password" required
             class="form-control" />
     </div>
