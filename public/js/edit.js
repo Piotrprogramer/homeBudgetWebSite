@@ -81,14 +81,15 @@ function createList(div_name_of_list, data) {
         const newButton = document.createElement('button');
         newButton.classList.add('btn');
         newButton.classList.add('btn-outline-success');
-        //newButton.classList.add('edit-button');
+
         newButton.setAttribute("type", "button");
         newButton.setAttribute("style", "text-align: right");
 
 
         newButton.setAttribute("data-bs-toggle", "modal");
         newButton.setAttribute("data-bs-target", "#editModal");
-        newButton.setAttribute("data-bs-whatever", data[i].name);
+        newButton.setAttribute("data-bs-categoryName", data[i].name);
+        newButton.setAttribute("data-bs-categoryId", data[i].id);
 
         newButton.innerHTML = "<i class='fas fa-wrench fa-fw me-2'></i>Edytuj";
 
@@ -101,7 +102,8 @@ function createList(div_name_of_list, data) {
 
         newButton2.setAttribute("data-bs-toggle", "modal");
         newButton2.setAttribute("data-bs-target", "#deleteModal");
-        newButton2.setAttribute("data-bs-whatever", data[i].name);
+        newButton2.setAttribute("data-bs-categoryName", data[i].name);
+        newButton2.setAttribute("data-bs-categoryId", data[i].id);
 
         newButton2.innerHTML = "<i class='fas fa-trash-can fa-fw me-2'></i>Usuń";
 
@@ -126,16 +128,16 @@ function editModalIncome(name) {
         // Button that triggered the modal
         var button = event.relatedTarget
         // Extract info from data-bs-* attributes
-        var editText = button.getAttribute('data-bs-whatever')
-        // If necessary, you could initiate an AJAX request here
-        // and then do the updating in a callback.
-        //
-        // Update the modal's content.
-        var modalTitle = editModal.querySelector('.modal-title')
-        var modalBodyInput = editModal.querySelector('.modal-body input')
+        var categoryName = button.getAttribute('data-bs-categoryName')
+        var categoryId = button.getAttribute('data-bs-categoryId')
 
-        modalTitle.textContent = 'Zamień "' + editText + '"'
-        modalBodyInput.value = editText
+        var modalTitle = editModal.querySelector('.modal-title')
+        var modalCategoryName = editModal.querySelector('.modal-body #category-name')
+        var modalIdValue = editModal.querySelector('.modal-body #categoryId')
+
+        modalTitle.textContent = 'Zamień "' + categoryName + '"'
+        modalCategoryName.value = categoryName
+        modalIdValue.value = categoryId
     })
 }
 
@@ -144,12 +146,18 @@ function deleteModalIncome(name) {
     editModal.addEventListener('show.bs.modal', function (event) {
         // Button that triggered the modal
         var button = event.relatedTarget
-        // Extract info from data-bs-* attributes
-        var editText = button.getAttribute('data-bs-whatever')
+
+        var categoryName = button.getAttribute('data-bs-categoryName')
+        var categoryId = button.getAttribute('data-bs-categoryId')
 
         var modalTitle = editModal.querySelector('.modal-title')
 
-        modalTitle.textContent = 'Na pewno chcesz usunąć "' + editText + '"'
+        var modalCategoryName = editModal.querySelector('.modal-body #category-name')
+        var modalIdValue = editModal.querySelector('.modal-body #categoryId')
+
+        modalTitle.textContent = 'Na pewno chcesz usunąć "' + categoryName + '"'
+        modalCategoryName.value = categoryName
+        modalIdValue.value = categoryId
     })
 }
 
