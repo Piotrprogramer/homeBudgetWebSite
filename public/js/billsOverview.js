@@ -7,9 +7,9 @@ function show_content() {
     var x = document.getElementById("content");
 
     if (x.style.display === "none") {
-        $("#content").toggle();
-        $("#diagram-container").toggle();
-        $("#range-name").toggle();
+        $("#content").toggle(300);
+        $("#diagram-container").toggle(300);
+        $("#range-name").toggle(300);
     } else {
         $("#content").toggle();
         $("#diagram-container").toggle();

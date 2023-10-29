@@ -24,7 +24,6 @@ $.validator.addMethod('validPassword',
  * Add jQuery show/hide password function to toggle button
  * 
  */
-
 $(document).ready(function() {
     $("#show-password").change(function(){
         $(this).prop("checked") ?  $("#inputPassword").prop("type", "text") : $("#inputPassword").prop("type", "password");    

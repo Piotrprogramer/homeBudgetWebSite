@@ -224,7 +224,7 @@ class IncomeMenager extends \Core\Model
     public static function getIncomeList($id)
     {
         $sql = 
-        'SELECT name FROM 
+        'SELECT name,id FROM 
             incomes_category_assigned_to_users 
         WHERE 
             incomes_category_assigned_to_users.user_id = :id

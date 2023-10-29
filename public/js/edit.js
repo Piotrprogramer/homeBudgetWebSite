@@ -1,7 +1,38 @@
+
+/**
+ * Add jQuery Validation plugin method for a valid password
+ * 
+ * Valid passwords contain at least one letter and one number.
+ */
+$.validator.addMethod('validPassword',
+    function (value, element, param) {
+
+        if (value != '') {
+            if (value.match(/.*[a-z]+.*/i) == null) {
+                return false;
+            }
+            if (value.match(/.*\d+.*/) == null) {
+                return false;
+            }
+        }
+
+        return true;
+    },
+    'Musi zawierać conajmniej jedną cyfre'
+);
+
+/**
+ * Add jQuery show/hide password function to toggle button
+ * 
+ */
 $(document).ready(function () {
+    $("#show-password").change(function () {
+        $(this).prop("checked") ? $("#inputPassword").prop("type", "text") : $("#inputPassword").prop("type", "password");
+    });
+});
 
-    var userId = '{{ user.id }}';
 
+$(document).ready(function () {
     /**
      * Validate the form
      */
@@ -11,25 +42,19 @@ $(document).ready(function () {
             email: {
                 required: true,
                 email: true,
-                remote: {
-                    url: '/account/validate-email',
-                    data: {
-                        ignore_id: function () {
-                            return userId;
-                        }
-                    }
-                }
             },
             password: {
                 minlength: 6,
                 validPassword: true
+            },
+            messages: {
+                // Polish comment to action
+                password: {
+                    minlength: "Hasło powinno zawierać conajmniej 6 liter",
+                    validPassword: "Hasło nie poprawne"
+                }
             }
         },
-        messages: {
-            email: {
-                remote: 'email already taken'
-            }
-        }
     });
 
     /**
@@ -38,6 +63,160 @@ $(document).ready(function () {
     $('#inputPassword').hideShowPassword({
         show: false,
         innerToggle: 'focus'
+    });
+});
+
+function createList(div_name_of_list, data) {
+    $(div_name_of_list).html("");
+
+    for (let i = 0; i < data.length; i++) {
+
+        const li = document.createElement("li");
+        li.classList.add('list-group-item');
+
+        li.innerHTML =
+            "<span style='padding:50'>" + data[i].name + "</span>";
+        document.querySelector(div_name_of_list).appendChild(li);
+
+        const newButton = document.createElement('button');
+        newButton.classList.add('btn');
+        newButton.classList.add('btn-outline-success');
+        //newButton.classList.add('edit-button');
+        newButton.setAttribute("type", "button");
+        newButton.setAttribute("style", "text-align: right");
+
+
+        newButton.setAttribute("data-bs-toggle", "modal");
+        newButton.setAttribute("data-bs-target", "#editModal");
+        newButton.setAttribute("data-bs-whatever", data[i].name);
+
+        newButton.innerHTML = "<i class='fas fa-wrench fa-fw me-2'></i>Edytuj";
+
+        const newButton2 = document.createElement('button');
+        newButton2.classList.add('btn');
+        newButton2.classList.add('btn-outline-danger');
+        newButton2.setAttribute("type", "button");
+        newButton2.setAttribute("style", "text-align: right");
+        //newButton2.setAttribute("id", "delete-list");
+
+        newButton2.setAttribute("data-bs-toggle", "modal");
+        newButton2.setAttribute("data-bs-target", "#deleteModal");
+        newButton2.setAttribute("data-bs-whatever", data[i].name);
+
+        newButton2.innerHTML = "<i class='fas fa-trash-can fa-fw me-2'></i>Usuń";
+
+
+
+
+
+
+        li.appendChild(newButton2);
+        li.appendChild(newButton);
+
+
+    }
+    editModalIncome('editModal');
+    deleteModalIncome('deleteModal');
+
+}
+
+function editModalIncome(name) {
+    var editModal = document.getElementById(name)
+    editModal.addEventListener('show.bs.modal', function (event) {
+        // Button that triggered the modal
+        var button = event.relatedTarget
+        // Extract info from data-bs-* attributes
+        var editText = button.getAttribute('data-bs-whatever')
+        // If necessary, you could initiate an AJAX request here
+        // and then do the updating in a callback.
+        //
+        // Update the modal's content.
+        var modalTitle = editModal.querySelector('.modal-title')
+        var modalBodyInput = editModal.querySelector('.modal-body input')
+
+        modalTitle.textContent = 'Zamień "' + editText + '"'
+        modalBodyInput.value = editText
+    })
+}
+
+function deleteModalIncome(name) {
+    var editModal = document.getElementById(name)
+    editModal.addEventListener('show.bs.modal', function (event) {
+        // Button that triggered the modal
+        var button = event.relatedTarget
+        // Extract info from data-bs-* attributes
+        var editText = button.getAttribute('data-bs-whatever')
+
+        var modalTitle = editModal.querySelector('.modal-title')
+
+        modalTitle.textContent = 'Na pewno chcesz usunąć "' + editText + '"'
+    })
+}
+
+
+function createListtest(div_name_of_list, data) {
+    $(div_name_of_list).html("");
+
+    for (let i = 0; i < data.length; i++) {
+
+        const li = document.createElement("li");
+        li.classList.add('list-group-item');
+
+        li.innerHTML =
+            "<span style='padding:50'>" + data[i].name + "</span>";
+        document.querySelector(div_name_of_list).appendChild(li);
+
+        const newButton = document.createElement('button');
+        newButton.classList.add('btn');
+        newButton.classList.add('btn-outline-success');
+        newButton.setAttribute("type", "button");
+        newButton.setAttribute("style", "text-align: right");
+        newButton.setAttribute("id", "edit-list");
+        newButton.innerHTML = "<i class='fas fa-wrench fa-fw me-2'></i>Edytuj";
+
+        const newButton2 = document.createElement('button');
+        newButton2.classList.add('btn');
+        newButton2.classList.add('btn-outline-danger');
+        newButton2.setAttribute("type", "button");
+        newButton2.setAttribute("style", "text-align: right");
+        newButton2.setAttribute("id", "delete-list");
+        newButton2.innerHTML = "<i class='fas fa-trash-can fa-fw me-2'></i>Usuń";
+        li.appendChild(newButton2);
+        li.appendChild(newButton);
+    }
+}
+
+$(document).ready(function () {
+    $.ajax({
+        url: '/Income/getIncome',
+        method: 'POST',
+
+        success: function (response) {
+            createList("#formIncome", $.parseJSON(response));
+        }, error: function () {
+            alert('error: ');
+        }
+    });
+});
+
+$(document).ready(function () {
+    $.ajax({
+        url: '/Income/getIncome',
+        method: 'POST',
+
+        success: function (response) {
+            createList("#formExpense", $.parseJSON(response));
+        }, error: function () {
+            alert('error: ');
+        }
+    });
+});
+
+$(document).ready(function () {
+
+    $("#delete-list").click(function () {
+        alert("chyba jo");
+
     });
 });
 

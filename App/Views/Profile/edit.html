@@ -2,57 +2,16 @@
 
 {% block title %}Ustawienia{% endblock %}
 
+{% block header %}
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+
+{% endblock %}
+
 {% block footer %}
 <script src="/js/hideShowPassword.min.js"></script>
-<script src="/js/app.jss"></script>
 <script src="/js/edit.js"></script>
 
-<script>
-
-    function createList(div_name_of_list, data) {
-
-        $(div_name_of_list).html("");
-
-        i = 0;
-        for (let i = 0; i < data.length; i++) {
-            let position = i + 1;
-            const div = document.createElement("div");
-            div.classList.add('form-group');
-
-            div.innerHTML =
-                "<label for=" + data[i].name + ">Pozycja " + position + ":</label>"
-                + "<input id=" + data[i].name + " name=" + data[i].name + " placeholder=" + data[i].name + " value=" + data[i].name + " required class='form-control' />";
-
-            document.querySelector(div_name_of_list).appendChild(div);
-        }
-
-        const div = document.createElement("div");
-        div.classList.add('d-grid');
-        div.classList.add('mx-auto');
-        div.classList.add('edit');
-        div.style.width = "95%";
-
-        div.innerHTML =
-            "<button type='submit' class='btn btn-success'>Zapisz zmiany</button>";
-
-        document.querySelector(div_name_of_list).appendChild(div);
-    }
-
-    $(document).ready(function () {
-        $.ajax({
-            url: '/Income/getIncome',
-            method: 'POST',
-
-            success: function (response) {
-                createList("#formIncome", $.parseJSON(response));
-                //alert(response);
-            }, error: function () {
-                alert('error: ');
-            }
-        });
-    });
-
-</script>
 
 {% endblock %}
 
@@ -63,91 +22,106 @@
 {% if user.errors is not empty %}
 <p>Errors:</p>
 <ul>
-    {% for error in user.errors %}
-    <li>{{ error }}</li>
-    {% endfor %}
+  {% for error in user.errors %}
+  <li>{{ error }}</li>
+  {% endfor %}
 </ul>
 {% endif %}
 
 
-<button id="edit-profile" type="button" class="btn btn-primary" style="width:100%">Edytuj profil</button>
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Edytuj kategorie</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label for="recipient-name" class="col-form-label">Zamień na:</label>
+            <input type="text" class="form-control" id="recipient-name">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zamknij</button>
+        <button type="button" class="btn btn-primary">Aktualizuj</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Usuń kategorie</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zamknij</button>
+        <button type="button" class="btn btn-danger">Usuń</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!--<button type="button" class="btn btn-outline-success"><i class="fas fa-upload fa-fw me-4"></i>Edytuj</button>
+<button type="button" class="btn btn-outline-success"><i class="fas fa-wrench fa-fw me-4"></i>Edytuj</button>
+<button type="button" class="btn btn-outline-danger"><i class="fas fa-trash-can fa-fw me-4"></i>Usuń</button>
+-->
+
+
+
+
+
+
+<button id="edit-profile" type="button" class="btn btn-outline-primary" style="width:100%">Edytuj profil</button>
 <form method="post" id="formProfile" action="/profile/update" style="display:none">
 
-    <div class="form-group">
-        <label for="inputName">Imię</label>
-        <input id="inputName" name="name" placeholder="Name" value="{{ user.name }}" required class="form-control" />
-    </div>
-    <div class="form-group">
-        <label for="inputEmail">Email addres</label>
-        <input id="inputEmail" name="email" placeholder="email address" value="{{ user.email }}" required type="email"
-            class="form-control" />
-    </div>
-    <div class="form-group edit">
-        <label for="inputPassword">Hasło</label>
-        <input type="password" id="inputPassword" name="password" placeholder="Password" aria-describedby="helpBlock"
-            class="form-control" />
-        <span id="helpBlock" class="help-block">Zostaw puste hasło aby nie zmieniać obecnego</span>
-    </div>
+  <div class="form-group">
+    <label for="inputName">Name</label>
+    <input id="inputName" name="name" placeholder="Name" value="{{ user.name }}" required class="form-control" />
+  </div>
+  <div class="form-group">
+    <label for="inputEmail">Email address</label>
+    <input id="inputEmail" name="email" placeholder="email address" value="{{ user.email }}" required type="email"
+      class="form-control" />
+  </div>
+  <div class="form-group">
+    <label for="inputPassword">Password</label>
+    <input type="password" id="inputPassword" name="password" placeholder="Password" aria-describedby="helpBlock"
+      class="form-control" />
+    <span id="helpBlock" class="help-block">Zostaw puste hasło jeżeli nie chcesz go zmieniać</span>
+  </div>
 
-    <div class="d-grid mx-auto edit" style="width:95%">
-        <button type="submit" class="btn btn-success">Zapisz zmiany</button>
-    </div>
+  <input type="checkbox" id="show-password">
+  <label for="show-password">Show Password</label>
 
-</form>
-
-
-<button id="edit-income" type="button" class="btn btn-primary" style="width:100%">Edytuj liste przychodów</button>
-<form id="formIncome" method="post" action="#" style="display:none">
+  <div class="d-grid mx-auto edit" style="width:95%">
+    <button type="submit" class="btn btn-success">Zapisz zmiany</button>
+  </div>
 
 </form>
 
+<button id="edit-income" type="button" class="btn btn-outline-primary" style="width:100%">Edytuj liste
+  przychodów</button>
+<ul id="formIncome" class="list-group w-100" style="display:none"></ul>
 
-<button id="edit-expense" type="button" class="btn btn-primary" style="width:100%">Edytuj liste wydatków</button>
-<form method="post" id="formExpense" action="/profile/update" style="display:none">
+<button id="edit-expense" type="button" class="btn btn-outline-primary" style="width:100%">Edytuj liste
+  wydatków</button>
+<ul id="formExpense" class="list-group w-100" style="display:none"></ul>
 
-    <div class="form-group">
-        <label for="inputName">Name</label>
-        <input id="inputName" name="name" placeholder="Name" value="{{ user.name }}" required class="form-control" />
-    </div>
-    <div class="form-group">
-        <label for="inputEmail">Email address</label>
-        <input id="inputEmail" name="email" placeholder="email address" value="{{ user.email }}" required type="email"
-            class="form-control" />
-    </div>
-    <div class="form-group">
-        <label for="inputPassword">Password</label>
-        <input type="password" id="inputPassword" name="password" placeholder="Password" aria-describedby="helpBlock"
-            class="form-control" />
-        <span id="helpBlock" class="help-block">Leave blank to keep current password</span>
-    </div>
-    <div class="d-grid mx-auto edit" style="width:95%">
-        <button type="submit" class="btn btn-success">Zapisz zmiany</button>
-    </div>
-</form>
+<button id="edit-payment" type="button" class="btn btn-outline-primary" style="width:100%">Edytuj metody
+  płatności</button>
+<ul id="formPayment" class="list-group w-100" style="display:none"></ul>
 
 
-<button id="edit-payment" type="button" class="btn btn-primary" style="width:100%">Edytuj metody płatności</button>
-<form method="post" id="formPayment" action="/profile/update" style="display:none">
 
-    <div class="form-group">
-        <label for="inputName">Name</label>
-        <input id="inputName" name="name" placeholder="Name" value="{{ user.name }}" required class="form-control" />
-    </div>
-    <div class="form-group">
-        <label for="inputEmail">Email address</label>
-        <input id="inputEmail" name="email" placeholder="email address" value="{{ user.email }}" required type="email"
-            class="form-control" />
-    </div>
-    <div class="form-group">
-        <label for="inputPassword">Password</label>
-        <input type="password" id="inputPassword" name="password" placeholder="Password" aria-describedby="helpBlock"
-            class="form-control" />
-        <span id="helpBlock" class="help-block">Leave blank to keep current password</span>
-    </div>
-
-    <div class="d-grid mx-auto edit" style="width:95%">
-        <button type="submit" class="btn btn-success">Zapisz zmiany</button>
-    </div>
-</form>
 
 {% endblock %}

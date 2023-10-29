@@ -75,4 +75,11 @@ class Income extends Authenticated
             //exit;
         }
     }
+
+    public static function test()
+    {
+        echo 'test';
+        exit;
+  
+    }
 }
