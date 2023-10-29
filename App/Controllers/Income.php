@@ -68,18 +68,23 @@ class Income extends Authenticated
     public static function getIncome()
     {
         if (isset($_SESSION['user_id'])) {
-            //return IncomeMenager::getIncomeList($_SESSION['user_id']);
-            //var_dump(IncomeMenager::getIncomeList($_SESSION['user_id']));
-
             echo json_encode(IncomeMenager::getIncomeList($_SESSION['user_id']));
-            //exit;
         }
     }
-
-    public static function test()
+    
+    public function updateCategoryAction()
     {
-        echo 'test';
-        exit;
-  
+        if(IncomeMenager::updateCategory($_POST)) { 
+            
+            Flash::addMessage('Kategoria zmieniona poprawnie', Flash::SUCCESS);
+
+            View::renderTemplate('Profile/edit.html');
+
+        }else{
+
+            Flash::addMessage('Coś poszło nie tak', Flash::WARNING);
+
+            View::renderTemplate('Profile/edit.html');
+        }
     }
 }

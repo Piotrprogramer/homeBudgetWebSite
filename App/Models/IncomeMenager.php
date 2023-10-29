@@ -240,4 +240,30 @@ class IncomeMenager extends \Core\Model
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+
+    public static function updateCategory($data)
+    {
+
+     
+        
+        $sql = 
+            'UPDATE	
+                incomes_category_assigned_to_users	
+            SET	
+                incomes_category_assigned_to_users.name = :category
+            WHERE 
+                incomes_category_assigned_to_users.id = :id';
+        
+        $db = static::getDB();
+        
+        $stmt = $db->prepare($sql);
+
+        $stmt->bindValue(':category', $data["category-name"], PDO::PARAM_STMT);
+        $stmt->bindValue(':id', $data["categoryId"], PDO::PARAM_INT);
+
+
+        if($stmt->execute()) return true;
+        
+    }
 }

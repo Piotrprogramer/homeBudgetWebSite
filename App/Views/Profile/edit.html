@@ -36,17 +36,17 @@
         <h5 class="modal-title" id="editModalLabel">Edytuj kategorie</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <form>
+      <form method="post" action="/Income/updateCategory">
         <div class="modal-body">
           <div class="mb-3">
             <label for="category-name" class="col-form-label">Zamień na:</label>
-            <input type="text" class="form-control" id="category-name">
-            <input type="number" class="form-control" id="categoryId" disabled hidden>
+            <input type="text" class="form-control" id="category-name" name="category-name">
+            <input type="number" class="form-control" id="categoryId" name="categoryId" hidden>
           </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zamknij</button>
-          <button type="button" class="btn btn-primary">Aktualizuj</button>
+          <button type="submit" class="btn btn-primary">Aktualizuj</button>
         </div>
       </form>
     </div>
