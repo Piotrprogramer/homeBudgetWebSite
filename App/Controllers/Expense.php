@@ -72,4 +72,11 @@ class Expense extends Authenticated
             View::renderTemplate('Expense/newForm.html');
         }
     }
+
+    public static function getExpense()
+    {
+        if (isset($_SESSION['user_id'])) {
+            echo json_encode(ExpenseMenager::getExpenseList($_SESSION['user_id']));
+        }
+    }
 }

@@ -66,7 +66,7 @@ $(document).ready(function () {
     });
 });
 
-function createList(div_name_of_list, data) {
+function createList(div_name_of_list, data, edit, deleteM, addNew) {
     $(div_name_of_list).html("");
 
     for (let i = 0; i < data.length; i++) {
@@ -86,7 +86,7 @@ function createList(div_name_of_list, data) {
         newButton.setAttribute("style", "text-align: right");
 
         newButton.setAttribute("data-bs-toggle", "modal");
-        newButton.setAttribute("data-bs-target", "#editModal");
+        newButton.setAttribute("data-bs-target", '#' + edit);
         newButton.setAttribute("data-bs-categoryName", data[i].name);
         newButton.setAttribute("data-bs-categoryId", data[i].id);
 
@@ -99,7 +99,7 @@ function createList(div_name_of_list, data) {
         newButton2.setAttribute("style", "text-align: right");
 
         newButton2.setAttribute("data-bs-toggle", "modal");
-        newButton2.setAttribute("data-bs-target", "#deleteModal");
+        newButton2.setAttribute("data-bs-target", '#' + deleteM);
         newButton2.setAttribute("data-bs-categoryName", data[i].name);
         newButton2.setAttribute("data-bs-categoryId", data[i].id);
 
@@ -124,21 +124,21 @@ function createList(div_name_of_list, data) {
     newButton.setAttribute("style", "text-align: right");
 
     newButton.setAttribute("data-bs-toggle", "modal");
-    newButton.setAttribute("data-bs-target", "#addModal");
-    newButton.setAttribute("data-bs-target", "#addModal");
+    newButton.setAttribute("data-bs-target", '#' + addNew);
 
     newButton.innerHTML = "<i class='fas fa-square-plus fa-fw me-2'></i>Dodaj";
     li.appendChild(newButton);
 
-    editModalIncome('editModal');
-    deleteModalIncome('deleteModal');
-    addIncomeModal('addModal');
+    editModal(edit);
+    deleteModal(deleteM);
+    addModal(addNew);
 }
 
-function editModalIncome(name) {
+function editModal(name) {
     var editModal = document.getElementById(name)
     editModal.addEventListener('show.bs.modal', function (event) {
         var button = event.relatedTarget
+
         var categoryName = button.getAttribute('data-bs-categoryName')
         var categoryId = button.getAttribute('data-bs-categoryId')
 
@@ -152,7 +152,7 @@ function editModalIncome(name) {
     })
 }
 
-function deleteModalIncome(name) {
+function deleteModal(name) {
     var editModal = document.getElementById(name)
     editModal.addEventListener('show.bs.modal', function (event) {
         var button = event.relatedTarget
@@ -167,18 +167,10 @@ function deleteModalIncome(name) {
     })
 }
 
-function addIncomeModal(name) {
+function addModal(name) {
     var editModal = document.getElementById(name)
     editModal.addEventListener('show.bs.modal', function (event) {
-        //var button = event.relatedTarget
-
-        //var categoryName = button.getAttribute('data-bs-categoryName')
-        //var categoryId = button.getAttribute('data-bs-categoryId')
-        //var modalTitle = editModal.querySelector('.modal-title')
         var modalCategoryName = editModal.querySelector('.modal-body #newName')
-
-        //modalTitle.textContent = 'Na pewno chcesz usunąć "' + categoryName + '"'
-        //modalIdValue.value = categoryId
         modalCategoryName.value = ''
     })
 }
@@ -187,106 +179,80 @@ function addIncomeModal(name) {
 $(document).ready(function () {
     $("#updateIncome").button().click(function () {
 
-      var editForm = {
-        category_name: $("#category-name").val(),
-        categoryId: $("#categoryId").val(),
-      };
+        var editForm = {
+            category_name: $("#category-name").val(),
+            categoryId: $("#categoryId").val(),
+        };
 
-      $.ajax({
-        url: '/Income/updateCategory',
-        method: 'POST',
-        data: editForm,
-        dataType: "json",
-        encode: true,
-      });
+        $.ajax({
+            url: '/Income/updateCategory',
+            method: 'POST',
+            data: editForm,
+            dataType: "json",
+            encode: true,
+        });
 
-      $.ajax({
-        url: '/Income/getIncome',
-        method: 'POST',
+        $.ajax({
+            url: '/Income/getIncome',
+            method: 'POST',
 
-        success: function (response) {
-          createList("#formIncome", $.parseJSON(response));
-        }, error: function () {
-          alert('error: ');
-        }
-      });
+            success: function (response) {
+                createList("#formIncome", $.parseJSON(response), 'editModal', 'deleteModal', 'addModal');
+            }, error: function () {
+                alert('error: ');
+            }
+        });
     });
 
     $("#deleteIncome").button().click(function () {
 
-      var deleteForm = {
-        categoryId: $("#categoryDeleteId").val(),
-      };
-      $.ajax({
-        url: '/Income/deleteCategory',
-        method: 'POST',
-        data: deleteForm,
-        dataType: "json",
-        encode: true,
-      });
+        var deleteForm = {
+            categoryId: $("#categoryDeleteId").val(),
+        };
+        $.ajax({
+            url: '/Income/deleteCategory',
+            method: 'POST',
+            data: deleteForm,
+            dataType: "json",
+            encode: true,
+        });
 
-      $.ajax({
-        url: '/Income/getIncome',
-        method: 'POST',
+        $.ajax({
+            url: '/Income/getIncome',
+            method: 'POST',
 
-        success: function (response) {
-          createList("#formIncome", $.parseJSON(response));
-        }, error: function () {
-          alert('error: ');
-        }
-      });
+            success: function (response) {
+                createList("#formIncome", $.parseJSON(response), 'editModal', 'deleteModal', 'addModal');
+            }, error: function () {
+                alert('error: ');
+            }
+        });
     });
 
     $("#addNew").button().click(function () {
-      var addForm = {
-        categoryName: $("#newName").val(),
-      };
+        var addForm = {
+            categoryName: $("#newName").val(),
+        };
 
-      $.ajax({
-        url: '/Income/addCategory',
-        method: 'POST',
-        data: addForm,
-        dataType: "json",
-        encode: true,
+        $.ajax({
+            url: '/Income/addCategory',
+            method: 'POST',
+            data: addForm,
+            dataType: "json",
+            encode: true,
 
-      });
+        });
 
-      $.ajax({
-        url: '/Income/getIncome',
-        method: 'POST',
+        $.ajax({
+            url: '/Income/getIncome',
+            method: 'POST',
 
-        success: function (response) {
-          createList("#formIncome", $.parseJSON(response));
-        }, error: function () {
-          alert('error: ');
-        }
-      });
-    });
-  });
-  
-$(document).ready(function () {
-    $.ajax({
-        url: '/Income/getIncome',
-        method: 'POST',
-
-        success: function (response) {
-            createList("#formIncome", $.parseJSON(response));
-        }, error: function () {
-            alert('error: ');
-        }
-    });
-});
-
-$(document).ready(function () {
-    $.ajax({
-        url: '/Income/getIncome',
-        method: 'POST',
-
-        success: function (response) {
-            createList("#formExpense", $.parseJSON(response));
-        }, error: function () {
-            alert('error: ');
-        }
+            success: function (response) {
+                createList("#formIncome", $.parseJSON(response), 'editModal', 'deleteModal', 'addModal');
+            }, error: function () {
+                alert('error: ');
+            }
+        });
     });
 });
 

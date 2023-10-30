@@ -13,7 +13,30 @@
 <script>
 
 
+$(document).ready(function () {
+    $.ajax({
+        url: '/Income/getIncome',
+        method: 'POST',
 
+        success: function (response) {
+            createList("#formIncome", $.parseJSON(response), 'editModal','deleteModal','addModal');
+        }, error: function () {
+            alert('error: ');
+        }
+    });
+
+    $.ajax({
+        url: '/Expense/getExpense',
+        method: 'POST',
+
+        success: function (response) {
+            createList("#formExpense", $.parseJSON(response), 'editExpense','deleteExpense','addExpense');
+        }, error: function () {
+            alert('error: ');
+        }
+    });
+
+});
 </script>
 {% endblock %}
 
@@ -44,7 +67,7 @@
         <div class="modal-body">
           <div class="mb-3">
             <label for="category-name" class="col-form-label">Zamień na:</label>
-            <input type="text" class="form-control" id="category-name" name="category-name">
+            <input type="text" class="form-control" id="category-name" name="category-name" required>
             <input type="number" class="form-control" id="categoryId" name="categoryId" hidden>
           </div>
         </div>
@@ -90,12 +113,84 @@
         <div class="modal-body">
           <div class="mb-3">
             <label for="newName" class="col-form-label">Dodaj nową kategorie:</label>
-            <input type="text" class="form-control" id="newName" name="newName">
+            <input type="text" class="form-control" id="newName" name="newName" required>
           </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zamknij</button>
           <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="addNew">Dodaj</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Edit expense -->
+<div class="modal fade" id="editExpense" tabindex="-1" aria-labelledby="editExpenseLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editExpenseLabel">Edytuj kategorie</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="category-name" class="col-form-label">Zamień na:</label>
+            <input type="text" class="form-control" id="category-name" name="category-name" required>
+            <input type="number" class="form-control" id="categoryId" name="categoryId" hidden>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zamknij</button>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="updateExpense">Aktualizuj</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Delete expense -->
+<div class="modal fade" id="deleteExpense" tabindex="-1" aria-labelledby="deleteExpenseLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteExpenseLabel">Usuń kategorie</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form>
+        <div class="modal-body" hidden>
+          <div class="mb-3">
+            <input type="number" class="form-control" id="categoryDeleteId" name="categoryDeleteId">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zamknij</button>
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="deleteExpenseButton">Usuń</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Add expense -->
+<div class="modal fade" id="addExpense" tabindex="-1" aria-labelledby="addExpenseLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addExpenseLabel">Dodaj</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="newName" class="col-form-label">Dodaj nową kategorie:</label>
+            <input type="text" class="form-control" id="newName" name="newName" required>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zamknij</button>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="addExpenseButton">Dodaj</button>
         </div>
       </form>
     </div>

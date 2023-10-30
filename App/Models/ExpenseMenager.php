@@ -367,4 +367,22 @@ class ExpenseMenager extends \Core\Model
         } else
             return false;
     }
+
+    public static function getExpenseList($id)
+    {
+        $sql = 
+        'SELECT name,id FROM 
+            expenses_category_assigned_to_users 
+        WHERE 
+            expenses_category_assigned_to_users.user_id = :id
+        ';
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
