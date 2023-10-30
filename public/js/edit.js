@@ -85,7 +85,6 @@ function createList(div_name_of_list, data) {
         newButton.setAttribute("type", "button");
         newButton.setAttribute("style", "text-align: right");
 
-
         newButton.setAttribute("data-bs-toggle", "modal");
         newButton.setAttribute("data-bs-target", "#editModal");
         newButton.setAttribute("data-bs-categoryName", data[i].name);
@@ -98,7 +97,6 @@ function createList(div_name_of_list, data) {
         newButton2.classList.add('btn-outline-danger');
         newButton2.setAttribute("type", "button");
         newButton2.setAttribute("style", "text-align: right");
-        //newButton2.setAttribute("id", "delete-list");
 
         newButton2.setAttribute("data-bs-toggle", "modal");
         newButton2.setAttribute("data-bs-target", "#deleteModal");
@@ -107,26 +105,39 @@ function createList(div_name_of_list, data) {
 
         newButton2.innerHTML = "<i class='fas fa-trash-can fa-fw me-2'></i>Usuń";
 
-
-
-
-
-
         li.appendChild(newButton2);
         li.appendChild(newButton);
-
-
     }
+
+    const li = document.createElement("li");
+    li.classList.add('list-group-item');
+
+    li.innerHTML =
+        "<span style='padding:50'></span>";
+    document.querySelector(div_name_of_list).appendChild(li);
+
+    const newButton = document.createElement('button');
+    newButton.classList.add('btn');
+    newButton.classList.add('btn-outline-success');
+
+    newButton.setAttribute("type", "button");
+    newButton.setAttribute("style", "text-align: right");
+
+    newButton.setAttribute("data-bs-toggle", "modal");
+    newButton.setAttribute("data-bs-target", "#addModal");
+
+    newButton.innerHTML = "<i class='fas fa-square-plus fa-fw me-2'></i>Dodaj";
+    li.appendChild(newButton);
+
     editModalIncome('editModal');
     deleteModalIncome('deleteModal');
+     //addIncomeModal('addIncome');
 }
 
 function editModalIncome(name) {
     var editModal = document.getElementById(name)
     editModal.addEventListener('show.bs.modal', function (event) {
-        // Button that triggered the modal
         var button = event.relatedTarget
-        // Extract info from data-bs-* attributes
         var categoryName = button.getAttribute('data-bs-categoryName')
         var categoryId = button.getAttribute('data-bs-categoryId')
 
@@ -143,56 +154,114 @@ function editModalIncome(name) {
 function deleteModalIncome(name) {
     var editModal = document.getElementById(name)
     editModal.addEventListener('show.bs.modal', function (event) {
-        // Button that triggered the modal
         var button = event.relatedTarget
 
         var categoryName = button.getAttribute('data-bs-categoryName')
         var categoryId = button.getAttribute('data-bs-categoryId')
-
         var modalTitle = editModal.querySelector('.modal-title')
-
-        //var modalCategoryName = editModal.querySelector('.modal-body #category-name')
         var modalIdValue = editModal.querySelector('.modal-body #categoryDeleteId')
 
         modalTitle.textContent = 'Na pewno chcesz usunąć "' + categoryName + '"'
-        //modalCategoryName.value = categoryName
         modalIdValue.value = categoryId
     })
 }
+/*
+function addIncomeModal(name) {
+    var editModal = document.getElementById(name)
+    editModal.addEventListener('show.bs.modal', function (event) {
+        var button = event.relatedTarget
+
+        var categoryName = button.getAttribute('data-bs-categoryName')
+        var categoryId = button.getAttribute('data-bs-categoryId')
+        var modalTitle = editModal.querySelector('.modal-title')
+        var modalIdValue = editModal.querySelector('.modal-body #categoryDeleteId')
+
+        modalTitle.textContent = 'Na pewno chcesz usunąć "' + categoryName + '"'
+        modalIdValue.value = categoryId
+    })
+}*/
 
 
-function createListtest(div_name_of_list, data) {
-    $(div_name_of_list).html("");
+$(document).ready(function () {
+    $("#updateIncome").button().click(function () {
 
-    for (let i = 0; i < data.length; i++) {
+      var editForm = {
+        category_name: $("#category-name").val(),
+        categoryId: $("#categoryId").val(),
+      };
 
-        const li = document.createElement("li");
-        li.classList.add('list-group-item');
+      $.ajax({
+        url: '/Income/updateCategory',
+        method: 'POST',
+        data: editForm,
+        dataType: "json",
+        encode: true,
+      });
 
-        li.innerHTML =
-            "<span style='padding:50'>" + data[i].name + "</span>";
-        document.querySelector(div_name_of_list).appendChild(li);
+      $.ajax({
+        url: '/Income/getIncome',
+        method: 'POST',
 
-        const newButton = document.createElement('button');
-        newButton.classList.add('btn');
-        newButton.classList.add('btn-outline-success');
-        newButton.setAttribute("type", "button");
-        newButton.setAttribute("style", "text-align: right");
-        newButton.setAttribute("id", "edit-list");
-        newButton.innerHTML = "<i class='fas fa-wrench fa-fw me-2'></i>Edytuj";
+        success: function (response) {
+          createList("#formIncome", $.parseJSON(response));
+        }, error: function () {
+          alert('error: ');
+        }
+      });
+    });
 
-        const newButton2 = document.createElement('button');
-        newButton2.classList.add('btn');
-        newButton2.classList.add('btn-outline-danger');
-        newButton2.setAttribute("type", "button");
-        newButton2.setAttribute("style", "text-align: right");
-        newButton2.setAttribute("id", "delete-list");
-        newButton2.innerHTML = "<i class='fas fa-trash-can fa-fw me-2'></i>Usuń";
-        li.appendChild(newButton2);
-        li.appendChild(newButton);
-    }
-}
+    $("#deleteIncome").button().click(function () {
 
+      var deleteForm = {
+        categoryId: $("#categoryDeleteId").val(),
+      };
+      $.ajax({
+        url: '/Income/deleteCategory',
+        method: 'POST',
+        data: deleteForm,
+        dataType: "json",
+        encode: true,
+      });
+
+      $.ajax({
+        url: '/Income/getIncome',
+        method: 'POST',
+
+        success: function (response) {
+          createList("#formIncome", $.parseJSON(response));
+        }, error: function () {
+          alert('error: ');
+        }
+      });
+    });
+
+    $("#addNew").button().click(function () {
+      var addForm = {
+        categoryName: $("#newName").val(),
+      };
+
+      $.ajax({
+        url: '/Income/addCategory',
+        method: 'POST',
+        data: addForm,
+        dataType: "json",
+        encode: true,
+
+      });
+
+      $.ajax({
+        url: '/Income/getIncome',
+        method: 'POST',
+
+        success: function (response) {
+          createList("#formIncome", $.parseJSON(response));
+        }, error: function () {
+          alert('error: ');
+        }
+      });
+    });
+  });
+  
 $(document).ready(function () {
     $.ajax({
         url: '/Income/getIncome',

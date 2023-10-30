@@ -30,8 +30,8 @@ class Income extends Authenticated
      * @return void
      */
     public function getUserCategoryAction()
-    {   
-        if(IncomeMenager::isEmptyUserArray()){
+    {
+        if (IncomeMenager::isEmptyUserArray()) {
             IncomeMenager::copyDefaultCategory();
         }
         echo IncomeMenager::incomeAsignetToUser();
@@ -46,13 +46,13 @@ class Income extends Authenticated
     {
         $Income = new IncomeMenager($_POST);
 
-        if($Income->save()){
-            
+        if ($Income->save()) {
+
             Flash::addMessage('Przychód dodany poprawnie', Flash::SUCCESS);
 
             View::renderTemplate('Home/index.html');
 
-        }else{
+        } else {
 
             Flash::addMessage('Coś poszło nie tak', Flash::WARNING);
 
@@ -71,14 +71,29 @@ class Income extends Authenticated
             echo json_encode(IncomeMenager::getIncomeList($_SESSION['user_id']));
         }
     }
-    
+
     public function updateCategoryAction()
     {
-        if(IncomeMenager::updateCategory($_POST)) echo json_encode('all good');
+        if (isset($_SESSION['user_id'])) {
+            if (IncomeMenager::updateCategory($_POST))
+                echo json_encode('all good');
+        }
     }
 
     public function deleteCategoryAction()
     {
-        if(IncomeMenager::deleteCategory($_POST)) echo json_encode('all good');
+        if (isset($_SESSION['user_id'])) {
+            if (IncomeMenager::deleteCategory($_POST))
+                echo json_encode('all good');
+        }
+    }
+
+    public function addCategoryAction()
+    {
+        if (isset($_SESSION['user_id'])) {
+            if (IncomeMenager::addCategory($_POST)) {
+                echo json_encode('all good');
+            }
+        }
     }
 }

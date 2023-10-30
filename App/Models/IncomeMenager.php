@@ -277,4 +277,23 @@ class IncomeMenager extends \Core\Model
 
         if($stmt->execute()) return true;
     }
+
+    public static function addCategory($data)
+    {  
+        $sql = 
+            'INSERT INTO 
+                incomes_category_assigned_to_users(user_id, name) 
+            VALUES 
+                (:id , :newCategory)';
+        
+        $db = static::getDB();
+        
+        $stmt = $db->prepare($sql);
+
+        $stmt->bindValue(':newCategory', $data["categoryName"], PDO::PARAM_STMT);
+        $stmt->bindValue(':id', $_SESSION['user_id'], PDO::PARAM_INT);
+
+        if($stmt->execute()) return true;
+    }
+    
 }

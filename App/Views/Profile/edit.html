@@ -11,59 +11,6 @@
 <script src="/js/edit.js"></script>
 
 <script>
-  $(document).ready(function () {
-    $("#updateIncome").button().click(function () {
-
-      var editForm = {
-        category_name: $("#category-name").val(),
-        categoryId: $("#categoryId").val(),
-      };
-
-      $.ajax({
-        url: '/Income/updateCategory',
-        method: 'POST',
-        data: editForm,
-        dataType: "json",
-        encode: true,
-      });
-
-      $.ajax({
-        url: '/Income/getIncome',
-        method: 'POST',
-
-        success: function (response) {
-          createList("#formIncome", $.parseJSON(response));
-        }, error: function () {
-          alert('error: ');
-        }
-      });
-    });
-
-    $("#deleteIncome").button().click(function () {
-
-      var deleteForm = {
-        categoryId: $("#categoryDeleteId").val(),
-      };
-      $.ajax({
-        url: '/Income/deleteCategory',
-        method: 'POST',
-        data: deleteForm,
-        dataType: "json",
-        encode: true,
-      });
-
-      $.ajax({
-        url: '/Income/getIncome',
-        method: 'POST',
-
-        success: function (response) {
-          createList("#formIncome", $.parseJSON(response));
-        }, error: function () {
-          alert('error: ');
-        }
-      });
-    });
-  });
 
 
 
@@ -93,7 +40,7 @@
         <h5 class="modal-title" id="editModalLabel">Edytuj kategorie</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <form >
+      <form>
         <div class="modal-body">
           <div class="mb-3">
             <label for="category-name" class="col-form-label">Zamień na:</label>
@@ -120,74 +67,40 @@
       <form>
         <div class="modal-body" hidden>
           <div class="mb-3">
-            <input type="number" class="form-control" id="categoryDeleteId" name="categoryDeleteId" >
+            <input type="number" class="form-control" id="categoryDeleteId" name="categoryDeleteId">
           </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zamknij</button>
-          <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="deleteIncome" >Usuń</button>
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="deleteIncome">Usuń</button>
         </div>
       </form>
     </div>
   </div>
 </div>
 
-
-<div class="modal fade" id="editModalExpense" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+<div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addIncomelLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="editModalLabel">Edytuj kategorie</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <form >
-        <div class="modal-body">
-          <div class="mb-3">
-            <label for="category-name" class="col-form-label">Zamień na:</label>
-            <input type="text" class="form-control" id="expense_name" name="expense_name">
-            <input type="number" class="form-control" id="expenseId" name="expenseId" hidden>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zamknij</button>
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="updateExprnse">Aktualizuj</button>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
-
-<div class="modal fade" id="deleteModalExpense" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="deleteModalLabel">Usuń kategorie</h5>
+        <h5 class="modal-title" id="addIncomelLabel">Dodaj</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <form>
-        <div class="modal-body" hidden>
+        <div class="modal-body">
           <div class="mb-3">
-            <input type="number" class="form-control" id="expenseIddelete" name="expenseIddelete" hidden>
+            <label for="newName" class="col-form-label">Dodaj nową kategorie:</label>
+            <input type="text" class="form-control" id="newName" name="newName">
           </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zamknij</button>
-          <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="deleteExprnse" >Usuń</button>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="addNew">Dodaj</button>
         </div>
       </form>
     </div>
   </div>
 </div>
-
-
-<!--<button type="button" class="btn btn-outline-success"><i class="fas fa-upload fa-fw me-4"></i>Edytuj</button>
-<button type="button" class="btn btn-outline-success"><i class="fas fa-wrench fa-fw me-4"></i>Edytuj</button>
-<button type="button" class="btn btn-outline-danger"><i class="fas fa-trash-can fa-fw me-4"></i>Usuń</button>
--->
-
-
-
-
 
 
 <button id="edit-profile" type="button" class="btn btn-outline-primary" style="width:100%">Edytuj profil</button>
