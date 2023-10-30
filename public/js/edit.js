@@ -119,7 +119,6 @@ function createList(div_name_of_list, data) {
     }
     editModalIncome('editModal');
     deleteModalIncome('deleteModal');
-
 }
 
 function editModalIncome(name) {
@@ -152,11 +151,11 @@ function deleteModalIncome(name) {
 
         var modalTitle = editModal.querySelector('.modal-title')
 
-        var modalCategoryName = editModal.querySelector('.modal-body #category-name')
-        var modalIdValue = editModal.querySelector('.modal-body #categoryId')
+        //var modalCategoryName = editModal.querySelector('.modal-body #category-name')
+        var modalIdValue = editModal.querySelector('.modal-body #categoryDeleteId')
 
         modalTitle.textContent = 'Na pewno chcesz usunąć "' + categoryName + '"'
-        modalCategoryName.value = categoryName
+        //modalCategoryName.value = categoryName
         modalIdValue.value = categoryId
     })
 }
@@ -217,14 +216,6 @@ $(document).ready(function () {
         }, error: function () {
             alert('error: ');
         }
-    });
-});
-
-$(document).ready(function () {
-
-    $("#delete-list").click(function () {
-        alert("chyba jo");
-
     });
 });
 

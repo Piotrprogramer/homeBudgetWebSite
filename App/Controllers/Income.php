@@ -74,17 +74,11 @@ class Income extends Authenticated
     
     public function updateCategoryAction()
     {
-        if(IncomeMenager::updateCategory($_POST)) { 
-            
-            Flash::addMessage('Kategoria zmieniona poprawnie', Flash::SUCCESS);
+        if(IncomeMenager::updateCategory($_POST)) echo json_encode('all good');
+    }
 
-            View::renderTemplate('Profile/edit.html');
-
-        }else{
-
-            Flash::addMessage('Coś poszło nie tak', Flash::WARNING);
-
-            View::renderTemplate('Profile/edit.html');
-        }
+    public function deleteCategoryAction()
+    {
+        if(IncomeMenager::deleteCategory($_POST)) echo json_encode('all good');
     }
 }

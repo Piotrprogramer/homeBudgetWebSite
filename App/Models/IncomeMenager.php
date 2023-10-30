@@ -234,8 +234,6 @@ class IncomeMenager extends \Core\Model
         $stmt = $db->prepare($sql);
         $stmt->bindValue(':id', $id, PDO::PARAM_INT);
 
-        //$stmt->setFetchMode(PDO::FETCH_CLASS, get_called_class());
-
         $stmt->execute();
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -243,10 +241,7 @@ class IncomeMenager extends \Core\Model
 
 
     public static function updateCategory($data)
-    {
-
-     
-        
+    {  
         $sql = 
             'UPDATE	
                 incomes_category_assigned_to_users	
@@ -259,11 +254,27 @@ class IncomeMenager extends \Core\Model
         
         $stmt = $db->prepare($sql);
 
-        $stmt->bindValue(':category', $data["category-name"], PDO::PARAM_STMT);
+        $stmt->bindValue(':category', $data["category_name"], PDO::PARAM_STMT);
         $stmt->bindValue(':id', $data["categoryId"], PDO::PARAM_INT);
-
 
         if($stmt->execute()) return true;
         
+    }
+
+    public static function deleteCategory($data)
+    {  
+        $sql = 
+            'DELETE FROM 
+                incomes_category_assigned_to_users 
+            WHERE 
+                incomes_category_assigned_to_users.id = :id';
+        
+        $db = static::getDB();
+        
+        $stmt = $db->prepare($sql);
+
+        $stmt->bindValue(':id', $data["categoryId"], PDO::PARAM_INT);
+
+        if($stmt->execute()) return true;
     }
 }
