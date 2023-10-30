@@ -125,13 +125,14 @@ function createList(div_name_of_list, data) {
 
     newButton.setAttribute("data-bs-toggle", "modal");
     newButton.setAttribute("data-bs-target", "#addModal");
+    newButton.setAttribute("data-bs-target", "#addModal");
 
     newButton.innerHTML = "<i class='fas fa-square-plus fa-fw me-2'></i>Dodaj";
     li.appendChild(newButton);
 
     editModalIncome('editModal');
     deleteModalIncome('deleteModal');
-     //addIncomeModal('addIncome');
+    addIncomeModal('addModal');
 }
 
 function editModalIncome(name) {
@@ -165,21 +166,22 @@ function deleteModalIncome(name) {
         modalIdValue.value = categoryId
     })
 }
-/*
+
 function addIncomeModal(name) {
     var editModal = document.getElementById(name)
     editModal.addEventListener('show.bs.modal', function (event) {
-        var button = event.relatedTarget
+        //var button = event.relatedTarget
 
-        var categoryName = button.getAttribute('data-bs-categoryName')
-        var categoryId = button.getAttribute('data-bs-categoryId')
-        var modalTitle = editModal.querySelector('.modal-title')
-        var modalIdValue = editModal.querySelector('.modal-body #categoryDeleteId')
+        //var categoryName = button.getAttribute('data-bs-categoryName')
+        //var categoryId = button.getAttribute('data-bs-categoryId')
+        //var modalTitle = editModal.querySelector('.modal-title')
+        var modalCategoryName = editModal.querySelector('.modal-body #newName')
 
-        modalTitle.textContent = 'Na pewno chcesz usunąć "' + categoryName + '"'
-        modalIdValue.value = categoryId
+        //modalTitle.textContent = 'Na pewno chcesz usunąć "' + categoryName + '"'
+        //modalIdValue.value = categoryId
+        modalCategoryName.value = ''
     })
-}*/
+}
 
 
 $(document).ready(function () {
