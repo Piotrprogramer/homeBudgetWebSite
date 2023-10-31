@@ -315,7 +315,7 @@ class ExpenseMenager extends \Core\Model
         }
     }
 
-        /**
+    /**
      * Past defoult income category to user category
      *
      * @return void  

@@ -11,7 +11,7 @@
 <script src="/js/edit.js"></script>
 
 <script>
-/*
+
   $(document).ready(function () {
     $("#updatePayment").button().click(function () {
 
@@ -21,7 +21,7 @@
       };
 
       $.ajax({
-        url: '/Expense/updateCategory',
+        url: '/Payment/updateCategory',
         method: 'POST',
         data: editForm,
         dataType: "json",
@@ -29,12 +29,12 @@
       });
 
       $.ajax({
-        url: '/Expense/getExpense',
+        url: '/Payment/getPayment',
         method: 'POST',
 
         success: function (response) {
-          createList("#formExpense", $.parseJSON(response), 'editModal', 'deleteModal', 'addModal',
-            'edit_ex', 'delete_ex', 'add_ex');
+          createList("#formPayment", $.parseJSON(response), 'editModal', 'deleteModal', 'addModal',
+            'edit_py', 'delete_py', 'add_py');
         }, error: function () {
           alert('error: ');
         }
@@ -47,7 +47,7 @@
         categoryId: $("#categoryDeleteId").val(),
       };
       $.ajax({
-        url: '/Expense/deleteCategory',
+        url: '/Payment/deleteCategory',
         method: 'POST',
         data: deleteForm,
         dataType: "json",
@@ -55,12 +55,12 @@
       });
 
       $.ajax({
-        url: '/Expense/getExpense',
+        url: '/Payment/getPayment',
         method: 'POST',
 
         success: function (response) {
-          createList("#formExpense", $.parseJSON(response), 'editModal', 'deleteModal', 'addModal',
-            'edit_ex', 'delete_ex', 'add_ex');
+          createList("#formPayment", $.parseJSON(response), 'editModal', 'deleteModal', 'addModal',
+            'edit_py', 'delete_py', 'add_py');
         }, error: function () {
           alert('error: ');
         }
@@ -73,7 +73,7 @@
       };
 
       $.ajax({
-        url: '/Expense/addCategory',
+        url: '/Payment/addCategory',
         method: 'POST',
         data: addForm,
         dataType: "json",
@@ -82,19 +82,19 @@
       });
 
       $.ajax({
-        url: '/Expense/getExpense',
+        url: '/Payment/getPayment',
         method: 'POST',
 
         success: function (response) {
-          createList("#formExpense", $.parseJSON(response), 'editModal', 'deleteModal', 'addModal',
-            'edit_ex', 'delete_ex', 'add_ex');
+          createList("#formPayment", $.parseJSON(response), 'editModal', 'deleteModal', 'addModal',
+            'edit_py', 'delete_py', 'add_py');
         }, error: function () {
           alert('error: ');
         }
       });
     });
   });
-  */
+
 </script>
 {% endblock %}
 

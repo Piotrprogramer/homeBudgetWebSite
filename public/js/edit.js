@@ -91,6 +91,18 @@ $(document).ready(function () {
         }
     });
 
+    $.ajax({
+        url: '/Payment/getPayment',
+        method: 'POST',
+
+        success: function (response) {
+            createList("#formPayment", $.parseJSON(response), 'editModal', 'deleteModal', 'addModal',
+                'edit_py', 'delete_py', 'add_py');
+        }, error: function () {
+            alert('error: ');
+        }
+    });
+
 });
 
 function createList(div_name_of_list, data, edit, deleteM, addNew, button_edit, button_delete, button_add) {
