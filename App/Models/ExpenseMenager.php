@@ -385,4 +385,60 @@ class ExpenseMenager extends \Core\Model
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public static function updateCategory($data)
+    {  
+        $sql = 
+        'UPDATE	
+            expenses_category_assigned_to_users	
+        SET	
+            expenses_category_assigned_to_users.name = :category
+        WHERE 
+            expenses_category_assigned_to_users.id = :id';
+        
+        $db = static::getDB();
+        
+        $stmt = $db->prepare($sql);
+
+        $stmt->bindValue(':category', $data["category_name"], PDO::PARAM_STMT);
+        $stmt->bindValue(':id', $data["categoryId"], PDO::PARAM_INT);
+
+        if($stmt->execute()) return true;
+        
+    }
+
+    public static function deleteCategory($data)
+    {  
+        $sql = 
+            'DELETE FROM 
+                expenses_category_assigned_to_users 
+            WHERE 
+                expenses_category_assigned_to_users.id = :id';
+        
+        $db = static::getDB();
+        
+        $stmt = $db->prepare($sql);
+
+        $stmt->bindValue(':id', $data["categoryId"], PDO::PARAM_INT);
+
+        if($stmt->execute()) return true;
+    }
+
+    public static function addCategory($data)
+    {  
+        $sql = 
+            'INSERT INTO 
+                expenses_category_assigned_to_users(user_id, name) 
+            VALUES 
+                (:id , :newCategory)';
+        
+        $db = static::getDB();
+        
+        $stmt = $db->prepare($sql);
+
+        $stmt->bindValue(':newCategory', $data["categoryName"], PDO::PARAM_STMT);
+        $stmt->bindValue(':id', $_SESSION['user_id'], PDO::PARAM_INT);
+
+        if($stmt->execute()) return true;
+    }
 }

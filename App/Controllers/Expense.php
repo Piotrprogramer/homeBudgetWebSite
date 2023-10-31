@@ -79,4 +79,29 @@ class Expense extends Authenticated
             echo json_encode(ExpenseMenager::getExpenseList($_SESSION['user_id']));
         }
     }
+
+    public function updateCategoryAction()
+    {
+        if (isset($_SESSION['user_id'])) {
+            if (ExpenseMenager::updateCategory($_POST))
+                echo json_encode('all good');
+        }
+    }
+
+    public function deleteCategoryAction()
+    {
+        if (isset($_SESSION['user_id'])) {
+            if (ExpenseMenager::deleteCategory($_POST))
+                echo json_encode('all good');
+        }
+    }
+
+    public function addCategoryAction()
+    {
+        if (isset($_SESSION['user_id'])) {
+            if (ExpenseMenager::addCategory($_POST)) {
+                echo json_encode('all good');
+            }
+        }
+    }
 }

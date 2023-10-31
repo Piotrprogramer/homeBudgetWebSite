@@ -11,32 +11,90 @@
 <script src="/js/edit.js"></script>
 
 <script>
+/*
+  $(document).ready(function () {
+    $("#updatePayment").button().click(function () {
 
+      var editForm = {
+        category_name: $("#category-name").val(),
+        categoryId: $("#categoryId").val(),
+      };
 
-$(document).ready(function () {
-    $.ajax({
-        url: '/Income/getIncome',
+      $.ajax({
+        url: '/Expense/updateCategory',
         method: 'POST',
+        data: editForm,
+        dataType: "json",
+        encode: true,
+      });
 
-        success: function (response) {
-            createList("#formIncome", $.parseJSON(response), 'editModal','deleteModal','addModal');
-        }, error: function () {
-            alert('error: ');
-        }
-    });
-
-    $.ajax({
+      $.ajax({
         url: '/Expense/getExpense',
         method: 'POST',
 
         success: function (response) {
-            createList("#formExpense", $.parseJSON(response), 'editExpense','deleteExpense','addExpense');
+          createList("#formExpense", $.parseJSON(response), 'editModal', 'deleteModal', 'addModal',
+            'edit_ex', 'delete_ex', 'add_ex');
         }, error: function () {
-            alert('error: ');
+          alert('error: ');
         }
+      });
     });
 
-});
+    $("#deletePaymentButton").button().click(function () {
+
+      var deleteForm = {
+        categoryId: $("#categoryDeleteId").val(),
+      };
+      $.ajax({
+        url: '/Expense/deleteCategory',
+        method: 'POST',
+        data: deleteForm,
+        dataType: "json",
+        encode: true,
+      });
+
+      $.ajax({
+        url: '/Expense/getExpense',
+        method: 'POST',
+
+        success: function (response) {
+          createList("#formExpense", $.parseJSON(response), 'editModal', 'deleteModal', 'addModal',
+            'edit_ex', 'delete_ex', 'add_ex');
+        }, error: function () {
+          alert('error: ');
+        }
+      });
+    });
+
+    $("#addPayButton").button().click(function () {
+      var addForm = {
+        categoryName: $("#newName").val(),
+      };
+
+      $.ajax({
+        url: '/Expense/addCategory',
+        method: 'POST',
+        data: addForm,
+        dataType: "json",
+        encode: true,
+
+      });
+
+      $.ajax({
+        url: '/Expense/getExpense',
+        method: 'POST',
+
+        success: function (response) {
+          createList("#formExpense", $.parseJSON(response), 'editModal', 'deleteModal', 'addModal',
+            'edit_ex', 'delete_ex', 'add_ex');
+        }, error: function () {
+          alert('error: ');
+        }
+      });
+    });
+  });
+  */
 </script>
 {% endblock %}
 
@@ -73,7 +131,11 @@ $(document).ready(function () {
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zamknij</button>
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="updateIncome">Aktualizuj</button>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="updateIncome">Aktualizuj IN</button>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="updateExpense">Aktualizuj
+            EX</button>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="updatePayment">Aktualizuj
+            PY</button>
         </div>
       </form>
     </div>
@@ -95,7 +157,9 @@ $(document).ready(function () {
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zamknij</button>
-          <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="deleteIncome">Usuń</button>
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="deleteIncome">Usuń IN</button>
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="deleteExpenseButton">Usuń EX</button>
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="deletePaymentButton">Usuń PY</button>
         </div>
       </form>
     </div>
@@ -118,85 +182,14 @@ $(document).ready(function () {
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zamknij</button>
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="addNew">Dodaj</button>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="addNew">Dodaj IN</button>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="addExpenseButton">Dodaj EX</button>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="addPayButton">Dodaj PY</button>
         </div>
       </form>
     </div>
   </div>
 </div>
-
-<!-- Edit expense -->
-<div class="modal fade" id="editExpense" tabindex="-1" aria-labelledby="editExpenseLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="editExpenseLabel">Edytuj kategorie</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <form>
-        <div class="modal-body">
-          <div class="mb-3">
-            <label for="category-name" class="col-form-label">Zamień na:</label>
-            <input type="text" class="form-control" id="category-name" name="category-name" required>
-            <input type="number" class="form-control" id="categoryId" name="categoryId" hidden>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zamknij</button>
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="updateExpense">Aktualizuj</button>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
-
-<!-- Delete expense -->
-<div class="modal fade" id="deleteExpense" tabindex="-1" aria-labelledby="deleteExpenseLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="deleteExpenseLabel">Usuń kategorie</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <form>
-        <div class="modal-body" hidden>
-          <div class="mb-3">
-            <input type="number" class="form-control" id="categoryDeleteId" name="categoryDeleteId">
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zamknij</button>
-          <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="deleteExpenseButton">Usuń</button>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
-
-<!-- Add expense -->
-<div class="modal fade" id="addExpense" tabindex="-1" aria-labelledby="addExpenseLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="addExpenseLabel">Dodaj</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <form>
-        <div class="modal-body">
-          <div class="mb-3">
-            <label for="newName" class="col-form-label">Dodaj nową kategorie:</label>
-            <input type="text" class="form-control" id="newName" name="newName" required>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zamknij</button>
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="addExpenseButton">Dodaj</button>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
-
 
 <button id="edit-profile" type="button" class="btn btn-outline-primary" style="width:100%">Edytuj profil</button>
 <form method="post" id="formProfile" action="/profile/update" style="display:none">

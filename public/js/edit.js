@@ -66,7 +66,34 @@ $(document).ready(function () {
     });
 });
 
-function createList(div_name_of_list, data, edit, deleteM, addNew) {
+$(document).ready(function () {
+    $.ajax({
+        url: '/Income/getIncome',
+        method: 'POST',
+
+        success: function (response) {
+            createList("#formIncome", $.parseJSON(response), 'editModal', 'deleteModal', 'addModal',
+                'edit_in', 'delete_in', 'add_in');
+        }, error: function () {
+            alert('error: ');
+        }
+    });
+
+    $.ajax({
+        url: '/Expense/getExpense',
+        method: 'POST',
+
+        success: function (response) {
+            createList("#formExpense", $.parseJSON(response), 'editModal', 'deleteModal', 'addModal',
+                'edit_ex', 'delete_ex', 'add_ex');
+        }, error: function () {
+            alert('error: ');
+        }
+    });
+
+});
+
+function createList(div_name_of_list, data, edit, deleteM, addNew, button_edit, button_delete, button_add) {
     $(div_name_of_list).html("");
 
     for (let i = 0; i < data.length; i++) {
@@ -81,6 +108,7 @@ function createList(div_name_of_list, data, edit, deleteM, addNew) {
         const newButton = document.createElement('button');
         newButton.classList.add('btn');
         newButton.classList.add('btn-outline-success');
+        newButton.classList.add(button_edit);
 
         newButton.setAttribute("type", "button");
         newButton.setAttribute("style", "text-align: right");
@@ -95,6 +123,8 @@ function createList(div_name_of_list, data, edit, deleteM, addNew) {
         const newButton2 = document.createElement('button');
         newButton2.classList.add('btn');
         newButton2.classList.add('btn-outline-danger');
+        newButton2.classList.add(button_delete);
+
         newButton2.setAttribute("type", "button");
         newButton2.setAttribute("style", "text-align: right");
 
@@ -119,6 +149,7 @@ function createList(div_name_of_list, data, edit, deleteM, addNew) {
     const newButton = document.createElement('button');
     newButton.classList.add('btn');
     newButton.classList.add('btn-outline-success');
+    newButton.classList.add(button_add);
 
     newButton.setAttribute("type", "button");
     newButton.setAttribute("style", "text-align: right");
@@ -132,6 +163,168 @@ function createList(div_name_of_list, data, edit, deleteM, addNew) {
     editModal(edit);
     deleteModal(deleteM);
     addModal(addNew);
+    editModalButtons(div_name_of_list, button_edit);
+    deleteModalButtons(div_name_of_list, button_delete);
+    addModalButtons(div_name_of_list, button_add);
+}
+
+function editModalButtons(divName, buttonId) {
+    if (divName === "#formIncome") {
+        $("." + buttonId).click(function () {
+            if (document.getElementById("updateIncome").style.display == "none") {
+                $("#updateIncome").toggle();
+            }
+
+            if (document.getElementById("updateExpense").style.display === "") {
+                $("#updateExpense").toggle();
+            }
+
+            if (document.getElementById("updatePayment").style.display === "") {
+                $("#updatePayment").toggle();
+            }
+        });
+    }
+
+    if (divName === "#formExpense") {
+
+        $("." + buttonId).click(function () {
+
+            if (document.getElementById("updateExpense").style.display == "none") {
+                $("#updateExpense").toggle();
+            }
+
+            if (document.getElementById("updateIncome").style.display === "") {
+                $("#updateIncome").toggle();
+            }
+
+            if (document.getElementById("updatePayment").style.display === "") {
+                $("#updatePayment").toggle();
+            }
+        });
+    }
+
+    if (divName === "#formPayment") {
+        $("." + buttonId).click(function () {
+
+            if (document.getElementById("updatePayment").style.display == "none") {
+                $("#updatePayment").toggle();
+            }
+
+            if (document.getElementById("updateIncome").style.display === "") {
+                $("#updateIncome").toggle();
+            }
+
+            if (document.getElementById("updateExpense").style.display === "") {
+                $("#updateExpense").toggle();
+            }
+        });
+    }
+}
+
+function deleteModalButtons(divName, buttonId) {
+    if (divName === "#formIncome") {
+        $("." + buttonId).click(function () {
+            if (document.getElementById("deleteIncome").style.display == "none") {
+                $("#deleteIncome").toggle();
+            }
+
+            if (document.getElementById("deleteExpenseButton").style.display === "") {
+                $("#deleteExpenseButton").toggle();
+            }
+
+            if (document.getElementById("deletePaymentButton").style.display === "") {
+                $("#deletePaymentButton").toggle();
+            }
+        });
+    }
+
+    if (divName === "#formExpense") {
+
+        $("." + buttonId).click(function () {
+
+            if (document.getElementById("deleteExpenseButton").style.display == "none") {
+                $("#deleteExpenseButton").toggle();
+            }
+
+            if (document.getElementById("deleteIncome").style.display === "") {
+                $("#deleteIncome").toggle();
+            }
+
+            if (document.getElementById("deletePaymentButton").style.display === "") {
+                $("#deletePaymentButton").toggle();
+            }
+        });
+    }
+
+    if (divName === "#formPayment") {
+        $("." + buttonId).click(function () {
+
+            if (document.getElementById("deletePaymentButton").style.display == "none") {
+                $("#deletePaymentButton").toggle();
+            }
+
+            if (document.getElementById("deleteIncome").style.display === "") {
+                $("#deleteIncome").toggle();
+            }
+
+            if (document.getElementById("deleteExpenseButton").style.display === "") {
+                $("#deleteExpenseButton").toggle();
+            }
+        });
+    }
+}
+
+function addModalButtons(divName, buttonId) {
+    if (divName === "#formIncome") {
+        $("." + buttonId).click(function () {
+            if (document.getElementById("addNew").style.display == "none") {
+                $("#addNew").toggle();
+            }
+
+            if (document.getElementById("addExpenseButton").style.display === "") {
+                $("#addExpenseButton").toggle();
+            }
+
+            if (document.getElementById("addPayButton").style.display === "") {
+                $("#addPayButton").toggle();
+            }
+        });
+    }
+
+    if (divName === "#formExpense") {
+
+        $("." + buttonId).click(function () {
+
+            if (document.getElementById("addExpenseButton").style.display == "none") {
+                $("#addExpenseButton").toggle();
+            }
+
+            if (document.getElementById("addNew").style.display === "") {
+                $("#addNew").toggle();
+            }
+
+            if (document.getElementById("addPayButton").style.display === "") {
+                $("#addPayButton").toggle();
+            }
+        });
+    }
+
+    if (divName === "#formPayment") {
+        $("." + buttonId).click(function () {
+
+            if (document.getElementById("addPayButton").style.display == "none") {
+                $("#addPayButton").toggle();
+            }
+
+            if (document.getElementById("addNew").style.display === "") {
+                $("#addNew").toggle();
+            }
+
+            if (document.getElementById("addExpenseButton").style.display === "") {
+                $("#addExpenseButton").toggle();
+            }
+        });
+    }
 }
 
 function editModal(name) {
@@ -197,7 +390,8 @@ $(document).ready(function () {
             method: 'POST',
 
             success: function (response) {
-                createList("#formIncome", $.parseJSON(response), 'editModal', 'deleteModal', 'addModal');
+                createList("#formIncome", $.parseJSON(response), 'editModal', 'deleteModal', 'addModal',
+                    'edit_in', 'delete_in', 'add_in');
             }, error: function () {
                 alert('error: ');
             }
@@ -222,7 +416,8 @@ $(document).ready(function () {
             method: 'POST',
 
             success: function (response) {
-                createList("#formIncome", $.parseJSON(response), 'editModal', 'deleteModal', 'addModal');
+                createList("#formIncome", $.parseJSON(response), 'editModal', 'deleteModal', 'addModal',
+                    'edit_in', 'delete_in', 'add_in');
             }, error: function () {
                 alert('error: ');
             }
@@ -248,13 +443,98 @@ $(document).ready(function () {
             method: 'POST',
 
             success: function (response) {
-                createList("#formIncome", $.parseJSON(response), 'editModal', 'deleteModal', 'addModal');
+                createList("#formIncome", $.parseJSON(response), 'editModal', 'deleteModal', 'addModal',
+                    'edit_in', 'delete_in', 'add_in');
             }, error: function () {
                 alert('error: ');
             }
         });
     });
 });
+
+$(document).ready(function () {
+    $("#updateExpense").button().click(function () {
+
+        var editForm = {
+            category_name: $("#category-name").val(),
+            categoryId: $("#categoryId").val(),
+        };
+
+        $.ajax({
+            url: '/Expense/updateCategory',
+            method: 'POST',
+            data: editForm,
+            dataType: "json",
+            encode: true,
+        });
+
+        $.ajax({
+            url: '/Expense/getExpense',
+            method: 'POST',
+
+            success: function (response) {
+                createList("#formExpense", $.parseJSON(response), 'editModal', 'deleteModal', 'addModal',
+                    'edit_ex', 'delete_ex', 'add_ex');
+            }, error: function () {
+                alert('error: ');
+            }
+        });
+    });
+
+    $("#deleteExpenseButton").button().click(function () {
+
+        var deleteForm = {
+            categoryId: $("#categoryDeleteId").val(),
+        };
+        $.ajax({
+            url: '/Expense/deleteCategory',
+            method: 'POST',
+            data: deleteForm,
+            dataType: "json",
+            encode: true,
+        });
+
+        $.ajax({
+            url: '/Expense/getExpense',
+            method: 'POST',
+
+            success: function (response) {
+                createList("#formExpense", $.parseJSON(response), 'editModal', 'deleteModal', 'addModal',
+                    'edit_ex', 'delete_ex', 'add_ex');
+            }, error: function () {
+                alert('error: ');
+            }
+        });
+    });
+
+    $("#addExpenseButton").button().click(function () {
+        var addForm = {
+            categoryName: $("#newName").val(),
+        };
+
+        $.ajax({
+            url: '/Expense/addCategory',
+            method: 'POST',
+            data: addForm,
+            dataType: "json",
+            encode: true,
+
+        });
+
+        $.ajax({
+            url: '/Expense/getExpense',
+            method: 'POST',
+
+            success: function (response) {
+                createList("#formExpense", $.parseJSON(response), 'editModal', 'deleteModal', 'addModal',
+                    'edit_ex', 'delete_ex', 'add_ex');
+            }, error: function () {
+                alert('error: ');
+            }
+        });
+    });
+});
+
 
 $(document).ready(function () {
     $("#edit-profile").click(function () {
