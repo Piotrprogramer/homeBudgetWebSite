@@ -34,7 +34,8 @@ class Income extends Authenticated
         if (IncomeMenager::isEmptyUserArray()) {
             IncomeMenager::copyDefaultCategory();
         }
-        echo IncomeMenager::incomeAsignetToUser();
+        //echo IncomeMenager::incomeAsignetToUser();
+        echo json_encode(IncomeMenager::getIncomeList($_SESSION['user_id']));
     }
 
     /**

@@ -66,38 +66,24 @@ $(document).ready(function () {
     $.ajax({
         url: '/income/getUserCategory',
         method: 'POST',
-        success: function (response) {
-            var id = '';
-            var name = '';
-            var isFirst = true;
-            for (let i = 0; i < response.length; i++) {
-                if (response[i] == String.fromCharCode(58)) {
-                    i++;
-                    if (response[i] == String.fromCharCode(34)) {
-                        i++;
-                        var variable = '';
-                        do {
-                            variable += response[i];
-                            i++;
-                        }
-                        while (response[i] != String.fromCharCode(34))
 
-                        if (id == '') {
-                            id = variable;
-                        } else {
-                            name = variable;
-                        }
-                        if (id != '' && name != '') {
-                            addButton(name, isFirst);
-                            if (isFirst) isFirst = false;
-                            var id = '';
-                            var name = '';
-                        }
-                    }
-                }
-            }
-        }, error: function (error) {
-            alert('error: ' + error);
+        success: function (response) {
+            createList($.parseJSON(response));
+        }, error: function () {
+            alert('error: ');
         }
     });
+
 });
+
+/**
+ * Create list for income
+ */
+function createList(data) {
+    
+    for (let i = 0; i < data.length; i++) {
+
+        if(i==0)addButton(data[i].name, true);
+        else addButton(data[i].name, false);
+    }
+}

@@ -34,7 +34,7 @@ class Expense extends Authenticated
         if(ExpenseMenager::isEmptyUserArray()){
             ExpenseMenager::copyDefaultCategory();
         }
-        echo ExpenseMenager::expenseAsignetToUser();
+        echo json_encode(ExpenseMenager::getExpenseList($_SESSION['user_id']));
     }
 
     /**
@@ -47,7 +47,7 @@ class Expense extends Authenticated
         if(ExpenseMenager::isPaymentUserArray()){
             ExpenseMenager::copyDefaultPaymentCategory();
         }
-        echo ExpenseMenager::paymentAsignetToUser();
+        echo json_encode(ExpenseMenager::paymentAsignetToUser());
     }
 
     /**
