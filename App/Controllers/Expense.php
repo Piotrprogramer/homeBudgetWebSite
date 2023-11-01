@@ -73,6 +73,11 @@ class Expense extends Authenticated
         }
     }
 
+    /**
+     * Get expense from server
+     *
+     * @return string JSON_encode format
+     */
     public static function getExpense()
     {
         if (isset($_SESSION['user_id'])) {
@@ -80,6 +85,11 @@ class Expense extends Authenticated
         }
     }
 
+    /**
+     * Update expense from server
+     *
+     * @return string JSON_encode format
+     */
     public function updateCategoryAction()
     {
         if (isset($_SESSION['user_id'])) {
@@ -88,6 +98,11 @@ class Expense extends Authenticated
         }
     }
 
+    /**
+     * Delete expense from server
+     *
+     * @return string JSON_encode format
+     */
     public function deleteCategoryAction()
     {
         if (isset($_SESSION['user_id'])) {
@@ -96,6 +111,11 @@ class Expense extends Authenticated
         }
     }
 
+    /**
+     * Add expense to server
+     *
+     * @return string JSON_encode format
+     */
     public function addCategoryAction()
     {
         if (isset($_SESSION['user_id'])) {

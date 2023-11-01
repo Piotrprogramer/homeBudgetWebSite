@@ -63,7 +63,7 @@ class Income extends Authenticated
     /**
      * Get the current income list, from the session
      *
-     * @return mixed The income model 
+     * @return string JSON_encode 
      */
     public static function getIncome()
     {
@@ -72,6 +72,11 @@ class Income extends Authenticated
         }
     }
 
+    /**
+     * Update income list
+     *
+     * @return string JSON_encode 
+     */
     public function updateCategoryAction()
     {
         if (isset($_SESSION['user_id'])) {
@@ -80,6 +85,11 @@ class Income extends Authenticated
         }
     }
 
+    /**
+     * Delete income category from server 
+     *
+     * @return string JSON_encode 
+     */
     public function deleteCategoryAction()
     {
         if (isset($_SESSION['user_id'])) {
@@ -88,6 +98,11 @@ class Income extends Authenticated
         }
     }
 
+    /**
+     * Add income category from server 
+     *
+     * @return string JSON_encode 
+     */
     public function addCategoryAction()
     {
         if (isset($_SESSION['user_id'])) {

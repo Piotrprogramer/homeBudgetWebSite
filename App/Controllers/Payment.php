@@ -15,6 +15,11 @@ use \App\Flash;
 class Payment extends Authenticated
 {
 
+    /**
+     * Get payment category from server 
+     *
+     * @return string JSON_encode 
+     */
     public static function getPayment()
     {
         if (isset($_SESSION['user_id'])) {
@@ -22,6 +27,11 @@ class Payment extends Authenticated
         }
     }
 
+    /**
+     * Update payment category to server 
+     *
+     * @return string JSON_encode 
+     */
     public function updateCategoryAction()
     {
         if (isset($_SESSION['user_id'])) {
@@ -30,6 +40,11 @@ class Payment extends Authenticated
         }
     }
 
+    /**
+     * Delete payment category from server 
+     *
+     * @return string JSON_encode 
+     */
     public function deleteCategoryAction()
     {
         if (isset($_SESSION['user_id'])) {
@@ -38,6 +53,11 @@ class Payment extends Authenticated
         }
     }
 
+    /**
+     * Add payment category to server 
+     *
+     * @return string JSON_encode 
+     */
     public function addCategoryAction()
     {
         if (isset($_SESSION['user_id'])) {

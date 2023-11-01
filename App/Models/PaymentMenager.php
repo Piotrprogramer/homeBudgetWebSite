@@ -14,6 +14,11 @@ use \Core\View;
  */
 class PaymentMenager extends \Core\Model
 {
+    /**
+     * Get payment category list
+     * 
+     * @param PDO::FETCH_ASSOC 
+     */
     public static function getPaymentList($id)
     {
         $sql = 
@@ -32,7 +37,11 @@ class PaymentMenager extends \Core\Model
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-
+    /**
+     * Update payment category 
+     * 
+     * @param bool 
+     */
     public static function updateCategory($data)
     {  
         $sql = 
@@ -54,6 +63,11 @@ class PaymentMenager extends \Core\Model
         
     }
 
+    /**
+     * Delete payment category 
+     * 
+     * @param bool 
+     */
     public static function deleteCategory($data)
     {  
         $sql = 
@@ -71,6 +85,11 @@ class PaymentMenager extends \Core\Model
         if($stmt->execute()) return true;
     }
 
+    /**
+     * Add payment category 
+     * 
+     * @param bool 
+     */
     public static function addCategory($data)
     {  
         $sql = 

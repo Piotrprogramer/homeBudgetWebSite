@@ -239,7 +239,11 @@ class IncomeMenager extends \Core\Model
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-
+    /**
+     * Update income category 
+     * 
+     * @param bool 
+     */
     public static function updateCategory($data)
     {  
         $sql = 
@@ -261,6 +265,11 @@ class IncomeMenager extends \Core\Model
         
     }
 
+    /**
+     * Delete income category 
+     * 
+     * @param bool 
+     */
     public static function deleteCategory($data)
     {  
         $sql = 
@@ -278,6 +287,11 @@ class IncomeMenager extends \Core\Model
         if($stmt->execute()) return true;
     }
 
+    /**
+     * Add income category 
+     * 
+     * @param bool 
+     */
     public static function addCategory($data)
     {  
         $sql = 

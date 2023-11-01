@@ -31,7 +31,10 @@ $(document).ready(function () {
     });
 });
 
-
+/**
+ * Validation profile form
+ * 
+ */
 $(document).ready(function () {
     /**
      * Validate the form
@@ -66,6 +69,10 @@ $(document).ready(function () {
     });
 });
 
+/**
+ * Reload payment list
+ * 
+ */
 function reloadPayment() {
     setTimeout(function () {
         $.ajax({
@@ -82,6 +89,10 @@ function reloadPayment() {
     }, 300);
 }
 
+/**
+ * Reload Income list
+ * 
+ */
 function reloadIncome() {
     setTimeout(function () {
         $.ajax({
@@ -98,6 +109,10 @@ function reloadIncome() {
     }, 300);
 }
 
+/**
+ * Reload Expense list
+ * 
+ */
 function reloadExpense() {
     setTimeout(function () {
         $.ajax({
@@ -114,12 +129,21 @@ function reloadExpense() {
     }, 300);
 }
 
+/**
+ * Create list of Income, expense, payment
+ * 
+ */
 $(document).ready(function () {
     reloadIncome();
     reloadExpense();
     reloadPayment();
 });
 
+
+/**
+ * Add buttons , class etc.
+ * 
+ */
 function createList(div_name_of_list, data, edit, deleteM, addNew, button_edit, button_delete, button_add) {
     $(div_name_of_list).html("");
 
@@ -195,6 +219,10 @@ function createList(div_name_of_list, data, edit, deleteM, addNew, button_edit, 
     addModalButtons(div_name_of_list, button_add);
 }
 
+/**
+ * Show/hide used and unused edit modal buttons
+ * 
+ */
 function editModalButtons(divName, buttonId) {
     if (divName === "#formIncome") {
         $("." + buttonId).click(function () {
@@ -248,6 +276,10 @@ function editModalButtons(divName, buttonId) {
     }
 }
 
+/**
+ * Show/hide used and unused delete modal buttons
+ * 
+ */
 function deleteModalButtons(divName, buttonId) {
     if (divName === "#formIncome") {
         $("." + buttonId).click(function () {
@@ -301,6 +333,10 @@ function deleteModalButtons(divName, buttonId) {
     }
 }
 
+/**
+ * Show/hide used and unused add modal buttons
+ * 
+ */
 function addModalButtons(divName, buttonId) {
     if (divName === "#formIncome") {
         $("." + buttonId).click(function () {
@@ -354,6 +390,10 @@ function addModalButtons(divName, buttonId) {
     }
 }
 
+/**
+ * Add modal hendlers to edit buttons
+ * 
+ */
 function editModal(name) {
     var editModal = document.getElementById(name)
     editModal.addEventListener('show.bs.modal', function (event) {
@@ -372,6 +412,10 @@ function editModal(name) {
     })
 }
 
+/**
+ * Add modal hendlers to delete buttons
+ * 
+ */
 function deleteModal(name) {
     var editModal = document.getElementById(name)
     editModal.addEventListener('show.bs.modal', function (event) {
@@ -387,6 +431,10 @@ function deleteModal(name) {
     })
 }
 
+/**
+ * Add modal hendlers to add buttons
+ * 
+ */
 function addModal(name) {
     var editModal = document.getElementById(name)
     editModal.addEventListener('show.bs.modal', function (event) {
@@ -395,7 +443,10 @@ function addModal(name) {
     })
 }
 
-
+/**
+ * Update income function
+ * 
+ */
 $(document).ready(function () {
     $("#updateIncome").button().click(function () {
 
@@ -449,6 +500,10 @@ $(document).ready(function () {
     });
 });
 
+/**
+ * Update expense function
+ * 
+ */
 $(document).ready(function () {
     $("#updateExpense").button().click(function () {
 
@@ -502,6 +557,10 @@ $(document).ready(function () {
     });
 });
 
+/**
+ * Update payment function
+ * 
+ */
 $(document).ready(function () {
     $("#updatePayment").button().click(function () {
 
@@ -555,8 +614,10 @@ $(document).ready(function () {
     });
 });
 
-
-
+/**
+ * Show/hide main menu buttons
+ * 
+ */
 $(document).ready(function () {
     $("#edit-profile").click(function () {
 

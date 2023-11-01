@@ -316,7 +316,7 @@ class ExpenseMenager extends \Core\Model
     }
 
     /**
-     * Past defoult income category to user category
+     * Past defoult expense category to user category
      *
      * @return void  
      */
@@ -342,8 +342,8 @@ class ExpenseMenager extends \Core\Model
        $stmt->execute();
     }
 
-        /**
-     * Getting data about user income category
+     /**
+     * Getting data about user payment category
      *
      * @return boolean  True if getted correctly, false otherwise
      */
@@ -368,6 +368,11 @@ class ExpenseMenager extends \Core\Model
             return false;
     }
 
+     /**
+     * Getting expense list
+     *
+     * @return PDO::FETCH_ASSOC if correctly, false otherwise
+     */
     public static function getExpenseList($id)
     {
         $sql = 
@@ -386,6 +391,11 @@ class ExpenseMenager extends \Core\Model
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    /**
+     * Update category list
+     *
+     * @return void
+     */
     public static function updateCategory($data)
     {  
         $sql = 
@@ -404,9 +414,13 @@ class ExpenseMenager extends \Core\Model
         $stmt->bindValue(':id', $data["categoryId"], PDO::PARAM_INT);
 
         if($stmt->execute()) return true;
-        
     }
 
+     /**
+     * Delete expense category
+     *
+     * @return void
+     */
     public static function deleteCategory($data)
     {  
         $sql = 
@@ -424,6 +438,11 @@ class ExpenseMenager extends \Core\Model
         if($stmt->execute()) return true;
     }
 
+     /**
+     * Add expense category
+     *
+     * @return void
+     */
     public static function addCategory($data)
     {  
         $sql = 
