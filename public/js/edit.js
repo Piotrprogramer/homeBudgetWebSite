@@ -66,43 +66,58 @@ $(document).ready(function () {
     });
 });
 
+function reloadPayment() {
+    setTimeout(function () {
+        $.ajax({
+            url: '/Payment/getPayment',
+            method: 'POST',
+
+            success: function (response) {
+                createList("#formPayment", $.parseJSON(response), 'editModal', 'deleteModal', 'addModal',
+                    'edit_py', 'delete_py', 'add_py');
+            }, error: function () {
+                alert('error: ');
+            }
+        });
+    }, 300);
+}
+
+function reloadIncome() {
+    setTimeout(function () {
+        $.ajax({
+            url: '/Income/getIncome',
+            method: 'POST',
+
+            success: function (response) {
+                createList("#formIncome", $.parseJSON(response), 'editModal', 'deleteModal', 'addModal',
+                    'edit_in', 'delete_in', 'add_in');
+            }, error: function () {
+                alert('error: ');
+            }
+        });
+    }, 300);
+}
+
+function reloadExpense() {
+    setTimeout(function () {
+        $.ajax({
+            url: '/Expense/getExpense',
+            method: 'POST',
+
+            success: function (response) {
+                createList("#formExpense", $.parseJSON(response), 'editModal', 'deleteModal', 'addModal',
+                    'edit_ex', 'delete_ex', 'add_ex');
+            }, error: function () {
+                alert('error: ');
+            }
+        });
+    }, 300);
+}
+
 $(document).ready(function () {
-    $.ajax({
-        url: '/Income/getIncome',
-        method: 'POST',
-
-        success: function (response) {
-            createList("#formIncome", $.parseJSON(response), 'editModal', 'deleteModal', 'addModal',
-                'edit_in', 'delete_in', 'add_in');
-        }, error: function () {
-            alert('error: ');
-        }
-    });
-
-    $.ajax({
-        url: '/Expense/getExpense',
-        method: 'POST',
-
-        success: function (response) {
-            createList("#formExpense", $.parseJSON(response), 'editModal', 'deleteModal', 'addModal',
-                'edit_ex', 'delete_ex', 'add_ex');
-        }, error: function () {
-            alert('error: ');
-        }
-    });
-
-    $.ajax({
-        url: '/Payment/getPayment',
-        method: 'POST',
-
-        success: function (response) {
-            createList("#formPayment", $.parseJSON(response), 'editModal', 'deleteModal', 'addModal',
-                'edit_py', 'delete_py', 'add_py');
-        }, error: function () {
-            alert('error: ');
-        }
-    });
-
+    reloadIncome();
+    reloadExpense();
+    reloadPayment();
 });
 
 function createList(div_name_of_list, data, edit, deleteM, addNew, button_edit, button_delete, button_add) {
@@ -397,17 +412,7 @@ $(document).ready(function () {
             encode: true,
         });
 
-        $.ajax({
-            url: '/Income/getIncome',
-            method: 'POST',
-
-            success: function (response) {
-                createList("#formIncome", $.parseJSON(response), 'editModal', 'deleteModal', 'addModal',
-                    'edit_in', 'delete_in', 'add_in');
-            }, error: function () {
-                alert('error: ');
-            }
-        });
+        reloadIncome();
     });
 
     $("#deleteIncome").button().click(function () {
@@ -423,17 +428,7 @@ $(document).ready(function () {
             encode: true,
         });
 
-        $.ajax({
-            url: '/Income/getIncome',
-            method: 'POST',
-
-            success: function (response) {
-                createList("#formIncome", $.parseJSON(response), 'editModal', 'deleteModal', 'addModal',
-                    'edit_in', 'delete_in', 'add_in');
-            }, error: function () {
-                alert('error: ');
-            }
-        });
+        reloadIncome();
     });
 
     $("#addNew").button().click(function () {
@@ -450,17 +445,7 @@ $(document).ready(function () {
 
         });
 
-        $.ajax({
-            url: '/Income/getIncome',
-            method: 'POST',
-
-            success: function (response) {
-                createList("#formIncome", $.parseJSON(response), 'editModal', 'deleteModal', 'addModal',
-                    'edit_in', 'delete_in', 'add_in');
-            }, error: function () {
-                alert('error: ');
-            }
-        });
+        reloadIncome();
     });
 });
 
@@ -480,17 +465,7 @@ $(document).ready(function () {
             encode: true,
         });
 
-        $.ajax({
-            url: '/Expense/getExpense',
-            method: 'POST',
-
-            success: function (response) {
-                createList("#formExpense", $.parseJSON(response), 'editModal', 'deleteModal', 'addModal',
-                    'edit_ex', 'delete_ex', 'add_ex');
-            }, error: function () {
-                alert('error: ');
-            }
-        });
+        reloadExpense();
     });
 
     $("#deleteExpenseButton").button().click(function () {
@@ -506,17 +481,7 @@ $(document).ready(function () {
             encode: true,
         });
 
-        $.ajax({
-            url: '/Expense/getExpense',
-            method: 'POST',
-
-            success: function (response) {
-                createList("#formExpense", $.parseJSON(response), 'editModal', 'deleteModal', 'addModal',
-                    'edit_ex', 'delete_ex', 'add_ex');
-            }, error: function () {
-                alert('error: ');
-            }
-        });
+        reloadExpense();
     });
 
     $("#addExpenseButton").button().click(function () {
@@ -533,19 +498,63 @@ $(document).ready(function () {
 
         });
 
-        $.ajax({
-            url: '/Expense/getExpense',
-            method: 'POST',
-
-            success: function (response) {
-                createList("#formExpense", $.parseJSON(response), 'editModal', 'deleteModal', 'addModal',
-                    'edit_ex', 'delete_ex', 'add_ex');
-            }, error: function () {
-                alert('error: ');
-            }
-        });
+        reloadExpense();
     });
 });
+
+$(document).ready(function () {
+    $("#updatePayment").button().click(function () {
+
+        var editForm = {
+            category_name: $("#category-name").val(),
+            categoryId: $("#categoryId").val(),
+        };
+
+        $.ajax({
+            url: '/Payment/updateCategory',
+            method: 'POST',
+            data: editForm,
+            dataType: "json",
+            encode: true,
+        });
+
+        reloadPayment();
+    });
+
+    $("#deletePaymentButton").button().click(function () {
+
+        var deleteForm = {
+            categoryId: $("#categoryDeleteId").val(),
+        };
+        $.ajax({
+            url: '/Payment/deleteCategory',
+            method: 'POST',
+            data: deleteForm,
+            dataType: "json",
+            encode: true,
+        });
+
+        reloadPayment();
+    });
+
+    $("#addPayButton").button().click(function () {
+        var addForm = {
+            categoryName: $("#newName").val(),
+        };
+
+        $.ajax({
+            url: '/Payment/addCategory',
+            method: 'POST',
+            data: addForm,
+            dataType: "json",
+            encode: true,
+
+        });
+
+        reloadPayment();
+    });
+});
+
 
 
 $(document).ready(function () {

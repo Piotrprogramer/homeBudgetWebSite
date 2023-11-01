@@ -12,88 +12,6 @@
 
 <script>
 
-  $(document).ready(function () {
-    $("#updatePayment").button().click(function () {
-
-      var editForm = {
-        category_name: $("#category-name").val(),
-        categoryId: $("#categoryId").val(),
-      };
-
-      $.ajax({
-        url: '/Payment/updateCategory',
-        method: 'POST',
-        data: editForm,
-        dataType: "json",
-        encode: true,
-      });
-
-      $.ajax({
-        url: '/Payment/getPayment',
-        method: 'POST',
-
-        success: function (response) {
-          createList("#formPayment", $.parseJSON(response), 'editModal', 'deleteModal', 'addModal',
-            'edit_py', 'delete_py', 'add_py');
-        }, error: function () {
-          alert('error: ');
-        }
-      });
-    });
-
-    $("#deletePaymentButton").button().click(function () {
-
-      var deleteForm = {
-        categoryId: $("#categoryDeleteId").val(),
-      };
-      $.ajax({
-        url: '/Payment/deleteCategory',
-        method: 'POST',
-        data: deleteForm,
-        dataType: "json",
-        encode: true,
-      });
-
-      $.ajax({
-        url: '/Payment/getPayment',
-        method: 'POST',
-
-        success: function (response) {
-          createList("#formPayment", $.parseJSON(response), 'editModal', 'deleteModal', 'addModal',
-            'edit_py', 'delete_py', 'add_py');
-        }, error: function () {
-          alert('error: ');
-        }
-      });
-    });
-
-    $("#addPayButton").button().click(function () {
-      var addForm = {
-        categoryName: $("#newName").val(),
-      };
-
-      $.ajax({
-        url: '/Payment/addCategory',
-        method: 'POST',
-        data: addForm,
-        dataType: "json",
-        encode: true,
-
-      });
-
-      $.ajax({
-        url: '/Payment/getPayment',
-        method: 'POST',
-
-        success: function (response) {
-          createList("#formPayment", $.parseJSON(response), 'editModal', 'deleteModal', 'addModal',
-            'edit_py', 'delete_py', 'add_py');
-        }, error: function () {
-          alert('error: ');
-        }
-      });
-    });
-  });
 
 </script>
 {% endblock %}
@@ -131,7 +49,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zamknij</button>
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="updateIncome">Aktualizuj IN</button>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="updateIncome">Aktualizuj</button>
           <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="updateExpense">Aktualizuj
             EX</button>
           <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="updatePayment">Aktualizuj
@@ -157,9 +75,9 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zamknij</button>
-          <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="deleteIncome">Usuń IN</button>
-          <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="deleteExpenseButton">Usuń EX</button>
-          <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="deletePaymentButton">Usuń PY</button>
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="deleteIncome">Usuń</button>
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="deleteExpenseButton">Usuń</button>
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="deletePaymentButton">Usuń</button>
         </div>
       </form>
     </div>
@@ -182,9 +100,9 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zamknij</button>
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="addNew">Dodaj IN</button>
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="addExpenseButton">Dodaj EX</button>
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="addPayButton">Dodaj PY</button>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="addNew">Dodaj</button>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="addExpenseButton">Dodaj</button>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="addPayButton">Dodaj</button>
         </div>
       </form>
     </div>
