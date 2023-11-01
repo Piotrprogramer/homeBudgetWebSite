@@ -34,7 +34,7 @@ class Expense extends Authenticated
         if(ExpenseMenager::isEmptyUserArray()){
             ExpenseMenager::copyDefaultCategory();
         }
-        echo ExpenseMenager::expenseAsignetToUser();
+        echo json_encode(ExpenseMenager::getExpenseList($_SESSION['user_id']));
     }
 
     /**
@@ -47,7 +47,7 @@ class Expense extends Authenticated
         if(ExpenseMenager::isPaymentUserArray()){
             ExpenseMenager::copyDefaultPaymentCategory();
         }
-        echo ExpenseMenager::paymentAsignetToUser();
+        echo json_encode(ExpenseMenager::paymentAsignetToUser());
     }
 
     /**
@@ -70,6 +70,58 @@ class Expense extends Authenticated
             Flash::addMessage('Coś poszło nie tak', Flash::WARNING);
 
             View::renderTemplate('Expense/newForm.html');
+        }
+    }
+
+    /**
+     * Get expense from server
+     *
+     * @return string JSON_encode format
+     */
+    public static function getExpense()
+    {
+        if (isset($_SESSION['user_id'])) {
+            echo json_encode(ExpenseMenager::getExpenseList($_SESSION['user_id']));
+        }
+    }
+
+    /**
+     * Update expense from server
+     *
+     * @return string JSON_encode format
+     */
+    public function updateCategoryAction()
+    {
+        if (isset($_SESSION['user_id'])) {
+            if (ExpenseMenager::updateCategory($_POST))
+                echo json_encode('all good');
+        }
+    }
+
+    /**
+     * Delete expense from server
+     *
+     * @return string JSON_encode format
+     */
+    public function deleteCategoryAction()
+    {
+        if (isset($_SESSION['user_id'])) {
+            if (ExpenseMenager::deleteCategory($_POST))
+                echo json_encode('all good');
+        }
+    }
+
+    /**
+     * Add expense to server
+     *
+     * @return string JSON_encode format
+     */
+    public function addCategoryAction()
+    {
+        if (isset($_SESSION['user_id'])) {
+            if (ExpenseMenager::addCategory($_POST)) {
+                echo json_encode('all good');
+            }
         }
     }
 }

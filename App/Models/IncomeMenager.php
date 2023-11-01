@@ -40,9 +40,6 @@ class IncomeMenager extends \Core\Model
         foreach ($data as $key => $value) {
             $this->$key = $value;
         }
-        //var_dump($data);
-
-        ;
     }
 
     public function validate()
@@ -216,4 +213,101 @@ class IncomeMenager extends \Core\Model
         } else
             return false; 
     }
+
+    /**
+     * Check income assigned to user 
+     * 
+     * @param string $id The user ID
+     *
+     * @return mixed Income object if found, false otherwise
+     */
+    public static function getIncomeList($id)
+    {
+        $sql = 
+        'SELECT name,id FROM 
+            incomes_category_assigned_to_users 
+        WHERE 
+            incomes_category_assigned_to_users.user_id = :id
+        ';
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    /**
+     * Update income category 
+     * 
+     * @param bool 
+     */
+    public static function updateCategory($data)
+    {  
+        $sql = 
+            'UPDATE	
+                incomes_category_assigned_to_users	
+            SET	
+                incomes_category_assigned_to_users.name = :category
+            WHERE 
+                incomes_category_assigned_to_users.id = :id';
+        
+        $db = static::getDB();
+        
+        $stmt = $db->prepare($sql);
+
+        $stmt->bindValue(':category', $data["category_name"], PDO::PARAM_STMT);
+        $stmt->bindValue(':id', $data["categoryId"], PDO::PARAM_INT);
+
+        if($stmt->execute()) return true;
+        
+    }
+
+    /**
+     * Delete income category 
+     * 
+     * @param bool 
+     */
+    public static function deleteCategory($data)
+    {  
+        $sql = 
+            'DELETE FROM 
+                incomes_category_assigned_to_users 
+            WHERE 
+                incomes_category_assigned_to_users.id = :id';
+        
+        $db = static::getDB();
+        
+        $stmt = $db->prepare($sql);
+
+        $stmt->bindValue(':id', $data["categoryId"], PDO::PARAM_INT);
+
+        if($stmt->execute()) return true;
+    }
+
+    /**
+     * Add income category 
+     * 
+     * @param bool 
+     */
+    public static function addCategory($data)
+    {  
+        $sql = 
+            'INSERT INTO 
+                incomes_category_assigned_to_users(user_id, name) 
+            VALUES 
+                (:id , :newCategory)';
+        
+        $db = static::getDB();
+        
+        $stmt = $db->prepare($sql);
+
+        $stmt->bindValue(':newCategory', $data["categoryName"], PDO::PARAM_STMT);
+        $stmt->bindValue(':id', $_SESSION['user_id'], PDO::PARAM_INT);
+
+        if($stmt->execute()) return true;
+    }
+    
 }

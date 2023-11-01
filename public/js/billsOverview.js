@@ -1,3 +1,124 @@
+
+
+/**
+* display content
+*/
+function show_content() {
+    var x = document.getElementById("content");
+
+    if (x.style.display === "none") {
+        $("#content").toggle(300);
+        $("#diagram-container").toggle(300);
+        $("#range-name").toggle(300);
+    } else {
+        $("#content").toggle();
+        $("#diagram-container").toggle();
+        $("#range-name").toggle();
+
+        $("#content").toggle(300);
+        $("#diagram-container").toggle(300);
+        $("#range-name").toggle(300);
+    }
+}
+
+/**
+* Creating list from date in indicate DIV
+*/
+function createList(div_name_of_list, data) {
+
+    $(div_name_of_list).html("");
+
+    i = 0;
+    for (let i = 0; i < data.length; i++) {
+        const div = document.createElement("div");
+        div.innerHTML = (i + 1) + '). ' + data[i].name + ' = ' + data[i].total_amount;
+        document.querySelector(div_name_of_list).appendChild(div);
+    }
+
+    if ($('.income-list').is(':empty')) {
+        const div = document.createElement("div");
+        div.innerHTML = "Lista przychodów jest pusta :(";
+        document.querySelector(div_name_of_list).appendChild(div);
+    }
+
+    if ($('.expense-list').is(':empty')) {
+        const div = document.createElement("div");
+        div.innerHTML = "Lista wydatków jest pusta :)";
+        document.querySelector(div_name_of_list).appendChild(div);
+    }
+}
+
+/**
+* Creating chart pie from data
+*/
+function createChartPie(diagramData) {
+    $("#diagram").html("");
+
+    var pie = new d3pie("diagram", {
+        header: {
+            title: {
+                text: "Twoje wydatki:",
+                fontSize: 30
+            }
+        },
+        data: {
+            content: diagramData.map(function (datum) {
+                return {
+                    label: datum.name,
+                    value: parseFloat(datum.total_amount)
+                };
+            })
+        }
+    });
+}
+
+/**
+ * Creating list from date in indicate DIV
+ */
+function bilsInfo(div_name_of_list, amountArray, range_date_info) {
+
+    var mydata = JSON.parse(amountArray);
+
+    var income = parseFloat(mydata["income"]);
+    if (mydata["income"] == 'null') income = 0;
+
+    var expense = parseFloat(mydata["expense"]);
+    if (mydata["expense"] == 'null') expense = 0;
+
+    var bils;
+    $(div_name_of_list).html("");
+
+    const div = document.createElement("div");
+    div.innerHTML = range_date_info;
+    div.setAttribute('class', 'd-flex justify-content-center bils-inf');
+    document.querySelector(div_name_of_list).appendChild(div);
+
+    if (Number.isNaN(income) && Number.isNaN(expense)) {
+        const div = document.createElement("div");
+        div.innerHTML = "Brak danych";
+        div.setAttribute('class', 'd-flex justify-content-center bils-information');
+        document.querySelector(div_name_of_list).appendChild(div);
+    }
+    else {
+        if (income > expense) {
+            bils = income - expense;
+            const div = document.createElement("div");
+            div.innerHTML = "Udało Ci się nieco zaoszczędzić : +" + bils.toFixed(2);
+            div.style.color = "green";
+            div.setAttribute('class', 'd-flex justify-content-center bils-information');
+            document.querySelector(div_name_of_list).appendChild(div);
+        }
+        else if (income < expense) {
+            bils = expense - income;
+            const div = document.createElement("div");
+            div.innerHTML = "Niestety jesteś pod kreską : -" + bils.toFixed(2);
+            div.style.color = "red";
+            div.setAttribute('class', 'd-flex justify-content-center bils-information');
+            document.querySelector(div_name_of_list).appendChild(div);
+        }
+    }
+}
+
 /**
  * Getting income id, name from DB in Json value
  * 
@@ -14,8 +135,8 @@ $(document).ready(function () {
      * Show/hide date div button
      */
     $(".show-calendar").click(function () {
-        $("#user-date-range-calendar").toggle();
-        $("#user-date-range-button").toggle();
+        $("#user-date-range-calendar").toggle(300);
+        $("#user-date-range-button").toggle(300);
     });
 
     /**
@@ -24,118 +145,16 @@ $(document).ready(function () {
     $(".btn-outline-primary").click(function () {
         var x = document.getElementById("user-date-range-button");
         if (x.style.display === "none") {
-            $("#user-date-range-calendar").toggle();
-            $("#user-date-range-button").toggle();
+            $("#user-date-range-calendar").toggle(300);
+            $("#user-date-range-button").toggle(300);
         }
     });
 
-    /**
-     * Creating list from date in indicate DIV
-     */
-    function createList(div_name_of_list, data) {
-
-        $(div_name_of_list).html("");
-
-        i = 0;
-        for (let i = 0; i < data.length; i++) {
-            const div = document.createElement("div");
-            div.innerHTML = (i + 1) + '). ' + data[i].name + ' = ' + data[i].total_amount;
-            document.querySelector(div_name_of_list).appendChild(div);
-        }
-
-        if ($('.income-list').is(':empty')) {
-            const div = document.createElement("div");
-            div.innerHTML = "Lista przychodów jest pusta :(";
-            document.querySelector(div_name_of_list).appendChild(div);
-        }
-
-        if ($('.expense-list').is(':empty')) {
-            const div = document.createElement("div");
-            div.innerHTML = "Lista wydatków jest pusta :)";
-            document.querySelector(div_name_of_list).appendChild(div);
-        }
-    }
-
-    /**
-     * Creating chart pie from data
-     */
-    function createChartPie(diagramData) {
-        $("#diagram").html("");
-
-        var pie = new d3pie("diagram", {
-            header: {
-                title: {
-                    text: "Twoje wydatki:",
-                    fontSize: 30
-                }
-            },
-            data: {
-                content: diagramData.map(function (datum) {
-                    return {
-                        label: datum.name,
-                        value: parseFloat(datum.total_amount)
-                    };
-                })
-            }
-        });
-    }
-
-    /**
-     * Creating list from date in indicate DIV
-     */
-    function bilsInfo(div_name_of_list, amountArray, range_date_info) {
-
-        var mydata = JSON.parse(amountArray);
-
-        var income = parseFloat(mydata["income"]);
-        if(mydata["income"] == 'null') income = 0;
-
-        var expense = parseFloat(mydata["expense"]);
-        if(mydata["expense"] == 'null') expense = 0;
-
-        var bils;
-        $(div_name_of_list).html("");
-
-        const div = document.createElement("div");
-        div.innerHTML = range_date_info;
-        div.setAttribute('class', 'd-flex justify-content-center bils-inf');
-        document.querySelector(div_name_of_list).appendChild(div);
-
-        if (Number.isNaN(income) && Number.isNaN(expense)) { 
-            const div = document.createElement("div");
-            div.innerHTML = "Brak danych";
-            div.setAttribute('class', 'd-flex justify-content-center bils-information');
-            document.querySelector(div_name_of_list).appendChild(div);
-        }
-        else {
-            if (income > expense) {
-                bils = income - expense;
-                const div = document.createElement("div");
-                div.innerHTML = "Udało Ci się nieco zaoszczędzić : +" + bils.toFixed(2);
-                div.style.color = "green";
-                div.setAttribute('class', 'd-flex justify-content-center bils-information');
-                document.querySelector(div_name_of_list).appendChild(div);
-            }
-            else if (income < expense){
-                bils = expense - income;
-                const div = document.createElement("div");
-                div.innerHTML = "Niestety jesteś pod kreską : -" + bils.toFixed(2);
-                div.style.color = "red";
-                div.setAttribute('class', 'd-flex justify-content-center bils-information');
-                document.querySelector(div_name_of_list).appendChild(div);
-            }
-        }
-    }
 
     /**
     * This month bils creating button
     */
     $("#this-month").button().click(function () {
-        var x = document.getElementById("bilans-contetn");
-        if (x.style.display === "none") {
-            $("#bilans-contetn").toggle();
-        }
-
         $.ajax({
             url: '/billsOverview/thisMonthIncome',
             method: 'POST',
@@ -167,16 +186,14 @@ $(document).ready(function () {
                 alert('error: ');
             }
         });
+
+        show_content();
     });
 
     /**
      * Last month bils creating button
      */
     $("#last-month").button().click(function () {
-        var x = document.getElementById("bilans-contetn");
-        if (x.style.display === "none") {
-            $("#bilans-contetn").toggle();
-        }
 
         $.ajax({
             url: '/billsOverview/lastMonthIncome',
@@ -204,22 +221,19 @@ $(document).ready(function () {
             method: 'POST',
 
             success: function (response) {
-                //alert(response);
                 bilsInfo("#range-name", response, "W poprzednim miesiącu");
             }, error: function () {
                 alert('error: ');
             }
         });
+
+        show_content();
     });
 
     /**
      * Last there month bils creating button
      */
     $("#last-three-month").button().click(function () {
-        var x = document.getElementById("bilans-contetn");
-        if (x.style.display === "none") {
-            $("#bilans-contetn").toggle();
-        }
 
         $.ajax({
             url: '/billsOverview/lastThereMonthIncome',
@@ -252,21 +266,18 @@ $(document).ready(function () {
                 alert('error: ');
             }
         });
+
+        show_content();
     });
 
     /**
     * Custom bils creating button
     */
     $("#custom-date").button().click(function () {
-        var x = document.getElementById("bilans-contetn");
-        if (x.style.display === "none") {
-            $("#bilans-contetn").toggle();
-        }
 
-        $("#user-date-range-calendar").toggle();
-        $("#user-date-range-button").toggle();
+        $("#user-date-range-calendar").toggle(300);
+        $("#user-date-range-button").toggle(300);
 
-        // $('#form').submit(function () {
         var formData = {
             beaginingDate: $("#beaginingDate").val(),
             endDate: $("#endDate").val(),
@@ -305,8 +316,6 @@ $(document).ready(function () {
             url: '/billsOverview/getBilans',
             method: 'POST',
             data: formData,
-            //dataType: "json",
-            //encode: true,
 
             success: function (response) {
                 bilsInfo("#range-name", response, "W podanym zakresie");
@@ -314,5 +323,6 @@ $(document).ready(function () {
                 alert('error: ');
             }
         });
+        show_content();
     });
 });

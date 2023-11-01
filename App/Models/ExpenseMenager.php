@@ -133,14 +133,14 @@ class ExpenseMenager extends \Core\Model
         if (empty($this->errors)) {
             $sql = 'INSERT INTO expenses (id, user_id, expense_category_assigned_to_user_id,  payment_method_assigned_to_user_id, amount, date_of_expense, expense_comment)
                      VALUES (null, :user_id, :expense_category_assigned_to_user_id, :payment_method_assigned_to_user_id, :amount, :date_of_expense, :expense_comment)';
-                     	
+
             $db = static::getDB();
 
             $stmt = $db->prepare($sql);
 
             $stmt->bindValue(':user_id', $_SESSION["user_id"], PDO::PARAM_INT);
             $stmt->bindValue(':expense_category_assigned_to_user_id', $this->getCategoryId(), PDO::PARAM_STR);
-            $stmt->bindValue(':payment_method_assigned_to_user_id', $this->getPaymentId(), PDO::PARAM_STR);   //  MISSING
+            $stmt->bindValue(':payment_method_assigned_to_user_id', $this->getPaymentId(), PDO::PARAM_STR); //  MISSING
             $stmt->bindValue(':amount', $this->amount, PDO::PARAM_STR);
             $stmt->bindValue(':date_of_expense', $this->date, PDO::PARAM_STR);
             $stmt->bindValue(':expense_comment', $this->coment, PDO::PARAM_STR);
@@ -205,7 +205,7 @@ class ExpenseMenager extends \Core\Model
         $db = static::getDB();
         $stmt = $db->prepare($sql);
 
-       $stmt->bindValue(':Transport', $categorys[0]['name'], PDO::PARAM_STR);
+        $stmt->bindValue(':Transport', $categorys[0]['name'], PDO::PARAM_STR);
         $stmt->bindValue(':Ksiazki', $categorys[1]['name'], PDO::PARAM_STR);
         $stmt->bindValue(':Zywnosc', $categorys[2]['name'], PDO::PARAM_STR);
         $stmt->bindValue(':Mieszkanie', $categorys[3]['name'], PDO::PARAM_STR);
@@ -223,7 +223,7 @@ class ExpenseMenager extends \Core\Model
         $stmt->bindValue(':Inny', $categorys[15]['name'], PDO::PARAM_STR);
         $stmt->bindValue(':user_id', $_SESSION['user_id'], PDO::PARAM_INT);
 
-       $stmt->execute();
+        $stmt->execute();
     }
 
     /**
@@ -315,8 +315,8 @@ class ExpenseMenager extends \Core\Model
         }
     }
 
-        /**
-     * Past defoult income category to user category
+    /**
+     * Past defoult expense category to user category
      *
      * @return void  
      */
@@ -336,14 +336,14 @@ class ExpenseMenager extends \Core\Model
         $stmt->bindValue(':Cash', $payment_category[0]['name'], PDO::PARAM_STR);
         $stmt->bindValue(':Debit_card', $payment_category[1]['name'], PDO::PARAM_STR);
         $stmt->bindValue(':Credit_card', $payment_category[2]['name'], PDO::PARAM_STR);
- 
+
         $stmt->bindValue(':user_id', $_SESSION['user_id'], PDO::PARAM_INT);
 
-       $stmt->execute();
+        $stmt->execute();
     }
 
-        /**
-     * Getting data about user income category
+    /**
+     * Getting data about user payment category
      *
      * @return boolean  True if getted correctly, false otherwise
      */
@@ -358,13 +358,104 @@ class ExpenseMenager extends \Core\Model
 
         if ($stmt->execute()) {
 
-            $payment_methods = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-            if (!empty($payment_methods)) {
-                return json_encode($payment_methods);
-            } else
-                return false;
-        } else
-            return false;
+        }
+    }
+
+    /**
+     * Getting expense list
+     *
+     * @return PDO::FETCH_ASSOC if correctly, false otherwise
+     */
+    public static function getExpenseList($id)
+    {
+        $sql =
+            'SELECT name,id FROM 
+            expenses_category_assigned_to_users 
+        WHERE 
+            expenses_category_assigned_to_users.user_id = :id
+        ';
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    /**
+     * Update category list
+     *
+     * @return void
+     */
+    public static function updateCategory($data)
+    {
+        $sql =
+            'UPDATE	
+            expenses_category_assigned_to_users	
+        SET	
+            expenses_category_assigned_to_users.name = :category
+        WHERE 
+            expenses_category_assigned_to_users.id = :id';
+
+        $db = static::getDB();
+
+        $stmt = $db->prepare($sql);
+
+        $stmt->bindValue(':category', $data["category_name"], PDO::PARAM_STMT);
+        $stmt->bindValue(':id', $data["categoryId"], PDO::PARAM_INT);
+
+        if ($stmt->execute())
+            return true;
+    }
+
+    /**
+     * Delete expense category
+     *
+     * @return void
+     */
+    public static function deleteCategory($data)
+    {
+        $sql =
+            'DELETE FROM 
+                expenses_category_assigned_to_users 
+            WHERE 
+                expenses_category_assigned_to_users.id = :id';
+
+        $db = static::getDB();
+
+        $stmt = $db->prepare($sql);
+
+        $stmt->bindValue(':id', $data["categoryId"], PDO::PARAM_INT);
+
+        if ($stmt->execute())
+            return true;
+    }
+
+    /**
+     * Add expense category
+     *
+     * @return void
+     */
+    public static function addCategory($data)
+    {
+        $sql =
+            'INSERT INTO 
+                expenses_category_assigned_to_users(user_id, name) 
+            VALUES 
+                (:id , :newCategory)';
+
+        $db = static::getDB();
+
+        $stmt = $db->prepare($sql);
+
+        $stmt->bindValue(':newCategory', $data["categoryName"], PDO::PARAM_STMT);
+        $stmt->bindValue(':id', $_SESSION['user_id'], PDO::PARAM_INT);
+
+        if ($stmt->execute())
+            return true;
     }
 }

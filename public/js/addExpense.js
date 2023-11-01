@@ -43,6 +43,20 @@ $(document).ready(function () {
     });
 });
 
+
+/**
+ * Create list for income
+ */
+function createList(data, category) {
+
+    for (let i = 0; i < data.length; i++) {
+
+        if (i == 0) addButton(data[i].name, true, category);
+        
+        else addButton(data[i].name, false, category);
+    }
+}
+
 /**
  * Add select option to expense form with name and value
  */
@@ -66,41 +80,14 @@ $(document).ready(function () {
     $.ajax({
         url: '/expense/getUserCategory',
         method: 'POST',
+
         success: function (response) {
-            var id = '';
-            var name = '';
-            var isFirst = true;
-
-            for (let i = 0; i < response.length; i++) {
-                if (response[i] == String.fromCharCode(58)) {
-                    i++;
-                    if (response[i] == String.fromCharCode(34)) {
-                        i++;
-                        var variable = '';
-                        do {
-                            variable += response[i];
-                            i++;
-                        }
-                        while (response[i] != String.fromCharCode(34))
-
-                        if (id == '') {
-                            id = variable;
-                        } else {
-                            name = variable;
-                        }
-                        if (id != '' && name != '') {
-                            addButton(name, isFirst, "#Category");
-                            if (isFirst) isFirst = false;
-                            var id = '';
-                            var name = '';
-                        }
-                    }
-                }
-            }
-        }, error: function (error) {
-            alert('error: ' + error);
+            createList($.parseJSON(response), "#Category");
+        }, error: function () {
+            alert('error: ');
         }
     });
+
 });
 
 /**
@@ -113,37 +100,11 @@ $(document).ready(function () {
         url: '/expense/getUserPayments',
         method: 'POST',
         success: function (response) {
-            var id = '';
-            var name = '';
-            var isFirst = true;
-            for (let i = 0; i < response.length; i++) {
-                if (response[i] == String.fromCharCode(58)) {
-                    i++;
-                    if (response[i] == String.fromCharCode(34)) {
-                        i++;
-                        var variable = '';
-                        do {
-                            variable += response[i];
-                            i++;
-                        }
-                        while (response[i] != String.fromCharCode(34))
-
-                        if (id == '') {
-                            id = variable;
-                        } else {
-                            name = variable;
-                        }
-                        if (id != '' && name != '') {
-                            addButton(name, isFirst, "#payment_method");
-                            if (isFirst) isFirst = false;
-                            var id = '';
-                            var name = '';
-                        }
-                    }
-                }
-            }
-        }, error: function (error) {
-            alert('error: ' + error);
+            createList($.parseJSON(response), "#payment_method");
+        }, error: function () {
+            alert('error: ');
         }
     });
 });
+
+

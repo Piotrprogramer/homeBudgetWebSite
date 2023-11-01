@@ -5,6 +5,7 @@ namespace App\Controllers;
 use \Core\View;
 use \App\Auth;
 use \App\Flash;
+use \App\Controllers\Income;
 
 /**
  * Profile controller
@@ -26,18 +27,18 @@ class Profile extends Authenticated
         $this->user = Auth::getUser();
     }
 
-    /**
+    /** 
      * Show the profile
      *
      * @return void
-     */
+    */
     public function showAction()
     {
         View::renderTemplate('Profile/show.html', [
             'user' => $this->user
         ]);
     }
-
+ 
     /**
      * Show the form for editing the profile
      *
@@ -61,14 +62,13 @@ class Profile extends Authenticated
 
             Flash::addMessage('Changes saved');
 
-            $this->redirect('/profile/show');
+            $this->redirect('/profile/edit');
 
         } else {
 
             View::renderTemplate('Profile/edit.html', [
                 'user' => $this->user
             ]);
-
         }
     }
 }
