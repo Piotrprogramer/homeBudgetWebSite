@@ -84,7 +84,9 @@ body {
     color: white;
 }
 .bg-dark:hover{
-    color: rgb(255, 255, 255);
+    background-color:#373d43 !important;
+
+    color: rgb(255, 255, 255)!important;
 
     -webkit-box-shadow: 0px 0px 23px 2px rgb(20, 19, 17);
     -moz-box-shadow: 0px 0px 23px 2px rgb(20, 19, 17);
@@ -93,12 +95,27 @@ body {
     transition-duration: 300ms;
 }
 
-.bg-primary:hover{
-    color: rgb(20, 19, 17);
 
-    -webkit-box-shadow: 0px 0px 23px 3px #7ac1ff;
-    -moz-box-shadow: 0px 0px 23px 3px #7ac1ff;
-    box-shadow: 0px 0px 23px 3px #7ac1ff;
+.bg-primary:hover{
+    background-color:#7ac1ff !important;
+
+    color: rgb(20, 19, 17)!important;
+
+    -webkit-box-shadow: 0px 0px 23px 4px #7ac1ff;
+    -moz-box-shadow: 0px 0px 23px 4px #7ac1ff;
+    box-shadow: 0px 0px 23px 4px #7ac1ff;
+
+    transition-duration: 300ms;
+}
+
+.bg-success:hover{
+    background-color:#71b671 !important;
+
+    color: rgb(20, 19, 17)!important;
+
+    -webkit-box-shadow: 0px 0px 23px 4px #71b671;
+    -moz-box-shadow: 0px 0px 23px 4px #71b671;
+    box-shadow: 0px 0px 23px 4px #71b671;
 
     transition-duration: 300ms;
 }
