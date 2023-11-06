@@ -50,14 +50,10 @@ body {
     background-color: rgb(222, 222, 222);
 }
 
-
 #navbarNav:hover {
-
     border-radius: 5px;
     transition-duration: 1s;
 }
-
-
 
 #navbarNav>ul>li :hover {
     background-color:#7ac1ff;
@@ -69,41 +65,26 @@ body {
     box-shadow: 0px 0px 23px 4px #7ac1ff;
 
     transition-duration: 300ms;
-
 }
 
 .nav_menu{
-    background-image: linear-gradient(#1190ff,#0968bb);
+    background-image: linear-gradient(#07457b,#0c8dfe);
 
     margin-top: 15px;
     margin-bottom:  15px;
-
 }
 
-.bg-gradient{
+.my_button{
+    background-image: linear-gradient(#07457b,#0c8dfe);
     color: white;
-}
-.bg-dark:hover{
-    background-color:#373d43 !important;
-
-    color: rgb(255, 255, 255)!important;
-
-    -webkit-box-shadow: 0px 0px 23px 2px rgb(20, 19, 17);
-    -moz-box-shadow: 0px 0px 23px 2px rgb(20, 19, 17);
-    box-shadow: 0px 0px 23px 2px rgb(20, 19, 17);
-
-    transition-duration: 300ms;
+    
 }
 
 
-.bg-primary:hover{
-    background-color:#7ac1ff !important;
+.my_button:hover{
+    background-image: linear-gradient(#8dcaff,#5486b1);
 
-    color: rgb(20, 19, 17)!important;
-
-    -webkit-box-shadow: 0px 0px 23px 4px #7ac1ff;
-    -moz-box-shadow: 0px 0px 23px 4px #7ac1ff;
-    box-shadow: 0px 0px 23px 4px #7ac1ff;
+    color: rgb(20, 19, 17);
 
     transition-duration: 300ms;
 }
@@ -112,10 +93,6 @@ body {
     background-color:#71b671 !important;
 
     color: rgb(20, 19, 17)!important;
-
-    -webkit-box-shadow: 0px 0px 23px 4px #71b671;
-    -moz-box-shadow: 0px 0px 23px 4px #71b671;
-    box-shadow: 0px 0px 23px 4px #71b671;
 
     transition-duration: 300ms;
 }

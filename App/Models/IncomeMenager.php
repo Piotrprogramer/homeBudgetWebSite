@@ -150,23 +150,21 @@ class IncomeMenager extends \Core\Model
      */
     public static function pastDefaultCategory($categorys)
     {
-        $sql =
-            'INSERT INTO incomes_category_assigned_to_users 
-             VALUES(null, :user_id,:Wynagrodzenie),
-                (null, :user_id,:Odsetki),
-                (null, :user_id,:Allegro),
-                (null, :user_id,:Inne)';
+        $db = static::getDB(); 
+        foreach ($categorys as &$value) {
+            $sql =
+            'INSERT INTO 
+                incomes_category_assigned_to_users 
+             VALUES
+                (null, :user_id,:category)';
 
-        $db = static::getDB();
-        $stmt = $db->prepare($sql);
+             $stmt = $db->prepare($sql);    
 
-        $stmt->bindValue(':Wynagrodzenie', $categorys[0]['name'], PDO::PARAM_STR);
-        $stmt->bindValue(':Odsetki', $categorys[1]['name'], PDO::PARAM_STR);
-        $stmt->bindValue(':Allegro', $categorys[2]['name'], PDO::PARAM_STR);
-        $stmt->bindValue(':Inne', $categorys[3]['name'], PDO::PARAM_STR);
-        $stmt->bindValue(':user_id', $_SESSION['user_id'], PDO::PARAM_INT);
-
-        $stmt->execute();
+             $stmt->bindValue(':category', $value['name'], PDO::PARAM_STR);
+             $stmt->bindValue(':user_id', $_SESSION['user_id'], PDO::PARAM_INT);
+     
+             $stmt->execute();
+        }    
     }
 
     /**

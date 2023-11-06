@@ -183,47 +183,21 @@ class ExpenseMenager extends \Core\Model
      */
     public static function pastDefaultCategory($categorys)
     {
-        $sql =
-            'INSERT INTO expenses_category_assigned_to_users 
-             VALUES(null, :user_id,:Transport),
-               (null, :user_id,:Ksiazki),
-                (null, :user_id,:Zywnosc),
-                (null, :user_id,:Mieszkanie),
-                (null, :user_id,:Telekomunikacja),
-                (null, :user_id,:Zdrowie),
-                (null, :user_id,:Odziez),         
-                (null, :user_id,:Higiena),
-                (null, :user_id,:Dzieci),
-                (null, :user_id,:Rekreacja),
-                (null, :user_id,:Wycieczka),
-                (null, :user_id,:Oszczednosci),
-                (null, :user_id,:Na_emeryture),
-                (null, :user_id,:Splata_dlugu),
-                (null, :user_id,:Prezent),
-                (null, :user_id,:Inny)';
+        $db = static::getDB(); 
+        foreach ($categorys as &$value) {
+            $sql =
+            'INSERT INTO 
+                expenses_category_assigned_to_users 
+             VALUES
+                (null, :user_id,:category)';
 
-        $db = static::getDB();
-        $stmt = $db->prepare($sql);
+             $stmt = $db->prepare($sql);    
 
-        $stmt->bindValue(':Transport', $categorys[0]['name'], PDO::PARAM_STR);
-        $stmt->bindValue(':Ksiazki', $categorys[1]['name'], PDO::PARAM_STR);
-        $stmt->bindValue(':Zywnosc', $categorys[2]['name'], PDO::PARAM_STR);
-        $stmt->bindValue(':Mieszkanie', $categorys[3]['name'], PDO::PARAM_STR);
-        $stmt->bindValue(':Telekomunikacja', $categorys[4]['name'], PDO::PARAM_STR);
-        $stmt->bindValue(':Zdrowie', $categorys[5]['name'], PDO::PARAM_STR);
-        $stmt->bindValue(':Odziez', $categorys[6]['name'], PDO::PARAM_STR);
-        $stmt->bindValue(':Higiena', $categorys[7]['name'], PDO::PARAM_STR);
-        $stmt->bindValue(':Dzieci', $categorys[8]['name'], PDO::PARAM_STR);
-        $stmt->bindValue(':Rekreacja', $categorys[9]['name'], PDO::PARAM_STR);
-        $stmt->bindValue(':Wycieczka', $categorys[10]['name'], PDO::PARAM_STR);
-        $stmt->bindValue(':Oszczednosci', $categorys[11]['name'], PDO::PARAM_STR);
-        $stmt->bindValue(':Na_emeryture', $categorys[12]['name'], PDO::PARAM_STR);
-        $stmt->bindValue(':Splata_dlugu', $categorys[13]['name'], PDO::PARAM_STR);
-        $stmt->bindValue(':Prezent', $categorys[14]['name'], PDO::PARAM_STR);
-        $stmt->bindValue(':Inny', $categorys[15]['name'], PDO::PARAM_STR);
-        $stmt->bindValue(':user_id', $_SESSION['user_id'], PDO::PARAM_INT);
-
-        $stmt->execute();
+             $stmt->bindValue(':category', $value['name'], PDO::PARAM_STR);
+             $stmt->bindValue(':user_id', $_SESSION['user_id'], PDO::PARAM_INT);
+     
+             $stmt->execute();
+        }
     }
 
     /**
