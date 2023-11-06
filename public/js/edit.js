@@ -139,13 +139,63 @@ $(document).ready(function () {
     reloadPayment();
 });
 
+  /*
+  * Validate method
+  *
+  */
+  $(document).ready(function () {
+    $("#update_value").validate({
+      rules: {
+        category_name: {
+          required: true,
+        }
+      },
+      messages: {
+        // Polish comment to action
+        category_name: {
+          required: "To pole jest wymagane."
+        }
+      },
+      success: function () {
+        $('#updateIncome').removeAttr('disabled');
+        $('#updateExpense').removeAttr('disabled');
+        $('#updatePayment').removeAttr('disabled');
+      }
+    });
 
+    $("#add_value").validate({
+      rules: {
+        newName: {
+          required: true,
+        }
+      },
+      messages: {
+        // Polish comment to action
+        newName: {
+          required: "To pole jest wymagane."
+        }
+      },
+      success: function () {
+        $('#addNew').removeAttr('disabled');
+        $('#addExpenseButton').removeAttr('disabled');
+        $('#addPayButton').removeAttr('disabled');
+      }
+    });
 
+    $("#update_value").on('input', function () {
+      if ($("#category_name").empty()) {
+        $("#updateIncome").attr('disabled', true);
+        $("#updateExpense").attr('disabled', true);
+        $("#updatePayment").attr('disabled', true);
+      }
+    });
+  });
 
-
-
-
-function newSettingButton(class_name, edit, name, id, style, innerHtml){
+/**
+ * Return setting button 
+ * 
+ */
+function newSettingButton(class_name, edit, name, id, style, innerHtml) {
 
     const editButton = document.createElement('button');
     editButton.classList.add('btn');
@@ -157,8 +207,8 @@ function newSettingButton(class_name, edit, name, id, style, innerHtml){
 
     editButton.setAttribute("data-bs-toggle", "modal");
     editButton.setAttribute("data-bs-target", '#' + edit);
-    if(name != '')  editButton.setAttribute("data-bs-categoryName", name);
-    if(id != '')    editButton.setAttribute("data-bs-categoryId", id);
+    if (name != '') editButton.setAttribute("data-bs-categoryName", name);
+    if (id != '') editButton.setAttribute("data-bs-categoryId", id);
 
     editButton.innerHTML = innerHtml;
 
@@ -183,10 +233,10 @@ function createList(div_name_of_list, data, edit, deleteM, addNew, button_edit, 
         document.querySelector(div_name_of_list).appendChild(li);
 
 
-        li.appendChild(newSettingButton(button_edit, edit, data[i].name, data[i].id, 
+        li.appendChild(newSettingButton(button_delete, deleteM, data[i].name, data[i].id,
             'btn-outline-danger', "<i class='fas fa-trash-can fa-fw me-2'></i>Usuń"));
 
-        li.appendChild(newSettingButton(button_edit, edit, data[i].name, data[i].id, 
+        li.appendChild(newSettingButton(button_edit, edit, data[i].name, data[i].id,
             'btn-outline-success', "<i class='fas fa-wrench fa-fw me-2'></i>Edytuj"));
     }
 
@@ -197,13 +247,13 @@ function createList(div_name_of_list, data, edit, deleteM, addNew, button_edit, 
         "<span style='padding:50'></span>";
     document.querySelector(div_name_of_list).appendChild(li);
 
-    li.appendChild(newSettingButton(button_add, addNew, '', '', 
-    'btn-outline-success', "<i class='fas fa-square-plus fa-fw me-2'></i>Dodaj"));
+    li.appendChild(newSettingButton(button_add, addNew, '', '',
+        'btn-outline-success', "<i class='fas fa-square-plus fa-fw me-2'></i>Dodaj"));
 
     editModal(edit);
     deleteModal(deleteM);
     addModal(addNew);
-    
+
     editModalButtons(div_name_of_list, button_edit);
     deleteModalButtons(div_name_of_list, button_delete);
     addModalButtons(div_name_of_list, button_add);
@@ -341,6 +391,8 @@ function addModalButtons(divName, buttonId) {
             if (document.getElementById("addPayButton").style.display === "") {
                 $("#addPayButton").toggle();
             }
+
+            $("#addNew").attr('disabled', true);
         });
     }
 
@@ -359,6 +411,8 @@ function addModalButtons(divName, buttonId) {
             if (document.getElementById("addPayButton").style.display === "") {
                 $("#addPayButton").toggle();
             }
+
+            $("#addExpenseButton").attr('disabled', true);
         });
     }
 
@@ -376,8 +430,10 @@ function addModalButtons(divName, buttonId) {
             if (document.getElementById("addExpenseButton").style.display === "") {
                 $("#addExpenseButton").toggle();
             }
+
+            $("#addPayButton").attr('disabled', true);
         });
-    }
+    } 
 }
 
 /**
@@ -393,7 +449,7 @@ function editModal(name) {
         var categoryId = button.getAttribute('data-bs-categoryId')
 
         var modalTitle = editModal.querySelector('.modal-title')
-        var modalCategoryName = editModal.querySelector('.modal-body #category-name')
+        var modalCategoryName = editModal.querySelector('.modal-body #category_name')
         var modalIdValue = editModal.querySelector('.modal-body #categoryId')
 
         modalTitle.textContent = 'Zamień "' + categoryName + '"'
@@ -437,23 +493,28 @@ function addModal(name) {
  * Update income function
  * 
  */
+
+
+
+
 $(document).ready(function () {
     $("#updateIncome").button().click(function () {
+        if ($("#update_value").valid()) {
+            var editForm = {
+                category_name: $("#category_name").val(),
+                categoryId: $("#categoryId").val(),
+            };
 
-        var editForm = {
-            category_name: $("#category-name").val(),
-            categoryId: $("#categoryId").val(),
-        };
+            $.ajax({
+                url: '/Income/updateCategory',
+                method: 'POST',
+                data: editForm,
+                dataType: "json",
+                encode: true,
+            });
 
-        $.ajax({
-            url: '/Income/updateCategory',
-            method: 'POST',
-            data: editForm,
-            dataType: "json",
-            encode: true,
-        });
-
-        reloadIncome();
+            reloadIncome();
+        }
     });
 
     $("#deleteIncome").button().click(function () {
@@ -494,11 +555,12 @@ $(document).ready(function () {
  * Update expense function
  * 
  */
+
 $(document).ready(function () {
     $("#updateExpense").button().click(function () {
 
         var editForm = {
-            category_name: $("#category-name").val(),
+            category_name: $("#category_name").val(),
             categoryId: $("#categoryId").val(),
         };
 
@@ -555,7 +617,7 @@ $(document).ready(function () {
     $("#updatePayment").button().click(function () {
 
         var editForm = {
-            category_name: $("#category-name").val(),
+            category_name: $("#category_name").val(),
             categoryId: $("#categoryId").val(),
         };
 

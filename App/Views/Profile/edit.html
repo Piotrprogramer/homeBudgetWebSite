@@ -12,53 +12,71 @@
 
 <script>
   $(document).ready(function () {
-    $("#update_value").validate();
-    $("#formExpense").validate();
-    $("#formPayment").validate();
 
 
-
-    $("#formIncome").validate({
-        rules: {
-            amount: {
-                required: true,
-                min: 0.01,
-                step: 0.01
-            },
-            Category: {
-                required: true
-            },
-            date: {
-                required: true,
-                date: true,
-                min: "2000-01-01", // Minimum date
-                max: "2200-01-01" // Maximum date
-            }
-        },
-        messages: {
-            // Polish comment to action
-            amount: {
-                multiple: "Wprowadź wielokrotność kwoty 0.01.",
-                min: "Podaj kwotę wiekszą niż 0,01",
-                step: "Podaj wielokrotność kwoty 0,01",
-                required: "To pole jest wymagane."
-            },
-            date: {
-                required: "To pole jest wymagane.",
-                min: "Wprowadź datę po 2000-01-01",
-                max: "Wprowadź datę przed 2200-01-01"
-            }
-        },
-
-        submitHandler: function (form) {
-            // do other things for a valid form
-            form.submit();
+    $("#update_value").validate({
+      rules: {
+        category_name: {
+          required: true,
         }
+      },
+      messages: {
+        // Polish comment to action
+        category_name: {
+          required: "To pole jest wymagane."
+        }
+      },
+      success: function () {
+        $('#updateIncome').removeAttr('disabled');
+        $('#updateExpense').removeAttr('disabled');
+        $('#updatePayment').removeAttr('disabled');
+      }
     });
- });
+
+    $("#add_value").validate({
+      rules: {
+        newName: {
+          required: true,
+        }
+      },
+      messages: {
+        // Polish comment to action
+        newName: {
+          required: "To pole jest wymagane."
+        }
+      },
+      success: function () {
+        $('#addNew').removeAttr('disabled');
+        $('#addExpenseButton').removeAttr('disabled');
+        $('#addPayButton').removeAttr('disabled');
+      }
+    });
+
+    $("#update_value").on('input', function () {
+      if ($("#category_name").empty()) {
+        $("#updateIncome").attr('disabled', true);
+        $("#updateExpense").attr('disabled', true);
+        $("#updatePayment").attr('disabled', true);
+      }
+    });
 
 
-  
+
+    
+
+
+
+    //$("#updateIncome").attr('disabled', true); // Disable button on form validation error
+
+
+
+
+    // $('#register').removeAttr('disabled');
+
+  });
+
+
+
 
 
 </script>
@@ -90,8 +108,8 @@
       <form id="update_value">
         <div class="modal-body">
           <div class="mb-3">
-            <label for="category-name" class="col-form-label">Zamień na:</label>
-            <input type="text" class="form-control" id="category-name" name="category-name" required>
+            <label for="category_name" class="col-form-label">Zamień na:</label>
+            <input type="text" class="form-control" id="category_name" name="category_name" required>
             <input type="number" class="form-control" id="categoryId" name="categoryId" hidden>
           </div>
         </div>
@@ -137,7 +155,7 @@
         <h5 class="modal-title" id="addIncomelLabel">Dodaj</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <form>
+      <form id="add_value">
         <div class="modal-body">
           <div class="mb-3">
             <label for="newName" class="col-form-label">Dodaj nową kategorie:</label>
@@ -146,9 +164,9 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zamknij</button>
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="addNew">Dodaj</button>
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="addExpenseButton">Dodaj</button>
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="addPayButton">Dodaj</button>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="addNew" disabled>Dodaj</button>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="addExpenseButton" disabled>Dodaj</button>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="addPayButton" disabled>Dodaj</button>
         </div>
       </form>
     </div>
