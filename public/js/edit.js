@@ -140,6 +140,31 @@ $(document).ready(function () {
 });
 
 
+
+
+
+
+
+function newSettingButton(class_name, edit, name, id, style, innerHtml){
+
+    const editButton = document.createElement('button');
+    editButton.classList.add('btn');
+    editButton.classList.add(style);
+    editButton.classList.add(class_name);
+
+    editButton.setAttribute("type", "button");
+    editButton.setAttribute("style", "text-align: right");
+
+    editButton.setAttribute("data-bs-toggle", "modal");
+    editButton.setAttribute("data-bs-target", '#' + edit);
+    if(name != '')  editButton.setAttribute("data-bs-categoryName", name);
+    if(id != '')    editButton.setAttribute("data-bs-categoryId", id);
+
+    editButton.innerHTML = innerHtml;
+
+    return editButton;
+}
+
 /**
  * Add buttons , class etc.
  * 
@@ -150,44 +175,19 @@ function createList(div_name_of_list, data, edit, deleteM, addNew, button_edit, 
     for (let i = 0; i < data.length; i++) {
 
         const li = document.createElement("li");
+
         li.classList.add('list-group-item');
 
         li.innerHTML =
             "<span style='padding:50'>" + data[i].name + "</span>";
         document.querySelector(div_name_of_list).appendChild(li);
 
-        const newButton = document.createElement('button');
-        newButton.classList.add('btn');
-        newButton.classList.add('btn-outline-success');
-        newButton.classList.add(button_edit);
 
-        newButton.setAttribute("type", "button");
-        newButton.setAttribute("style", "text-align: right");
+        li.appendChild(newSettingButton(button_edit, edit, data[i].name, data[i].id, 
+            'btn-outline-danger', "<i class='fas fa-trash-can fa-fw me-2'></i>Usuń"));
 
-        newButton.setAttribute("data-bs-toggle", "modal");
-        newButton.setAttribute("data-bs-target", '#' + edit);
-        newButton.setAttribute("data-bs-categoryName", data[i].name);
-        newButton.setAttribute("data-bs-categoryId", data[i].id);
-
-        newButton.innerHTML = "<i class='fas fa-wrench fa-fw me-2'></i>Edytuj";
-
-        const newButton2 = document.createElement('button');
-        newButton2.classList.add('btn');
-        newButton2.classList.add('btn-outline-danger');
-        newButton2.classList.add(button_delete);
-
-        newButton2.setAttribute("type", "button");
-        newButton2.setAttribute("style", "text-align: right");
-
-        newButton2.setAttribute("data-bs-toggle", "modal");
-        newButton2.setAttribute("data-bs-target", '#' + deleteM);
-        newButton2.setAttribute("data-bs-categoryName", data[i].name);
-        newButton2.setAttribute("data-bs-categoryId", data[i].id);
-
-        newButton2.innerHTML = "<i class='fas fa-trash-can fa-fw me-2'></i>Usuń";
-
-        li.appendChild(newButton2);
-        li.appendChild(newButton);
+        li.appendChild(newSettingButton(button_edit, edit, data[i].name, data[i].id, 
+            'btn-outline-success', "<i class='fas fa-wrench fa-fw me-2'></i>Edytuj"));
     }
 
     const li = document.createElement("li");
@@ -197,23 +197,13 @@ function createList(div_name_of_list, data, edit, deleteM, addNew, button_edit, 
         "<span style='padding:50'></span>";
     document.querySelector(div_name_of_list).appendChild(li);
 
-    const newButton = document.createElement('button');
-    newButton.classList.add('btn');
-    newButton.classList.add('btn-outline-success');
-    newButton.classList.add(button_add);
-
-    newButton.setAttribute("type", "button");
-    newButton.setAttribute("style", "text-align: right");
-
-    newButton.setAttribute("data-bs-toggle", "modal");
-    newButton.setAttribute("data-bs-target", '#' + addNew);
-
-    newButton.innerHTML = "<i class='fas fa-square-plus fa-fw me-2'></i>Dodaj";
-    li.appendChild(newButton);
+    li.appendChild(newSettingButton(button_add, addNew, '', '', 
+    'btn-outline-success', "<i class='fas fa-square-plus fa-fw me-2'></i>Dodaj"));
 
     editModal(edit);
     deleteModal(deleteM);
     addModal(addNew);
+    
     editModalButtons(div_name_of_list, button_edit);
     deleteModalButtons(div_name_of_list, button_delete);
     addModalButtons(div_name_of_list, button_add);
