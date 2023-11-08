@@ -1,4 +1,3 @@
-
 /**
  * Add jQuery Validation plugin method for a valid password
  * 
@@ -214,6 +213,8 @@ function createList(div_name_of_list, data, edit, deleteM, addNew, button_edit, 
 function editModalButtons(divName, buttonId) {
     if (divName === "#formIncome") {
         $("." + buttonId).click(function () {
+            $('#edit_message').hide();
+
             if (document.getElementById("updateIncome").style.display == "none") {
                 $("#updateIncome").toggle();
             }
@@ -231,6 +232,7 @@ function editModalButtons(divName, buttonId) {
     if (divName === "#formExpense") {
 
         $("." + buttonId).click(function () {
+            $('#edit_message').hide();
 
             if (document.getElementById("updateExpense").style.display == "none") {
                 $("#updateExpense").toggle();
@@ -248,6 +250,7 @@ function editModalButtons(divName, buttonId) {
 
     if (divName === "#formPayment") {
         $("." + buttonId).click(function () {
+            $('#edit_message').hide();
 
             if (document.getElementById("updatePayment").style.display == "none") {
                 $("#updatePayment").toggle();
@@ -328,6 +331,8 @@ function deleteModalButtons(divName, buttonId) {
 function addModalButtons(divName, buttonId) {
     if (divName === "#formIncome") {
         $("." + buttonId).click(function () {
+            $('#add_message').hide();
+
             if (document.getElementById("addNew").style.display == "none") {
                 $("#addNew").toggle();
             }
@@ -347,6 +352,7 @@ function addModalButtons(divName, buttonId) {
     if (divName === "#formExpense") {
 
         $("." + buttonId).click(function () {
+            $('#add_message').hide();
 
             if (document.getElementById("addExpenseButton").style.display == "none") {
                 $("#addExpenseButton").toggle();
@@ -366,6 +372,7 @@ function addModalButtons(divName, buttonId) {
 
     if (divName === "#formPayment") {
         $("." + buttonId).click(function () {
+            $('#add_message').hide();
 
             if (document.getElementById("addPayButton").style.display == "none") {
                 $("#addPayButton").toggle();
@@ -435,8 +442,6 @@ function addModal(name) {
     })
 }
 
-
-
 function displayInformMessage(div_id, mesage) {
     $('#' + div_id).text(mesage);
     $('#' + div_id).show();
@@ -446,6 +451,12 @@ $(document).ready(function () {
     $("#category_name").bind("change paste keyup", function () {
         if ($('#edit_message').is(":visible")) {
             $('#edit_message').hide();
+        }
+    });
+
+    $("#newName").bind("change paste keyup", function () {
+        if ($('#add_message').is(":visible")) {
+            $('#add_message').hide();
         }
     });
 });
