@@ -1,4 +1,3 @@
-
 /**
  * Add jQuery Validation plugin method for a valid password
  * 
@@ -139,6 +138,29 @@ $(document).ready(function () {
     reloadPayment();
 });
 
+/**
+ * Return setting button 
+ * 
+ */
+function newSettingButton(class_name, edit, name, id, style, innerHtml) {
+
+    const editButton = document.createElement('button');
+    editButton.classList.add('btn');
+    editButton.classList.add(style);
+    editButton.classList.add(class_name);
+
+    editButton.setAttribute("type", "button");
+    editButton.setAttribute("style", "text-align: right");
+
+    editButton.setAttribute("data-bs-toggle", "modal");
+    editButton.setAttribute("data-bs-target", '#' + edit);
+    if (name != '') editButton.setAttribute("data-bs-categoryName", name);
+    if (id != '') editButton.setAttribute("data-bs-categoryId", id);
+
+    editButton.innerHTML = innerHtml;
+
+    return editButton;
+}
 
 /**
  * Add buttons , class etc.
@@ -150,44 +172,19 @@ function createList(div_name_of_list, data, edit, deleteM, addNew, button_edit, 
     for (let i = 0; i < data.length; i++) {
 
         const li = document.createElement("li");
+
         li.classList.add('list-group-item');
 
         li.innerHTML =
             "<span style='padding:50'>" + data[i].name + "</span>";
         document.querySelector(div_name_of_list).appendChild(li);
 
-        const newButton = document.createElement('button');
-        newButton.classList.add('btn');
-        newButton.classList.add('btn-outline-success');
-        newButton.classList.add(button_edit);
 
-        newButton.setAttribute("type", "button");
-        newButton.setAttribute("style", "text-align: right");
+        li.appendChild(newSettingButton(button_delete, deleteM, data[i].name, data[i].id,
+            'btn-outline-danger', "<i class='fas fa-trash-can fa-fw me-2'></i>Usuń"));
 
-        newButton.setAttribute("data-bs-toggle", "modal");
-        newButton.setAttribute("data-bs-target", '#' + edit);
-        newButton.setAttribute("data-bs-categoryName", data[i].name);
-        newButton.setAttribute("data-bs-categoryId", data[i].id);
-
-        newButton.innerHTML = "<i class='fas fa-wrench fa-fw me-2'></i>Edytuj";
-
-        const newButton2 = document.createElement('button');
-        newButton2.classList.add('btn');
-        newButton2.classList.add('btn-outline-danger');
-        newButton2.classList.add(button_delete);
-
-        newButton2.setAttribute("type", "button");
-        newButton2.setAttribute("style", "text-align: right");
-
-        newButton2.setAttribute("data-bs-toggle", "modal");
-        newButton2.setAttribute("data-bs-target", '#' + deleteM);
-        newButton2.setAttribute("data-bs-categoryName", data[i].name);
-        newButton2.setAttribute("data-bs-categoryId", data[i].id);
-
-        newButton2.innerHTML = "<i class='fas fa-trash-can fa-fw me-2'></i>Usuń";
-
-        li.appendChild(newButton2);
-        li.appendChild(newButton);
+        li.appendChild(newSettingButton(button_edit, edit, data[i].name, data[i].id,
+            'btn-outline-success', "<i class='fas fa-wrench fa-fw me-2'></i>Edytuj"));
     }
 
     const li = document.createElement("li");
@@ -197,23 +194,13 @@ function createList(div_name_of_list, data, edit, deleteM, addNew, button_edit, 
         "<span style='padding:50'></span>";
     document.querySelector(div_name_of_list).appendChild(li);
 
-    const newButton = document.createElement('button');
-    newButton.classList.add('btn');
-    newButton.classList.add('btn-outline-success');
-    newButton.classList.add(button_add);
-
-    newButton.setAttribute("type", "button");
-    newButton.setAttribute("style", "text-align: right");
-
-    newButton.setAttribute("data-bs-toggle", "modal");
-    newButton.setAttribute("data-bs-target", '#' + addNew);
-
-    newButton.innerHTML = "<i class='fas fa-square-plus fa-fw me-2'></i>Dodaj";
-    li.appendChild(newButton);
+    li.appendChild(newSettingButton(button_add, addNew, '', '',
+        'btn-outline-success', "<i class='fas fa-square-plus fa-fw me-2'></i>Dodaj"));
 
     editModal(edit);
     deleteModal(deleteM);
     addModal(addNew);
+
     editModalButtons(div_name_of_list, button_edit);
     deleteModalButtons(div_name_of_list, button_delete);
     addModalButtons(div_name_of_list, button_add);
@@ -226,6 +213,8 @@ function createList(div_name_of_list, data, edit, deleteM, addNew, button_edit, 
 function editModalButtons(divName, buttonId) {
     if (divName === "#formIncome") {
         $("." + buttonId).click(function () {
+            $('#edit_message').hide();
+
             if (document.getElementById("updateIncome").style.display == "none") {
                 $("#updateIncome").toggle();
             }
@@ -243,6 +232,7 @@ function editModalButtons(divName, buttonId) {
     if (divName === "#formExpense") {
 
         $("." + buttonId).click(function () {
+            $('#edit_message').hide();
 
             if (document.getElementById("updateExpense").style.display == "none") {
                 $("#updateExpense").toggle();
@@ -260,6 +250,7 @@ function editModalButtons(divName, buttonId) {
 
     if (divName === "#formPayment") {
         $("." + buttonId).click(function () {
+            $('#edit_message').hide();
 
             if (document.getElementById("updatePayment").style.display == "none") {
                 $("#updatePayment").toggle();
@@ -340,6 +331,8 @@ function deleteModalButtons(divName, buttonId) {
 function addModalButtons(divName, buttonId) {
     if (divName === "#formIncome") {
         $("." + buttonId).click(function () {
+            $('#add_message').hide();
+
             if (document.getElementById("addNew").style.display == "none") {
                 $("#addNew").toggle();
             }
@@ -351,12 +344,15 @@ function addModalButtons(divName, buttonId) {
             if (document.getElementById("addPayButton").style.display === "") {
                 $("#addPayButton").toggle();
             }
+
+
         });
     }
 
     if (divName === "#formExpense") {
 
         $("." + buttonId).click(function () {
+            $('#add_message').hide();
 
             if (document.getElementById("addExpenseButton").style.display == "none") {
                 $("#addExpenseButton").toggle();
@@ -369,11 +365,14 @@ function addModalButtons(divName, buttonId) {
             if (document.getElementById("addPayButton").style.display === "") {
                 $("#addPayButton").toggle();
             }
+
+
         });
     }
 
     if (divName === "#formPayment") {
         $("." + buttonId).click(function () {
+            $('#add_message').hide();
 
             if (document.getElementById("addPayButton").style.display == "none") {
                 $("#addPayButton").toggle();
@@ -403,7 +402,7 @@ function editModal(name) {
         var categoryId = button.getAttribute('data-bs-categoryId')
 
         var modalTitle = editModal.querySelector('.modal-title')
-        var modalCategoryName = editModal.querySelector('.modal-body #category-name')
+        var modalCategoryName = editModal.querySelector('.modal-body #category_name')
         var modalIdValue = editModal.querySelector('.modal-body #categoryId')
 
         modalTitle.textContent = 'Zamień "' + categoryName + '"'
@@ -443,27 +442,71 @@ function addModal(name) {
     })
 }
 
+function displayInformMessage(div_id, mesage) {
+    $('#' + div_id).text(mesage);
+    $('#' + div_id).show();
+}
+
+$(document).ready(function () {
+    $("#category_name").bind("change paste keyup", function () {
+        if ($('#edit_message').is(":visible")) {
+            $('#edit_message').hide();
+        }
+    });
+
+    $("#newName").bind("change paste keyup", function () {
+        if ($('#add_message').is(":visible")) {
+            $('#add_message').hide();
+        }
+    });
+});
+
 /**
  * Update income function
  * 
  */
+function updateIncome(category_name) {
+    var form = {
+        category_name: category_name,
+    };
+
+    $.ajax({
+        url: '/Income/isCategoryAvailable',
+        method: 'POST',
+        data: form,
+        dataType: "json",
+        encode: true,
+
+        success: function (response) {
+            if (response == true) {
+                var editForm = {
+                    category_name: $("#category_name").val(),
+                    categoryId: $("#categoryId").val(),
+                };
+                $.ajax({
+                    url: '/Income/updateCategory',
+                    method: 'POST',
+                    data: editForm,
+                    dataType: "json",
+                    encode: true,
+                });
+                $("#editModal").modal('hide');
+                reloadIncome();
+            }
+            else displayInformMessage('edit_message', 'Wprowadzona kategoria jest już dodana');
+        }, error: function () {
+            alert('error');
+        }
+    });
+}
+
+
 $(document).ready(function () {
     $("#updateIncome").button().click(function () {
-
-        var editForm = {
-            category_name: $("#category-name").val(),
-            categoryId: $("#categoryId").val(),
-        };
-
-        $.ajax({
-            url: '/Income/updateCategory',
-            method: 'POST',
-            data: editForm,
-            dataType: "json",
-            encode: true,
-        });
-
-        reloadIncome();
+        if ($('#category_name').val()) {
+            updateIncome($("#category_name").val(),);
+        }
+        else displayInformMessage('edit_message', 'Wprowadź nową kategorię');
     });
 
     $("#deleteIncome").button().click(function () {
@@ -483,22 +526,76 @@ $(document).ready(function () {
     });
 
     $("#addNew").button().click(function () {
-        var addForm = {
-            categoryName: $("#newName").val(),
-        };
 
-        $.ajax({
-            url: '/Income/addCategory',
-            method: 'POST',
-            data: addForm,
-            dataType: "json",
-            encode: true,
+        if ($('#newName').val()) {
+            var addForm = {
+                categoryName: $("#newName").val(),
+            };
 
-        });
+            $.ajax({
+                url: '/Income/addCategory',
+                method: 'POST',
+                data: addForm,
+                dataType: "json",
+                encode: true,
 
-        reloadIncome();
+                success: function (response) {
+                    if (response == true) {
+                        $("#addModal").modal('hide');
+                        reloadIncome();
+                    }
+                    else displayInformMessage('add_message', 'Wprowadzona kategoria jest już dodana');
+                }, error: function () {
+                    alert('error');
+                }
+            });
+
+            reloadIncome();
+        }
+        else displayInformMessage('add_message', 'Wprowadź nową kategorię');
+
     });
 });
+
+
+/**
+ * Update expense function
+ * 
+ */
+function updateExpense(category_name) {
+    var form = {
+        category_name: category_name,
+    };
+
+    $.ajax({
+        url: '/Expense/isCategoryAvailable',
+        method: 'POST',
+        data: form,
+        dataType: "json",
+        encode: true,
+
+        success: function (response) {
+            if (response == true) {
+                var editForm = {
+                    category_name: $("#category_name").val(),
+                    categoryId: $("#categoryId").val(),
+                };
+                $.ajax({
+                    url: '/Expense/updateCategory',
+                    method: 'POST',
+                    data: editForm,
+                    dataType: "json",
+                    encode: true,
+                });
+                $("#editModal").modal('hide');
+                reloadExpense();
+            }
+            else displayInformMessage('edit_message', 'Wprowadzona kategoria jest już dodana');
+        }, error: function () {
+            alert('error');
+        }
+    });
+}
 
 /**
  * Update expense function
@@ -507,20 +604,10 @@ $(document).ready(function () {
 $(document).ready(function () {
     $("#updateExpense").button().click(function () {
 
-        var editForm = {
-            category_name: $("#category-name").val(),
-            categoryId: $("#categoryId").val(),
-        };
-
-        $.ajax({
-            url: '/Expense/updateCategory',
-            method: 'POST',
-            data: editForm,
-            dataType: "json",
-            encode: true,
-        });
-
-        reloadExpense();
+        if ($('#category_name').val()) {
+            updateExpense($("#category_name").val(),);
+        }
+        else displayInformMessage('edit_message', 'Wprowadź nową kategorię');
     });
 
     $("#deleteExpenseButton").button().click(function () {
@@ -540,22 +627,75 @@ $(document).ready(function () {
     });
 
     $("#addExpenseButton").button().click(function () {
-        var addForm = {
-            categoryName: $("#newName").val(),
-        };
+        if ($('#newName').val()) {
+            var addForm = {
+                categoryName: $("#newName").val(),
+            };
 
-        $.ajax({
-            url: '/Expense/addCategory',
-            method: 'POST',
-            data: addForm,
-            dataType: "json",
-            encode: true,
+            $.ajax({
+                url: '/Expense/addCategory',
+                method: 'POST',
+                data: addForm,
+                dataType: "json",
+                encode: true,
 
-        });
+                success: function (response) {
+                    if (response == true) {
+                        $("#addModal").modal('hide');
+                        reloadExpense();
+                    }
+                    else displayInformMessage('add_message', 'Wprowadzona kategoria jest już dodana');
+                }, error: function () {
+                    alert('error');
+                }
 
-        reloadExpense();
+            });
+        }
+        else displayInformMessage('add_message', 'Wprowadź nową kategorię');
     });
 });
+
+
+/**
+ * Update payment function
+ * 
+ */
+function updatePayment(category_name) {
+    var form = {
+        category_name: category_name,
+    };
+
+    $.ajax({
+        url: '/Payment/isCategoryAvailable',
+        method: 'POST',
+        data: form,
+        dataType: "json",
+        encode: true,
+
+        success: function (response) {
+            if (response == true) {
+                var editForm = {
+                    category_name: $("#category_name").val(),
+                    categoryId: $("#categoryId").val(),
+                };
+
+                $.ajax({
+                    url: '/Payment/updateCategory',
+                    method: 'POST',
+                    data: editForm,
+                    dataType: "json",
+                    encode: true,
+                });
+
+                $("#editModal").modal('hide');
+                reloadPayment();
+            }
+            else displayInformMessage('edit_message', 'Wprowadzona kategoria jest już dodana');
+        }, error: function () {
+            alert('error');
+        }
+    });
+}
 
 /**
  * Update payment function
@@ -564,20 +704,11 @@ $(document).ready(function () {
 $(document).ready(function () {
     $("#updatePayment").button().click(function () {
 
-        var editForm = {
-            category_name: $("#category-name").val(),
-            categoryId: $("#categoryId").val(),
-        };
+        if ($('#category_name').val()) {
+            updatePayment($("#category_name").val(),);
+        }
+        else displayInformMessage('edit_message', 'Wprowadź nową kategorię');
 
-        $.ajax({
-            url: '/Payment/updateCategory',
-            method: 'POST',
-            data: editForm,
-            dataType: "json",
-            encode: true,
-        });
-
-        reloadPayment();
     });
 
     $("#deletePaymentButton").button().click(function () {
@@ -597,20 +728,32 @@ $(document).ready(function () {
     });
 
     $("#addPayButton").button().click(function () {
-        var addForm = {
-            categoryName: $("#newName").val(),
-        };
+        if ($('#newName').val()) {
+            var addForm = {
+                categoryName: $("#newName").val(),
+            };
 
-        $.ajax({
-            url: '/Payment/addCategory',
-            method: 'POST',
-            data: addForm,
-            dataType: "json",
-            encode: true,
+            $.ajax({
+                url: '/Payment/addCategory',
+                method: 'POST',
+                data: addForm,
+                dataType: "json",
+                encode: true,
 
-        });
+                success: function (response) {
+                    if (response == true) {
+                        $("#addModal").modal('hide');
+                        reloadPayment();
+                    }
+                    else displayInformMessage('add_message', 'Wprowadzona kategoria jest już dodana');
+                }, error: function () {
+                    alert('error');
+                }
 
-        reloadPayment();
+            });
+        }
+        else displayInformMessage('add_message', 'Wprowadź nową kategorię');
+
     });
 });
 

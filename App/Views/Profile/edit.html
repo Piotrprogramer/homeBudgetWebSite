@@ -12,6 +12,10 @@
 
 <script>
 
+
+
+
+
 </script>
 {% endblock %}
 
@@ -30,7 +34,6 @@
 </ul>
 {% endif %}
 
-
 <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -38,19 +41,23 @@
         <h5 class="modal-title" id="editModalLabel">Edytuj kategorie</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <form>
+      <form id="update_value">
         <div class="modal-body">
+
           <div class="mb-3">
-            <label for="category-name" class="col-form-label">Zamień na:</label>
-            <input type="text" class="form-control" id="category-name" name="category-name" required>
+            <label for="category_name" class="col-form-label">Zamień na:</label>
+            <input type="text" class="form-control" id="category_name" name="category_name" required>
             <input type="number" class="form-control" id="categoryId" name="categoryId" hidden>
+
+            <label class="col-form-label" id="edit_message" style="color:red"></label>
           </div>
         </div>
+
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zamknij</button>
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="updateIncome">Aktualizuj</button>
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="updateExpense">Aktualizuj</button>
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="updatePayment">Aktualizuj</button>
+          <button type="button" class="btn btn-primary" id="updateIncome">Aktualizuj</button>
+          <button type="button" class="btn btn-primary" id="updateExpense">Aktualizuj</button>
+          <button type="button" class="btn btn-primary" id="updatePayment">Aktualizuj</button>
         </div>
       </form>
     </div>
@@ -66,9 +73,14 @@
       </div>
       <form>
         <div class="modal-body" hidden>
-          <div class="mb-3">
+
+
+          <div class="mb-3" hidden>
             <input type="number" class="form-control" id="categoryDeleteId" name="categoryDeleteId">
           </div>
+
+
+
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zamknij</button>
@@ -88,18 +100,19 @@
         <h5 class="modal-title" id="addIncomelLabel">Dodaj</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <form>
+      <form id="add_value">
         <div class="modal-body">
           <div class="mb-3">
             <label for="newName" class="col-form-label">Dodaj nową kategorie:</label>
             <input type="text" class="form-control" id="newName" name="newName" required>
+            <label class="col-form-label" id="add_message" style="color:red"></label>
           </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zamknij</button>
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="addNew">Dodaj</button>
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="addExpenseButton">Dodaj</button>
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="addPayButton">Dodaj</button>
+          <button type="button" class="btn btn-primary" id="addNew">Dodaj</button>
+          <button type="button" class="btn btn-primary" id="addExpenseButton">Dodaj</button>
+          <button type="button" class="btn btn-primary" id="addPayButton">Dodaj</button>
         </div>
       </form>
     </div>

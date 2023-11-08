@@ -432,4 +432,38 @@ class ExpenseMenager extends \Core\Model
         if ($stmt->execute())
             return true;
     }
+
+        /**
+     * Check income category is available
+     *
+     * @return bool 
+     */
+    public static function isAvailable($id, $category_name)
+    {
+        $sql = 
+        'SELECT 
+            name 
+        FROM 
+            expenses_category_assigned_to_users 
+        WHERE 
+            expenses_category_assigned_to_users.user_id = :id
+        AND
+            expenses_category_assigned_to_users.name = :category_name 
+        ';
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+        $stmt->bindValue(':category_name', $category_name, PDO::PARAM_STR);
+
+        $stmt->execute();
+
+
+        $word = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        if(empty($word)){
+            return true;
+        }
+        else return false;
+    }
 }

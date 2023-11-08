@@ -72,7 +72,15 @@ class IncomeMenager extends \Core\Model
      */
     public function getCategoryId()
     {
-        $sql = 'SELECT id FROM incomes_category_assigned_to_users WHERE name = :category AND user_id = :user_id';
+        $sql = 
+        'SELECT 
+            id 
+        FROM 
+            incomes_category_assigned_to_users 
+        WHERE 
+            name = :category 
+        AND 
+            user_id = :user_id';
 
         $db = static::getDB();
         $stmt = $db->prepare($sql);
@@ -124,7 +132,13 @@ class IncomeMenager extends \Core\Model
      */
     public static function incomeAsignetToUser()
     {
-        $sql = 'SELECT id, name FROM incomes_category_assigned_to_users WHERE user_id = :user_id';
+        $sql = 
+        'SELECT 
+            id, name 
+        FROM 
+            incomes_category_assigned_to_users 
+        WHERE 
+            user_id = :user_id';
 
         $db = static::getDB();
         $stmt = $db->prepare($sql);
@@ -193,7 +207,13 @@ class IncomeMenager extends \Core\Model
      */
     public static function isEmptyUserArray()
     {
-        $sql = 'SELECT id, name FROM incomes_category_assigned_to_users WHERE user_id = :user_id';
+        $sql = 
+        'SELECT 
+            id, name 
+        FROM 
+            incomes_category_assigned_to_users 
+        WHERE 
+            user_id = :user_id';
 
         $db = static::getDB();
         $stmt = $db->prepare($sql);
@@ -307,5 +327,38 @@ class IncomeMenager extends \Core\Model
 
         if($stmt->execute()) return true;
     }
-    
+
+    /**
+     * Check income category is available
+     *
+     * @return bool 
+     */
+    public static function isAvailable($id, $category_name)
+    {
+        $sql = 
+        'SELECT 
+            name 
+        FROM 
+            incomes_category_assigned_to_users 
+        WHERE 
+            incomes_category_assigned_to_users.user_id = :id
+        AND
+            incomes_category_assigned_to_users.name = :category_name 
+        ';
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+        $stmt->bindValue(':category_name', $category_name, PDO::PARAM_STR);
+
+        $stmt->execute();
+
+
+        $word = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        if(empty($word)){
+            return true;
+        }
+        else return false;
+    }
 }
