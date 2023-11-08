@@ -11,69 +11,6 @@
 <script src="/js/edit.js"></script>
 
 <script>
-  $(document).ready(function () {
-
-
-    $("#update_value").validate({
-      rules: {
-        category_name: {
-          required: true,
-        }
-      },
-      messages: {
-        // Polish comment to action
-        category_name: {
-          required: "To pole jest wymagane."
-        }
-      },
-      success: function () {
-        $('#updateIncome').removeAttr('disabled');
-        $('#updateExpense').removeAttr('disabled');
-        $('#updatePayment').removeAttr('disabled');
-      }
-    });
-
-    $("#add_value").validate({
-      rules: {
-        newName: {
-          required: true,
-        }
-      },
-      messages: {
-        // Polish comment to action
-        newName: {
-          required: "To pole jest wymagane."
-        }
-      },
-      success: function () {
-        $('#addNew').removeAttr('disabled');
-        $('#addExpenseButton').removeAttr('disabled');
-        $('#addPayButton').removeAttr('disabled');
-      }
-    });
-
-    $("#update_value").on('input', function () {
-      if ($("#category_name").empty()) {
-        $("#updateIncome").attr('disabled', true);
-        $("#updateExpense").attr('disabled', true);
-        $("#updatePayment").attr('disabled', true);
-      }
-    });
-
-
-
-    
-
-
-
-    //$("#updateIncome").attr('disabled', true); // Disable button on form validation error
-
-
-
-
-    // $('#register').removeAttr('disabled');
-
-  });
 
 
 
@@ -97,6 +34,10 @@
 </ul>
 {% endif %}
 
+<form action="/Income/isCategoryAvailable" method="post">
+  <input type="text" value="test" name="category_name">
+  <button type="submit">OK</button>
+</form>
 
 <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -107,17 +48,27 @@
       </div>
       <form id="update_value">
         <div class="modal-body">
+
           <div class="mb-3">
             <label for="category_name" class="col-form-label">Zamień na:</label>
             <input type="text" class="form-control" id="category_name" name="category_name" required>
             <input type="number" class="form-control" id="categoryId" name="categoryId" hidden>
+
+          
+            <label class="col-form-label" id="edit_message" style="color:red"></label>
           </div>
+
+            
+            
+           
+
         </div>
+
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zamknij</button>
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="updateIncome">Aktualizuj</button>
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="updateExpense">Aktualizuj</button>
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="updatePayment">Aktualizuj</button>
+          <button type="button" class="btn btn-primary" id="updateIncome">Aktualizuj</button>
+          <button type="button" class="btn btn-primary" id="updateExpense">Aktualizuj</button>
+          <button type="button" class="btn btn-primary" id="updatePayment">Aktualizuj</button>
         </div>
       </form>
     </div>
@@ -133,9 +84,14 @@
       </div>
       <form>
         <div class="modal-body" hidden>
-          <div class="mb-3">
+
+
+          <div class="mb-3" hidden>
             <input type="number" class="form-control" id="categoryDeleteId" name="categoryDeleteId">
           </div>
+
+
+
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zamknij</button>
@@ -164,9 +120,9 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zamknij</button>
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="addNew" disabled>Dodaj</button>
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="addExpenseButton" disabled>Dodaj</button>
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="addPayButton" disabled>Dodaj</button>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="addNew">Dodaj</button>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="addExpenseButton">Dodaj</button>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="addPayButton">Dodaj</button>
         </div>
       </form>
     </div>

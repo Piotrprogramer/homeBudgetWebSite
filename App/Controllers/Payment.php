@@ -4,7 +4,7 @@ namespace App\Controllers;
 
 use \Core\View;
 use \App\Models\PaymentMenager;
-use \App\Auth;
+use \App\Controllers\AuxiliaryMethods;
 use \App\Flash;
 
 /**
@@ -34,6 +34,7 @@ class Payment extends Authenticated
      */
     public function updateCategoryAction()
     {
+        $_POST["category_name"] = AuxiliaryMethods::upperCaseFirstLetter($_POST["category_name"]);
         if (isset($_SESSION['user_id'])) {
             if (PaymentMenager::updateCategory($_POST))
                 echo json_encode('all good');
@@ -60,10 +61,32 @@ class Payment extends Authenticated
      */
     public function addCategoryAction()
     {
+        $_POST["categoryName"] = AuxiliaryMethods::upperCaseFirstLetter($_POST["categoryName"]);
         if (isset($_SESSION['user_id'])) {
             if (PaymentMenager::addCategory($_POST)) {
                 echo json_encode('all good');
             }
         }
+    }
+
+    /**
+     * if category available return true, otherwise false in JSON encode format
+     *
+     * @return string JSONencode
+     */
+    public function isCategoryAvailable()
+    {
+        $data = json_encode($_POST);
+        $object = json_decode($data);
+        
+        $category = array(
+            'category_name' => $object->category_name,
+        );
+
+        $category_name = AuxiliaryMethods::upperCaseFirstLetter($category['category_name']);
+ 
+        if (PaymentMenager::isAvailable($_SESSION['user_id'], $category_name)) echo json_encode(true);
+ 
+        else echo json_encode(false);
     }
 }

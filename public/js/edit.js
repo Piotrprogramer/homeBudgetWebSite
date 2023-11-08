@@ -139,57 +139,17 @@ $(document).ready(function () {
     reloadPayment();
 });
 
-  /*
-  * Validate method
-  *
-  */
-  $(document).ready(function () {
-    $("#update_value").validate({
-      rules: {
-        category_name: {
-          required: true,
-        }
-      },
-      messages: {
-        // Polish comment to action
-        category_name: {
-          required: "To pole jest wymagane."
-        }
-      },
-      success: function () {
-        $('#updateIncome').removeAttr('disabled');
-        $('#updateExpense').removeAttr('disabled');
-        $('#updatePayment').removeAttr('disabled');
-      }
-    });
+/*
+* Validate method
+*
+*/
+$(document).ready(function () {
 
-    $("#add_value").validate({
-      rules: {
-        newName: {
-          required: true,
-        }
-      },
-      messages: {
-        // Polish comment to action
-        newName: {
-          required: "To pole jest wymagane."
-        }
-      },
-      success: function () {
-        $('#addNew').removeAttr('disabled');
-        $('#addExpenseButton').removeAttr('disabled');
-        $('#addPayButton').removeAttr('disabled');
-      }
-    });
 
-    $("#update_value").on('input', function () {
-      if ($("#category_name").empty()) {
-        $("#updateIncome").attr('disabled', true);
-        $("#updateExpense").attr('disabled', true);
-        $("#updatePayment").attr('disabled', true);
-      }
-    });
-  });
+
+
+
+});
 
 /**
  * Return setting button 
@@ -392,7 +352,7 @@ function addModalButtons(divName, buttonId) {
                 $("#addPayButton").toggle();
             }
 
-            $("#addNew").attr('disabled', true);
+
         });
     }
 
@@ -412,7 +372,7 @@ function addModalButtons(divName, buttonId) {
                 $("#addPayButton").toggle();
             }
 
-            $("#addExpenseButton").attr('disabled', true);
+
         });
     }
 
@@ -431,9 +391,9 @@ function addModalButtons(divName, buttonId) {
                 $("#addExpenseButton").toggle();
             }
 
-            $("#addPayButton").attr('disabled', true);
+
         });
-    } 
+    }
 }
 
 /**
@@ -493,28 +453,62 @@ function addModal(name) {
  * Update income function
  * 
  */
+function updateIncome(category_name) {
+    var form = {
+        category_name: category_name,
+    };
+
+    $.ajax({
+        url: '/Income/isCategoryAvailable',
+        method: 'POST',
+        data: form,
+        dataType: "json",
+        encode: true,
+
+        success: function (response) {
+            if (response == true) {
+                var editForm = {
+                    category_name: $("#category_name").val(),
+                    categoryId: $("#categoryId").val(),
+                };
+                $.ajax({
+                    url: '/Income/updateCategory',
+                    method: 'POST',
+                    data: editForm,
+                    dataType: "json",
+                    encode: true,
+                });
+                $("#editModal").modal('hide');
+                reloadIncome();
+            }
+            else displayInformMessage('edit_message', 'Wprowadzona kategoria jest już dodana');
+        }, error: function () {
+            alert('error');
+        }
+    });
+}
 
 
+function displayInformMessage(div_id, mesage) {
+    $('#' + div_id).text(mesage);
+    $('#' + div_id).show();
+}
+
+$(document).ready(function () {
+    $("#category_name").bind("change paste keyup", function () {
+        if ($('#edit_message').is(":visible")) {
+            $('#edit_message').hide();
+        }
+    });
+});
 
 
 $(document).ready(function () {
     $("#updateIncome").button().click(function () {
-        if ($("#update_value").valid()) {
-            var editForm = {
-                category_name: $("#category_name").val(),
-                categoryId: $("#categoryId").val(),
-            };
-
-            $.ajax({
-                url: '/Income/updateCategory',
-                method: 'POST',
-                data: editForm,
-                dataType: "json",
-                encode: true,
-            });
-
-            reloadIncome();
+        if ($('#category_name').val()) {
+            updateIncome($("#category_name").val(),);
         }
+        else displayInformMessage('edit_message', 'Wprowadź nową kategorię');
     });
 
     $("#deleteIncome").button().click(function () {
@@ -534,6 +528,7 @@ $(document).ready(function () {
     });
 
     $("#addNew").button().click(function () {
+
         var addForm = {
             categoryName: $("#newName").val(),
         };
@@ -548,31 +543,61 @@ $(document).ready(function () {
         });
 
         reloadIncome();
+
     });
 });
+
 
 /**
  * Update expense function
  * 
  */
+function updateExpense(category_name) {
+    var form = {
+        category_name: category_name,
+    };
 
+    $.ajax({
+        url: '/Expense/isCategoryAvailable',
+        method: 'POST',
+        data: form,
+        dataType: "json",
+        encode: true,
+
+        success: function (response) {
+            if (response == true) {
+                var editForm = {
+                    category_name: $("#category_name").val(),
+                    categoryId: $("#categoryId").val(),
+                };
+                $.ajax({
+                    url: '/Expense/updateCategory',
+                    method: 'POST',
+                    data: editForm,
+                    dataType: "json",
+                    encode: true,
+                });
+                $("#editModal").modal('hide');
+                reloadExpense();
+            }
+            else displayInformMessage('edit_message', 'Wprowadzona kategoria jest już dodana');
+        }, error: function () {
+            alert('error');
+        }
+    });
+}
+
+/**
+ * Update expense function
+ * 
+ */
 $(document).ready(function () {
     $("#updateExpense").button().click(function () {
 
-        var editForm = {
-            category_name: $("#category_name").val(),
-            categoryId: $("#categoryId").val(),
-        };
-
-        $.ajax({
-            url: '/Expense/updateCategory',
-            method: 'POST',
-            data: editForm,
-            dataType: "json",
-            encode: true,
-        });
-
-        reloadExpense();
+            if ($('#category_name').val()) {
+                updateExpense($("#category_name").val(),);
+            }
+            else displayInformMessage('edit_message', 'Wprowadź nową kategorię');
     });
 
     $("#deleteExpenseButton").button().click(function () {
@@ -592,6 +617,7 @@ $(document).ready(function () {
     });
 
     $("#addExpenseButton").button().click(function () {
+
         var addForm = {
             categoryName: $("#newName").val(),
         };
@@ -606,8 +632,51 @@ $(document).ready(function () {
         });
 
         reloadExpense();
+
     });
 });
+
+
+/**
+ * Update payment function
+ * 
+ */
+function updatePayment(category_name) {
+    var form = {
+        category_name: category_name,
+    };
+
+    $.ajax({
+        url: '/Payment/isCategoryAvailable',
+        method: 'POST',
+        data: form,
+        dataType: "json",
+        encode: true,
+
+        success: function (response) {
+            if (response == true) {
+                var editForm = {
+                    category_name: $("#category_name").val(),
+                    categoryId: $("#categoryId").val(),
+                };
+        
+                $.ajax({
+                    url: '/Payment/updateCategory',
+                    method: 'POST',
+                    data: editForm,
+                    dataType: "json",
+                    encode: true,
+                });
+
+                $("#editModal").modal('hide');
+                reloadPayment();
+            }
+            else displayInformMessage('edit_message', 'Wprowadzona kategoria jest już dodana');
+        }, error: function () {
+            alert('error');
+        }
+    });
+}
 
 /**
  * Update payment function
@@ -616,20 +685,11 @@ $(document).ready(function () {
 $(document).ready(function () {
     $("#updatePayment").button().click(function () {
 
-        var editForm = {
-            category_name: $("#category_name").val(),
-            categoryId: $("#categoryId").val(),
-        };
+        if ($('#category_name').val()) {
+            updatePayment($("#category_name").val(),);
+        }
+        else displayInformMessage('edit_message', 'Wprowadź nową kategorię');
 
-        $.ajax({
-            url: '/Payment/updateCategory',
-            method: 'POST',
-            data: editForm,
-            dataType: "json",
-            encode: true,
-        });
-
-        reloadPayment();
     });
 
     $("#deletePaymentButton").button().click(function () {
@@ -649,6 +709,7 @@ $(document).ready(function () {
     });
 
     $("#addPayButton").button().click(function () {
+
         var addForm = {
             categoryName: $("#newName").val(),
         };
@@ -661,7 +722,6 @@ $(document).ready(function () {
             encode: true,
 
         });
-
         reloadPayment();
     });
 });
