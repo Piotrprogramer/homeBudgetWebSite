@@ -109,10 +109,15 @@ class Income extends Authenticated
     {
         $_POST["categoryName"] = AuxiliaryMethods::upperCaseFirstLetter($_POST["categoryName"]);
         if (isset($_SESSION['user_id'])) {
-            if (IncomeMenager::addCategory($_POST)) {
-                echo json_encode('all good');
-            }
-        }
+            
+            if(IncomeMenager::isAvailable($_SESSION['user_id'], $_POST["categoryName"])){
+                
+                if (IncomeMenager::addCategory($_POST)) {
+                    echo json_encode(true);
+                } else echo json_encode(false);
+            } else echo json_encode(false);
+
+        }else echo json_encode(false);
     }
 
     /**

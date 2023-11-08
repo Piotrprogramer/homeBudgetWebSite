@@ -63,10 +63,15 @@ class Payment extends Authenticated
     {
         $_POST["categoryName"] = AuxiliaryMethods::upperCaseFirstLetter($_POST["categoryName"]);
         if (isset($_SESSION['user_id'])) {
-            if (PaymentMenager::addCategory($_POST)) {
-                echo json_encode('all good');
-            }
-        }
+            
+            if(PaymentMenager::isAvailable($_SESSION['user_id'], $_POST["categoryName"])){
+                
+                if (PaymentMenager::addCategory($_POST)) {
+                    echo json_encode(true);
+                } else echo json_encode(false);
+            } else echo json_encode(false);
+
+        }else echo json_encode(false);
     }
 
     /**

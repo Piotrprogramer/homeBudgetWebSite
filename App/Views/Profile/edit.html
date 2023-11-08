@@ -34,11 +34,6 @@
 </ul>
 {% endif %}
 
-<form action="/Income/isCategoryAvailable" method="post">
-  <input type="text" value="test" name="category_name">
-  <button type="submit">OK</button>
-</form>
-
 <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -54,14 +49,8 @@
             <input type="text" class="form-control" id="category_name" name="category_name" required>
             <input type="number" class="form-control" id="categoryId" name="categoryId" hidden>
 
-          
             <label class="col-form-label" id="edit_message" style="color:red"></label>
           </div>
-
-            
-            
-           
-
         </div>
 
         <div class="modal-footer">
@@ -116,13 +105,14 @@
           <div class="mb-3">
             <label for="newName" class="col-form-label">Dodaj nową kategorie:</label>
             <input type="text" class="form-control" id="newName" name="newName" required>
+            <label class="col-form-label" id="add_message" style="color:red"></label>
           </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zamknij</button>
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="addNew">Dodaj</button>
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="addExpenseButton">Dodaj</button>
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="addPayButton">Dodaj</button>
+          <button type="button" class="btn btn-primary" id="addNew">Dodaj</button>
+          <button type="button" class="btn btn-primary" id="addExpenseButton">Dodaj</button>
+          <button type="button" class="btn btn-primary" id="addPayButton">Dodaj</button>
         </div>
       </form>
     </div>

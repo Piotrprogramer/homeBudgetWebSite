@@ -121,10 +121,15 @@ class Expense extends Authenticated
     {
         $_POST["categoryName"] = AuxiliaryMethods::upperCaseFirstLetter($_POST["categoryName"]);
         if (isset($_SESSION['user_id'])) {
-            if (ExpenseMenager::addCategory($_POST)) {
-                echo json_encode('all good');
-            }
-        }
+            
+            if(ExpenseMenager::isAvailable($_SESSION['user_id'], $_POST["categoryName"])){
+                
+                if (ExpenseMenager::addCategory($_POST)) {
+                    echo json_encode(true);
+                } else echo json_encode(false);
+            } else echo json_encode(false);
+
+        }else echo json_encode(false);
     }
 
     /**

@@ -139,18 +139,6 @@ $(document).ready(function () {
     reloadPayment();
 });
 
-/*
-* Validate method
-*
-*/
-$(document).ready(function () {
-
-
-
-
-
-});
-
 /**
  * Return setting button 
  * 
@@ -390,8 +378,6 @@ function addModalButtons(divName, buttonId) {
             if (document.getElementById("addExpenseButton").style.display === "") {
                 $("#addExpenseButton").toggle();
             }
-
-
         });
     }
 }
@@ -449,6 +435,21 @@ function addModal(name) {
     })
 }
 
+
+
+function displayInformMessage(div_id, mesage) {
+    $('#' + div_id).text(mesage);
+    $('#' + div_id).show();
+}
+
+$(document).ready(function () {
+    $("#category_name").bind("change paste keyup", function () {
+        if ($('#edit_message').is(":visible")) {
+            $('#edit_message').hide();
+        }
+    });
+});
+
 /**
  * Update income function
  * 
@@ -489,20 +490,6 @@ function updateIncome(category_name) {
 }
 
 
-function displayInformMessage(div_id, mesage) {
-    $('#' + div_id).text(mesage);
-    $('#' + div_id).show();
-}
-
-$(document).ready(function () {
-    $("#category_name").bind("change paste keyup", function () {
-        if ($('#edit_message').is(":visible")) {
-            $('#edit_message').hide();
-        }
-    });
-});
-
-
 $(document).ready(function () {
     $("#updateIncome").button().click(function () {
         if ($('#category_name').val()) {
@@ -529,20 +516,32 @@ $(document).ready(function () {
 
     $("#addNew").button().click(function () {
 
-        var addForm = {
-            categoryName: $("#newName").val(),
-        };
+        if ($('#newName').val()) {
+            var addForm = {
+                categoryName: $("#newName").val(),
+            };
 
-        $.ajax({
-            url: '/Income/addCategory',
-            method: 'POST',
-            data: addForm,
-            dataType: "json",
-            encode: true,
+            $.ajax({
+                url: '/Income/addCategory',
+                method: 'POST',
+                data: addForm,
+                dataType: "json",
+                encode: true,
 
-        });
+                success: function (response) {
+                    if (response == true) {
+                        $("#addModal").modal('hide');
+                        reloadIncome();
+                    }
+                    else displayInformMessage('add_message', 'Wprowadzona kategoria jest już dodana');
+                }, error: function () {
+                    alert('error');
+                }
+            });
 
-        reloadIncome();
+            reloadIncome();
+        }
+        else displayInformMessage('add_message', 'Wprowadź nową kategorię');
 
     });
 });
@@ -594,10 +593,10 @@ function updateExpense(category_name) {
 $(document).ready(function () {
     $("#updateExpense").button().click(function () {
 
-            if ($('#category_name').val()) {
-                updateExpense($("#category_name").val(),);
-            }
-            else displayInformMessage('edit_message', 'Wprowadź nową kategorię');
+        if ($('#category_name').val()) {
+            updateExpense($("#category_name").val(),);
+        }
+        else displayInformMessage('edit_message', 'Wprowadź nową kategorię');
     });
 
     $("#deleteExpenseButton").button().click(function () {
@@ -617,22 +616,31 @@ $(document).ready(function () {
     });
 
     $("#addExpenseButton").button().click(function () {
+        if ($('#newName').val()) {
+            var addForm = {
+                categoryName: $("#newName").val(),
+            };
 
-        var addForm = {
-            categoryName: $("#newName").val(),
-        };
+            $.ajax({
+                url: '/Expense/addCategory',
+                method: 'POST',
+                data: addForm,
+                dataType: "json",
+                encode: true,
 
-        $.ajax({
-            url: '/Expense/addCategory',
-            method: 'POST',
-            data: addForm,
-            dataType: "json",
-            encode: true,
+                success: function (response) {
+                    if (response == true) {
+                        $("#addModal").modal('hide');
+                        reloadExpense();
+                    }
+                    else displayInformMessage('add_message', 'Wprowadzona kategoria jest już dodana');
+                }, error: function () {
+                    alert('error');
+                }
 
-        });
-
-        reloadExpense();
-
+            });
+        }
+        else displayInformMessage('add_message', 'Wprowadź nową kategorię');
     });
 });
 
@@ -659,7 +667,7 @@ function updatePayment(category_name) {
                     category_name: $("#category_name").val(),
                     categoryId: $("#categoryId").val(),
                 };
-        
+
                 $.ajax({
                     url: '/Payment/updateCategory',
                     method: 'POST',
@@ -709,20 +717,32 @@ $(document).ready(function () {
     });
 
     $("#addPayButton").button().click(function () {
+        if ($('#newName').val()) {
+            var addForm = {
+                categoryName: $("#newName").val(),
+            };
 
-        var addForm = {
-            categoryName: $("#newName").val(),
-        };
+            $.ajax({
+                url: '/Payment/addCategory',
+                method: 'POST',
+                data: addForm,
+                dataType: "json",
+                encode: true,
 
-        $.ajax({
-            url: '/Payment/addCategory',
-            method: 'POST',
-            data: addForm,
-            dataType: "json",
-            encode: true,
+                success: function (response) {
+                    if (response == true) {
+                        $("#addModal").modal('hide');
+                        reloadPayment();
+                    }
+                    else displayInformMessage('add_message', 'Wprowadzona kategoria jest już dodana');
+                }, error: function () {
+                    alert('error');
+                }
 
-        });
-        reloadPayment();
+            });
+        }
+        else displayInformMessage('add_message', 'Wprowadź nową kategorię');
+
     });
 });
 
