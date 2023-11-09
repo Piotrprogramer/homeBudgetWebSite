@@ -306,6 +306,28 @@ class IncomeMenager extends \Core\Model
     }
 
     /**
+     * Delete assignet incomes 
+     * 
+     * @param bool 
+     */
+    public static function deleteIncomes($data)
+    {  
+        $sql = 
+            'DELETE FROM
+                incomes
+            WHERE
+                incomes.income_category_assigned_to_user_id = :id';
+        
+        $db = static::getDB();
+        
+        $stmt = $db->prepare($sql);
+
+        $stmt->bindValue(':id', $data["categoryId"], PDO::PARAM_INT);
+
+        if($stmt->execute()) return true;
+    }
+
+    /**
      * Add income category 
      * 
      * @param bool 
@@ -353,6 +375,38 @@ class IncomeMenager extends \Core\Model
 
         $stmt->execute();
 
+
+        $word = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        if(empty($word)){
+            return true;
+        }
+        else return false;
+    }
+    
+    /**
+     * Check income category is available
+     *
+     * @return bool 
+     */
+    public static function isAssigned($id, $category_id)
+    {
+        $sql = 
+        'SELECT 
+            incomes.id 
+        FROM 
+            incomes
+        WHERE
+            incomes.user_id = :id
+        AND
+        incomes.income_category_assigned_to_user_id = :category_id';
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+        $stmt->bindValue(':category_id', $category_id, PDO::PARAM_STR);
+
+        $stmt->execute();
 
         $word = $stmt->fetchAll(PDO::FETCH_ASSOC);
 

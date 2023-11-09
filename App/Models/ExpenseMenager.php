@@ -405,8 +405,29 @@ class ExpenseMenager extends \Core\Model
 
         $stmt->bindValue(':id', $data["categoryId"], PDO::PARAM_INT);
 
-        if ($stmt->execute())
-            return true;
+        $stmt->execute();
+    }
+
+    /**
+     * Delete expense category
+     *
+     * @return void
+     */
+    public static function deleteExpenses($data)
+    {
+        $sql =
+            'DELETE FROM 
+                expenses
+            WHERE
+                expenses.expense_category_assigned_to_user_id = :id';
+
+        $db = static::getDB();
+
+        $stmt = $db->prepare($sql);
+
+        $stmt->bindValue(':id', $data["categoryId"], PDO::PARAM_INT);
+
+        $stmt->execute();
     }
 
     /**
@@ -458,6 +479,38 @@ class ExpenseMenager extends \Core\Model
 
         $stmt->execute();
 
+
+        $word = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        if(empty($word)){
+            return true;
+        }
+        else return false;
+    }
+
+    /**
+     * Check expense category is available
+     *
+     * @return bool 
+     */
+    public static function isAssigned($id, $category_id)
+    {
+        $sql = 
+        'SELECT 
+            expenses.id
+        FROM
+            expenses
+        WHERE
+            expenses.user_id = :id
+        AND
+            expenses.expense_category_assigned_to_user_id = :category_id';
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+        $stmt->bindValue(':category_id', $category_id, PDO::PARAM_STR);
+
+        $stmt->execute();
 
         $word = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
