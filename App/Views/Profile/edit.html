@@ -10,13 +10,6 @@
 <script src="/js/hideShowPassword.min.js"></script>
 <script src="/js/edit.js"></script>
 
-<script>
-
-
-
-
-
-</script>
 {% endblock %}
 
 {% block body %}
@@ -43,16 +36,13 @@
       </div>
       <form id="update_value">
         <div class="modal-body">
-
           <div class="mb-3">
             <label for="category_name" class="col-form-label">Zamień na:</label>
             <input type="text" class="form-control" id="category_name" name="category_name" required>
             <input type="number" class="form-control" id="categoryId" name="categoryId" hidden>
-
             <label class="col-form-label" id="edit_message" style="color:red"></label>
           </div>
         </div>
-
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zamknij</button>
           <button type="button" class="btn btn-primary" id="updateIncome">Aktualizuj</button>
@@ -72,17 +62,19 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <form>
-        <div class="modal-body" hidden>
-
-
+        <div class="modal-body"  id="delte_with_positions">
           <div class="mb-3" hidden>
             <input type="number" class="form-control" id="categoryDeleteId" name="categoryDeleteId">
+            <span style="text-align: center"> </span>
           </div>
-
-
-
+          <div style="text-align: center; margin-bottom: 15px">
+            <i class='fas fa-skull-crossbones fa-fw me-2' style="color: rgb(195, 135, 6)"></i> 
+            Usunięcie wybranej
+            kategorii spowoduje usunięcie przypisanych do
+            niej pozycji, czy nadal chcesz usunąć kategorię? 
+          </div>
         </div>
-        <div class="modal-footer">
+        <div class="modal-footer" id="delete_footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zamknij</button>
           <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="deleteIncome">Usuń</button>
           <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="deleteExpenseButton">Usuń</button>

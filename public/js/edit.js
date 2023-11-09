@@ -267,6 +267,27 @@ function editModalButtons(divName, buttonId) {
     }
 }
 
+function isAssignedCategory(class_name, method_name) {
+    var form = {
+        categoryDeleteId: $("#categoryDeleteId").val(),
+    };
+
+    $.ajax({
+        url: '/' + class_name + '/' + method_name,
+        method: 'POST',
+        data: form,
+        dataType: "json",
+        encode: true,
+
+        success: function (response) {
+
+            if (response == true) $('#delte_with_positions').hide();
+
+            else $('#delte_with_positions').show();
+        }
+    });
+}
+
 /**
  * Show/hide used and unused delete modal buttons
  * 
@@ -274,6 +295,9 @@ function editModalButtons(divName, buttonId) {
 function deleteModalButtons(divName, buttonId) {
     if (divName === "#formIncome") {
         $("." + buttonId).click(function () {
+
+            isAssignedCategory('Income', 'isIncomesAssigned');
+
             if (document.getElementById("deleteIncome").style.display == "none") {
                 $("#deleteIncome").toggle();
             }
@@ -292,6 +316,8 @@ function deleteModalButtons(divName, buttonId) {
 
         $("." + buttonId).click(function () {
 
+            isAssignedCategory('Expense', 'isExpenseAssigned');
+
             if (document.getElementById("deleteExpenseButton").style.display == "none") {
                 $("#deleteExpenseButton").toggle();
             }
@@ -308,6 +334,8 @@ function deleteModalButtons(divName, buttonId) {
 
     if (divName === "#formPayment") {
         $("." + buttonId).click(function () {
+
+            $('#delte_with_positions').hide();
 
             if (document.getElementById("deletePaymentButton").style.display == "none") {
                 $("#deletePaymentButton").toggle();

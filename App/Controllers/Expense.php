@@ -30,8 +30,8 @@ class Expense extends Authenticated
      * @return void
      */
     public function getUserCategoryAction()
-    {   
-        if(ExpenseMenager::isEmptyUserArray()){
+    {
+        if (ExpenseMenager::isEmptyUserArray()) {
             ExpenseMenager::copyDefaultCategory();
         }
         echo json_encode(ExpenseMenager::getExpenseList($_SESSION['user_id']));
@@ -43,8 +43,8 @@ class Expense extends Authenticated
      * @return void
      */
     public function getUserPaymentsAction()
-    {   
-        if(ExpenseMenager::isPaymentUserArray()){
+    {
+        if (ExpenseMenager::isPaymentUserArray()) {
             ExpenseMenager::copyDefaultPaymentCategory();
         }
         echo json_encode(ExpenseMenager::paymentAsignetToUser());
@@ -59,13 +59,13 @@ class Expense extends Authenticated
     {
         $Expense = new ExpenseMenager($_POST);
 
-        if($Expense->save()){
-            
+        if ($Expense->save()) {
+
             Flash::addMessage('Wydatek dodany poprawnie', Flash::SUCCESS);
 
             View::renderTemplate('Home/index.html');
 
-        }else{
+        } else {
 
             Flash::addMessage('Coś poszło nie tak', Flash::WARNING);
 
@@ -107,8 +107,9 @@ class Expense extends Authenticated
     public function deleteCategoryAction()
     {
         if (isset($_SESSION['user_id'])) {
-            if (ExpenseMenager::deleteCategory($_POST))
-                echo json_encode('all good');
+            ExpenseMenager::deleteCategory($_POST);
+            ExpenseMenager::deleteExpenses($_POST);
+            echo json_encode('all good');
         }
     }
 
@@ -121,15 +122,18 @@ class Expense extends Authenticated
     {
         $_POST["categoryName"] = AuxiliaryMethods::upperCaseFirstLetter($_POST["categoryName"]);
         if (isset($_SESSION['user_id'])) {
-            
-            if(ExpenseMenager::isAvailable($_SESSION['user_id'], $_POST["categoryName"])){
-                
+
+            if (ExpenseMenager::isAvailable($_SESSION['user_id'], $_POST["categoryName"])) {
+
                 if (ExpenseMenager::addCategory($_POST)) {
                     echo json_encode(true);
-                } else echo json_encode(false);
-            } else echo json_encode(false);
+                } else
+                    echo json_encode(false);
+            } else
+                echo json_encode(false);
 
-        }else echo json_encode(false);
+        } else
+            echo json_encode(false);
     }
 
     /**
@@ -141,14 +145,29 @@ class Expense extends Authenticated
     {
         $data = json_encode($_POST);
         $object = json_decode($data);
-        
+
         $category = array(
             'category_name' => $object->category_name,
         );
 
         $category_name = AuxiliaryMethods::upperCaseFirstLetter($category['category_name']);
- 
-        if (ExpenseMenager::isAvailable($_SESSION['user_id'], $category_name)) echo json_encode(true);
+
+        if (ExpenseMenager::isAvailable($_SESSION['user_id'], $category_name))
+            echo json_encode(true);
+        else
+            echo json_encode(false);
+    }
+
+    /**
+     * if to id is assigned any categories return true, otherwise false
+     *
+     * @return string JSONencode
+     */
+    public function isExpenseAssigned(){
+        $data = json_encode($_POST);
+        $object = json_decode($data);
+      
+        if (ExpenseMenager::isAssigned($_SESSION['user_id'], $object->categoryDeleteId)) echo json_encode(true);
  
         else echo json_encode(false);
     }

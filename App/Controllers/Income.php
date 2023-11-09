@@ -95,8 +95,9 @@ class Income extends Authenticated
     public function deleteCategoryAction()
     {
         if (isset($_SESSION['user_id'])) {
-            if (IncomeMenager::deleteCategory($_POST))
-                echo json_encode('all good');
+            IncomeMenager::deleteCategory($_POST);
+            IncomeMenager::deleteIncomes($_POST);
+            echo json_encode('all good');
         }
     }
 
@@ -137,6 +138,20 @@ class Income extends Authenticated
         $category_name = AuxiliaryMethods::upperCaseFirstLetter($category['category_name']);
  
         if (IncomeMenager::isAvailable($_SESSION['user_id'], $category_name)) echo json_encode(true);
+ 
+        else echo json_encode(false);
+    }
+
+    /**
+     * if to id is assigned any categories return true, otherwise false
+     *
+     * @return string JSONencode
+     */
+    public function isIncomesAssigned(){
+        $data = json_encode($_POST);
+        $object = json_decode($data);
+      
+        if (IncomeMenager::isAssigned($_SESSION['user_id'], $object->categoryDeleteId)) echo json_encode(true);
  
         else echo json_encode(false);
     }
