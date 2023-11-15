@@ -7,8 +7,89 @@
 {% endblock %}
 
 {% block footer %}
-<script src="/js/hideShowPassword.min.js"></script>
+
 <script src="/js/edit.js"></script>
+
+<script>
+  /* hide dive with limit option
+  */
+  function hideLimitDivs() {
+    let limit_div = document.querySelector('#limit_edit_div');
+    limit_div.style.display = 'none';
+
+    limit_div = document.querySelector('#limit_add_div');
+    limit_div.style.display = 'none';
+  }
+
+  /* show dive with limit option
+  */
+  function showLimitDivs() {
+    let limit_div = document.querySelector('#limit_edit_div');
+    limit_div.style.display = 'block';
+
+    limit_div = document.querySelector('#limit_add_div');
+    limit_div.style.display = 'block';
+  }
+
+
+
+
+
+
+
+
+  const edit_income = document.querySelector('#edit-income');
+  edit_income.addEventListener("click", (e) => {
+    hideLimitDivs();
+  });
+
+  const edit_expense = document.querySelector('#edit-expense');
+  edit_expense.addEventListener("click", (e) => {
+    console.log('you are in edit list');
+    showLimitDivs();
+  });
+
+  const edit_payment = document.querySelector('#edit-payment');
+  edit_payment.addEventListener("click", (e) => {
+    console.log('you are in edit list');
+    hideLimitDivs();
+  });
+
+
+  const edit_switch = document.querySelector('#edit_limit');
+  edit_switch.addEventListener("click", (e) => {
+
+    const limit_input = document.querySelector('#edit_limit_value');
+
+    if(edit_switch.checked ) limit_input.removeAttribute(  "disabled"  );
+    else limit_input.setAttribute(  "disabled", true  );
+
+  });
+
+  const add_switch = document.querySelector('#add_limit');
+  add_switch.addEventListener("click", (e) => {
+
+    const limit_input = document.querySelector('#add_limit_value');
+
+    if(add_switch.checked ) limit_input.removeAttribute(  "disabled"  );
+    else limit_input.setAttribute(  "disabled", true  );
+  });
+
+
+
+
+
+  //<button id="edit-income" type="button" class="btn my_button" style="width:100%">Edytuj liste przychodów</button>
+
+
+  //<button id="edit-expense" type="button" class="btn my_button" style="width:100%">Edytuj liste wydatków</button>
+
+
+  //<button id="edit-payment" type="button" class="btn my_button" style="width:100%">Edytuj metody płatności</button>
+
+
+
+</script>
 
 {% endblock %}
 
@@ -40,6 +121,26 @@
             <label for="category_name" class="col-form-label">Zamień na:</label>
             <input type="text" class="form-control" id="category_name" name="category_name" required>
             <input type="number" class="form-control" id="categoryId" name="categoryId" hidden>
+
+
+
+
+
+            <div  id="limit_edit_div">
+              <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" name="edit_limit" id="edit_limit">
+                <label class="form-check-label" for="edit_limit">Dodaj limit</label>
+              </div>
+              <input class="form-control" type="number" name="edit_limit_value" id="edit_limit_value" disabled>
+            </div>
+
+
+
+
+
+
+
+
             <label class="col-form-label" id="edit_message" style="color:red"></label>
           </div>
         </div>
@@ -62,16 +163,16 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <form>
-        <div class="modal-body"  id="delte_with_positions">
+        <div class="modal-body" id="delte_with_positions">
           <div class="mb-3" hidden>
             <input type="number" class="form-control" id="categoryDeleteId" name="categoryDeleteId">
             <span style="text-align: center"> </span>
           </div>
           <div style="text-align: center; margin-bottom: 15px">
-            <i class='fas fa-skull-crossbones fa-fw me-2' style="color: rgb(195, 135, 6)"></i> 
+            <i class='fas fa-skull-crossbones fa-fw me-2' style="color: rgb(195, 135, 6)"></i>
             Usunięcie wybranej
             kategorii spowoduje usunięcie przypisanych do
-            niej pozycji, czy nadal chcesz usunąć kategorię? 
+            niej pozycji, czy nadal chcesz usunąć kategorię?
           </div>
         </div>
         <div class="modal-footer" id="delete_footer">
@@ -97,6 +198,21 @@
           <div class="mb-3">
             <label for="newName" class="col-form-label">Dodaj nową kategorie:</label>
             <input type="text" class="form-control" id="newName" name="newName" required>
+
+
+
+
+            <div id="limit_add_div">
+              <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" name="add_limit" id="add_limit">
+                <label class="form-check-label" for="add_limit">Dodaj limit</label>
+              </div>
+              <input class="form-control" type="number" name="add_limit_value" id="add_limit_value" disabled>
+            </div>
+
+
+
+
             <label class="col-form-label" id="add_message" style="color:red"></label>
           </div>
         </div>

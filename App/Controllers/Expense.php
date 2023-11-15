@@ -126,6 +126,7 @@ class Expense extends Authenticated
             if (ExpenseMenager::isAvailable($_SESSION['user_id'], $_POST["categoryName"])) {
        
                 if (ExpenseMenager::addCategory($_POST)) {
+                    //if($_POST['limitOn'] == true)ExpenseMenager::setLimit($_POST);
                     echo json_encode(true);
                 } else
                     echo json_encode(false);

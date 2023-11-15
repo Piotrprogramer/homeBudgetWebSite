@@ -58,14 +58,6 @@ $(document).ready(function () {
             }
         },
     });
-
-    /**
-      * Show password toggle button
-      */
-    $('#inputPassword').hideShowPassword({
-        show: false,
-        innerToggle: 'focus'
-    });
 });
 
 /**
