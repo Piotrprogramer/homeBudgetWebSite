@@ -92,7 +92,7 @@ class Expense extends Authenticated
      */
     public function updateCategoryAction()
     {
-        $_POST["category_name"] = AuxiliaryMethods::upperCaseFirstLetter($_POST["category_name"]);
+        $_POST["categoryName"] = AuxiliaryMethods::upperCaseFirstLetter($_POST["categoryName"]);
         if (isset($_SESSION['user_id'])) {
             if (ExpenseMenager::updateCategory($_POST))
                 echo json_encode('all good');
@@ -124,7 +124,7 @@ class Expense extends Authenticated
         if (isset($_SESSION['user_id'])) {
 
             if (ExpenseMenager::isAvailable($_SESSION['user_id'], $_POST["categoryName"])) {
-
+       
                 if (ExpenseMenager::addCategory($_POST)) {
                     echo json_encode(true);
                 } else
@@ -147,12 +147,12 @@ class Expense extends Authenticated
         $object = json_decode($data);
 
         $category = array(
-            'category_name' => $object->category_name,
+            'categoryName' => $object->categoryName,
         );
 
-        $category_name = AuxiliaryMethods::upperCaseFirstLetter($category['category_name']);
+        $categoryName = AuxiliaryMethods::upperCaseFirstLetter($category['categoryName']);
 
-        if (ExpenseMenager::isAvailable($_SESSION['user_id'], $category_name))
+        if (ExpenseMenager::isAvailable($_SESSION['user_id'], $categoryName))
             echo json_encode(true);
         else
             echo json_encode(false);

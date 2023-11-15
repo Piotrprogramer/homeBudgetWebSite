@@ -495,7 +495,7 @@ $(document).ready(function () {
  */
 function updateIncome(category_name) {
     var form = {
-        category_name: category_name,
+        categoryName: category_name,
     };
 
     $.ajax({
@@ -508,7 +508,7 @@ function updateIncome(category_name) {
         success: function (response) {
             if (response == true) {
                 var editForm = {
-                    category_name: $("#category_name").val(),
+                    categoryName: $("#category_name").val(),
                     categoryId: $("#categoryId").val(),
                 };
                 $.ajax({
@@ -592,7 +592,7 @@ $(document).ready(function () {
  */
 function updateExpense(category_name) {
     var form = {
-        category_name: category_name,
+        categoryName: category_name,
     };
 
     $.ajax({
@@ -605,7 +605,7 @@ function updateExpense(category_name) {
         success: function (response) {
             if (response == true) {
                 var editForm = {
-                    category_name: $("#category_name").val(),
+                    categoryName: $("#category_name").val(),
                     categoryId: $("#categoryId").val(),
                 };
                 $.ajax({
@@ -690,7 +690,7 @@ $(document).ready(function () {
  */
 function updatePayment(category_name) {
     var form = {
-        category_name: category_name,
+        categoryName: category_name,
     };
 
     $.ajax({
@@ -703,7 +703,7 @@ function updatePayment(category_name) {
         success: function (response) {
             if (response == true) {
                 var editForm = {
-                    category_name: $("#category_name").val(),
+                    categoryName: $("#category_name").val(),
                     categoryId: $("#categoryId").val(),
                 };
 

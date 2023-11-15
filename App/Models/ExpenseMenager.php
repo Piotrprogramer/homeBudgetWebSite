@@ -73,7 +73,7 @@ class ExpenseMenager extends \Core\Model
      * 
      * @return int Return id category assigned to user, 0 otherwise
      */
-    public function getCategoryId()
+    public static function getCategoryId($category)
     {
         $sql = 'SELECT id FROM expenses_category_assigned_to_users WHERE name = :category AND user_id = :user_id';
 
@@ -81,7 +81,7 @@ class ExpenseMenager extends \Core\Model
         $stmt = $db->prepare($sql);
 
         $stmt->bindValue(':user_id', $_SESSION["user_id"], PDO::PARAM_INT);
-        $stmt->bindValue(':category', $this->Category, PDO::PARAM_STR);
+        $stmt->bindValue(':category', $category, PDO::PARAM_STR);
 
         if ($stmt->execute()) {
             $cat_id = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -139,7 +139,7 @@ class ExpenseMenager extends \Core\Model
             $stmt = $db->prepare($sql);
 
             $stmt->bindValue(':user_id', $_SESSION["user_id"], PDO::PARAM_INT);
-            $stmt->bindValue(':expense_category_assigned_to_user_id', $this->getCategoryId(), PDO::PARAM_STR);
+            $stmt->bindValue(':expense_category_assigned_to_user_id', $this->getCategoryId($this->Category), PDO::PARAM_STR);
             $stmt->bindValue(':payment_method_assigned_to_user_id', $this->getPaymentId(), PDO::PARAM_STR); //  MISSING
             $stmt->bindValue(':amount', $this->amount, PDO::PARAM_STR);
             $stmt->bindValue(':date_of_expense', $this->date, PDO::PARAM_STR);
@@ -189,7 +189,7 @@ class ExpenseMenager extends \Core\Model
             'INSERT INTO 
                 expenses_category_assigned_to_users 
              VALUES
-                (null, :user_id,:category)';
+                (null, :user_id,:category, null)';
 
              $stmt = $db->prepare($sql);    
 
@@ -379,7 +379,7 @@ class ExpenseMenager extends \Core\Model
 
         $stmt = $db->prepare($sql);
 
-        $stmt->bindValue(':category', $data["category_name"], PDO::PARAM_STMT);
+        $stmt->bindValue(':category', $data["categoryName"], PDO::PARAM_STMT);
         $stmt->bindValue(':id', $data["categoryId"], PDO::PARAM_INT);
 
         if ($stmt->execute())
@@ -448,18 +448,46 @@ class ExpenseMenager extends \Core\Model
         $stmt = $db->prepare($sql);
 
         $stmt->bindValue(':newCategory', $data["categoryName"], PDO::PARAM_STMT);
+       
         $stmt->bindValue(':id', $_SESSION['user_id'], PDO::PARAM_INT);
 
         if ($stmt->execute())
             return true;
     }
 
-        /**
-     * Check income category is available
+    /**
+     * Set expensse limit
+     *
+     * @return void 
+     *//*
+    public static function setCategoryLimit($id, $categoryName, $limit){
+            $categoryId = ExpenseMenager::getCategoryId($categoryName);
+
+            $sql = 
+            'UPDATE 
+                expenses 
+            SET 
+                limit = :limi
+            WHERE 
+                expenses.user_id = :id
+            AND 
+                expenses.expense_category_assigned_to_user_id = :categoryId';
+    
+            $db = static::getDB();
+            $stmt = $db->prepare($sql);
+            $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+            $stmt->bindValue(':limi', $limit, PDO::PARAM_INT);
+            $stmt->bindValue(':category_name', $categoryId, PDO::PARAM_INT);
+    
+            $stmt->execute();
+    }
+
+    /**
+     * Check expensse category is available
      *
      * @return bool 
      */
-    public static function isAvailable($id, $category_name)
+    public static function isAvailable($id, $categoryName)
     {
         $sql = 
         'SELECT 
@@ -469,13 +497,13 @@ class ExpenseMenager extends \Core\Model
         WHERE 
             expenses_category_assigned_to_users.user_id = :id
         AND
-            expenses_category_assigned_to_users.name = :category_name 
+            expenses_category_assigned_to_users.name = :categoryName 
         ';
 
         $db = static::getDB();
         $stmt = $db->prepare($sql);
         $stmt->bindValue(':id', $id, PDO::PARAM_INT);
-        $stmt->bindValue(':category_name', $category_name, PDO::PARAM_STR);
+        $stmt->bindValue(':categoryName', $categoryName, PDO::PARAM_STR);
 
         $stmt->execute();
 
@@ -489,7 +517,7 @@ class ExpenseMenager extends \Core\Model
     }
 
     /**
-     * Check expense category is available
+     * Check expense category is assigned
      *
      * @return bool 
      */
