@@ -595,10 +595,15 @@ function updateExpense(category_name) {
         encode: true,
 
         success: function (response) {
+
+            const limit_input = document.querySelector('#edit_limit_value');
+            limit = ( limit_input.disabled == true ? null : $("#edit_limit_value").val() );
+            
             if (response == true) {
                 var editForm = {
                     categoryName: $("#category_name").val(),
                     categoryId: $("#categoryId").val(),
+                    categoryLimit: limit,
                 };
                 $.ajax({
                     url: '/Expense/updateCategory',
@@ -648,8 +653,13 @@ $(document).ready(function () {
 
     $("#addExpenseButton").button().click(function () {
         if ($('#newName').val()) {
+
+            const limit_input = document.querySelector('#add_limit_value');
+            limit = ( limit_input.disabled == true ? null : $("#add_limit_value").val() );
+            
             var addForm = {
                 categoryName: $("#newName").val(),
+                categoryLimit: limit,
             };
 
             $.ajax({

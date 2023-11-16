@@ -94,7 +94,8 @@ class Expense extends Authenticated
     {
         $_POST["categoryName"] = AuxiliaryMethods::upperCaseFirstLetter($_POST["categoryName"]);
         if (isset($_SESSION['user_id'])) {
-            if (ExpenseMenager::updateCategory($_POST))
+            ExpenseMenager::updateCategory($_POST);
+            if($_POST['categoryLimit']) ExpenseMenager::setLimit($_POST);
                 echo json_encode('all good');
         }
     }
@@ -126,7 +127,7 @@ class Expense extends Authenticated
             if (ExpenseMenager::isAvailable($_SESSION['user_id'], $_POST["categoryName"])) {
        
                 if (ExpenseMenager::addCategory($_POST)) {
-                    //if($_POST['limitOn'] == true)ExpenseMenager::setLimit($_POST);
+                    if($_POST['categoryLimit']) ExpenseMenager::setLimit($_POST);
                     echo json_encode(true);
                 } else
                     echo json_encode(false);
