@@ -173,4 +173,19 @@ class Expense extends Authenticated
  
         else echo json_encode(false);
     }
+
+    
+    /**
+     * return limit category
+     *
+     * @return string JSONencode
+     */
+    public function limitAction(){
+        $userId = $_SESSION['user_id'];
+        $category = $this->route_params['category'];
+        
+        //echo json_encode('jestes w srodku chuju' , JSON_UNESCAPED_UNICODE);
+
+        echo json_encode(ExpenseMenager::getLimit( $userId, $category ) , JSON_UNESCAPED_UNICODE );
+    }
 }

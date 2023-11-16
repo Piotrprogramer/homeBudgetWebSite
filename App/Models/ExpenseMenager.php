@@ -183,20 +183,20 @@ class ExpenseMenager extends \Core\Model
      */
     public static function pastDefaultCategory($categorys)
     {
-        $db = static::getDB(); 
+        $db = static::getDB();
         foreach ($categorys as &$value) {
             $sql =
-            'INSERT INTO 
+                'INSERT INTO 
                 expenses_category_assigned_to_users 
              VALUES
                 (null, :user_id,:category, null)';
 
-             $stmt = $db->prepare($sql);    
+            $stmt = $db->prepare($sql);
 
-             $stmt->bindValue(':category', $value['name'], PDO::PARAM_STR);
-             $stmt->bindValue(':user_id', $_SESSION['user_id'], PDO::PARAM_INT);
-     
-             $stmt->execute();
+            $stmt->bindValue(':category', $value['name'], PDO::PARAM_STR);
+            $stmt->bindValue(':user_id', $_SESSION['user_id'], PDO::PARAM_INT);
+
+            $stmt->execute();
         }
     }
 
@@ -448,7 +448,7 @@ class ExpenseMenager extends \Core\Model
         $stmt = $db->prepare($sql);
 
         $stmt->bindValue(':newCategory', $data["categoryName"], PDO::PARAM_STMT);
-       
+
         $stmt->bindValue(':id', $_SESSION['user_id'], PDO::PARAM_INT);
 
         if ($stmt->execute())
@@ -484,30 +484,33 @@ class ExpenseMenager extends \Core\Model
     }
 
     /**
-     * Set expensse limit
+     * Get expensse limit
      *
      * @return void 
-     *//*
-    public static function setCategoryLimit($id, $categoryName, $limit){
-            $categoryId = ExpenseMenager::getCategoryId($categoryName);
-
-            $sql = 
-            'UPDATE 
-                expenses 
-            SET 
-                limit = :limi
+     */
+    public static function getLimit($userId, $category)
+    {
+        $sql =
+            'SELECT 
+                expenses_category_assigned_to_users.expenses_limit
+            FROM 
+                expenses_category_assigned_to_users
             WHERE 
-                expenses.user_id = :id
+                expenses_category_assigned_to_users.user_id = :userId
             AND 
-                expenses.expense_category_assigned_to_user_id = :categoryId';
-    
-            $db = static::getDB();
-            $stmt = $db->prepare($sql);
-            $stmt->bindValue(':id', $id, PDO::PARAM_INT);
-            $stmt->bindValue(':limi', $limit, PDO::PARAM_INT);
-            $stmt->bindValue(':category_name', $categoryId, PDO::PARAM_INT);
-    
-            $stmt->execute();
+                name = :category';
+
+        $db = static::getDB();
+
+        $stmt = $db->prepare($sql);
+
+        $stmt->bindValue(':userId', $userId, PDO::PARAM_INT);
+        $stmt->bindValue(':category', $category, PDO::PARAM_STR);
+
+        $stmt->execute();
+
+        //return $stmt->fetch(PDO::FETCH_ASSOC);
+        return $stmt->fetch(PDO::FETCH_NUM, PDO::FETCH_ORI_LAST);
     }
 
     /**
@@ -517,8 +520,8 @@ class ExpenseMenager extends \Core\Model
      */
     public static function isAvailable($id, $categoryName)
     {
-        $sql = 
-        'SELECT 
+        $sql =
+            'SELECT 
             name 
         FROM 
             expenses_category_assigned_to_users 
@@ -538,10 +541,10 @@ class ExpenseMenager extends \Core\Model
 
         $word = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        if(empty($word)){
+        if (empty($word)) {
             return true;
-        }
-        else return false;
+        } else
+            return false;
     }
 
     /**
@@ -551,8 +554,8 @@ class ExpenseMenager extends \Core\Model
      */
     public static function isAssigned($id, $category_id)
     {
-        $sql = 
-        'SELECT 
+        $sql =
+            'SELECT 
             expenses.id
         FROM
             expenses
@@ -570,9 +573,9 @@ class ExpenseMenager extends \Core\Model
 
         $word = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        if(empty($word)){
+        if (empty($word)) {
             return true;
-        }
-        else return false;
+        } else
+            return false;
     }
 }
