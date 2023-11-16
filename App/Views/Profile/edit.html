@@ -31,15 +31,14 @@
     limit_div.style.display = 'block';
   }
 
-
-
-
-
-
-
-
   const edit_income = document.querySelector('#edit-income');
   edit_income.addEventListener("click", (e) => {
+    hideLimitDivs();
+  });
+
+  const edit_payment = document.querySelector('#edit-payment');
+  edit_payment.addEventListener("click", (e) => {
+    console.log('you are in edit list');
     hideLimitDivs();
   });
 
@@ -49,43 +48,59 @@
     showLimitDivs();
   });
 
-  const edit_payment = document.querySelector('#edit-payment');
-  edit_payment.addEventListener("click", (e) => {
-    console.log('you are in edit list');
-    hideLimitDivs();
-  });
-
-
+  /*switch on/off input edit limit
+  */
   const edit_switch = document.querySelector('#edit_limit');
   edit_switch.addEventListener("click", (e) => {
 
     const limit_input = document.querySelector('#edit_limit_value');
 
-    if(edit_switch.checked ) limit_input.removeAttribute(  "disabled"  );
-    else limit_input.setAttribute(  "disabled", true  );
+    if (edit_switch.checked) limit_input.removeAttribute("disabled");
+    else limit_input.setAttribute("disabled", true);
 
   });
 
+  /*switch on/off input add limit
+  */
   const add_switch = document.querySelector('#add_limit');
   add_switch.addEventListener("click", (e) => {
 
     const limit_input = document.querySelector('#add_limit_value');
 
-    if(add_switch.checked ) limit_input.removeAttribute(  "disabled"  );
-    else limit_input.setAttribute(  "disabled", true  );
+    if (add_switch.checked) limit_input.removeAttribute("disabled");
+    else limit_input.setAttribute("disabled", true);
   });
 
+  /* clear input limit in edit modal
+  */
+  const editModalWindow = document.getElementById('editModal');
+  editModalWindow.addEventListener('show.bs.modal', (e) => {
 
+    const limitSwitch = document.querySelector('#edit_limit');
+    const limitInput = document.querySelector('#edit_limit_value');
 
+    limitSwitch.checked = false;
+    limitInput.value = null;
+    limitInput.setAttribute('disabled', true);
 
+    console.log(limitSwitch.checked);
+  });
 
-  //<button id="edit-income" type="button" class="btn my_button" style="width:100%">Edytuj liste przychodów</button>
+  /* clear input limit in add modal
+  */
+  const addModalWindow = document.getElementById('addModal');
+  addModalWindow.addEventListener('show.bs.modal', (e) => {
 
+    const limitSwitch = document.querySelector('#add_limit');
+    const limitInput = document.querySelector('#add_limit_value');
 
-  //<button id="edit-expense" type="button" class="btn my_button" style="width:100%">Edytuj liste wydatków</button>
+    limitSwitch.checked = false;
+    limitInput.value = null;
+    limitInput.setAttribute('disabled', true);
 
+    console.log(limitSwitch.checked);
+  });
 
-  //<button id="edit-payment" type="button" class="btn my_button" style="width:100%">Edytuj metody płatności</button>
 
 
 
@@ -126,7 +141,7 @@
 
 
 
-            <div  id="limit_edit_div">
+            <div id="limit_edit_div">
               <div class="form-check form-switch">
                 <input class="form-check-input" type="checkbox" name="edit_limit" id="edit_limit">
                 <label class="form-check-label" for="edit_limit">Dodaj limit</label>
