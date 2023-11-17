@@ -20,11 +20,11 @@
     const data = await res.json();
     console.log(data);
   }
-
+/*
   const getLimitCategory = async () => {
     try {
       //const res = await fetch(`https://catfact.ninja/fact/`);
-      const res = await fetch(`..api/limit/category/Test`);
+      const res = await fetch(`../api/limit/testsad`);
       const data = await res.json();
       console.log(data);
     }
@@ -33,7 +33,7 @@
     }
   }
 
-  getLimit();
+  getLimitCategory();*/
 
 </script>
 
@@ -153,7 +153,7 @@
 </div>
 
 <button id="edit-profile" type="button" class="btn my_button" style="width:100%">Edytuj profil</button>
-<form method="post" id="formProfile" action="/profile/update" style="display:none">
+<form class="list-group-item" method="post" id="formProfile"  action="/profile/update" style="display:none">
 
   <div class="form-group">
     <label for="inputName">Name</label>
@@ -172,7 +172,7 @@
   </div>
 
   <input type="checkbox" id="show-password">
-  <label for="show-password">Show Password</label>
+  <label for="show-password">Pokaż hasło</label>
 
   <div class="d-grid mx-auto edit" style="width:95%">
     <button type="submit" class="btn bg-success bg-gradient">Zapisz zmiany</button>

@@ -189,7 +189,6 @@ function createList(div_name_of_list, data, edit, deleteM, addNew, button_edit, 
     li.appendChild(newSettingButton(button_add, addNew, '', '',
         'btn-outline-success', "<i class='fas fa-square-plus fa-fw me-2'></i>Dodaj"));
 
-    editModal(edit);
     deleteModal(deleteM);
     addModal(addNew);
 
@@ -407,28 +406,6 @@ function addModalButtons(divName, buttonId) {
             }
         });
     }
-}
-
-/**
- * Add modal hendlers to edit buttons
- * 
- */
-function editModal(name) {
-    var editModal = document.getElementById(name)
-    editModal.addEventListener('show.bs.modal', function (event) {
-        var button = event.relatedTarget
-
-        var categoryName = button.getAttribute('data-bs-categoryName')
-        var categoryId = button.getAttribute('data-bs-categoryId')
-
-        var modalTitle = editModal.querySelector('.modal-title')
-        var modalCategoryName = editModal.querySelector('.modal-body #category_name')
-        var modalIdValue = editModal.querySelector('.modal-body #categoryId')
-
-        modalTitle.textContent = 'Zamień "' + categoryName + '"'
-        modalCategoryName.value = categoryName
-        modalIdValue.value = categoryId
-    })
 }
 
 /**
