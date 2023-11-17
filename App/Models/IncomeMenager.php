@@ -276,7 +276,7 @@ class IncomeMenager extends \Core\Model
         
         $stmt = $db->prepare($sql);
 
-        $stmt->bindValue(':category', $data["category_name"], PDO::PARAM_STMT);
+        $stmt->bindValue(':category', $data["categoryName"], PDO::PARAM_STMT);
         $stmt->bindValue(':id', $data["categoryId"], PDO::PARAM_INT);
 
         if($stmt->execute()) return true;
@@ -355,7 +355,7 @@ class IncomeMenager extends \Core\Model
      *
      * @return bool 
      */
-    public static function isAvailable($id, $category_name)
+    public static function isAvailable($id, $categoryName)
     {
         $sql = 
         'SELECT 
@@ -365,13 +365,13 @@ class IncomeMenager extends \Core\Model
         WHERE 
             incomes_category_assigned_to_users.user_id = :id
         AND
-            incomes_category_assigned_to_users.name = :category_name 
+            incomes_category_assigned_to_users.name = :categoryName 
         ';
 
         $db = static::getDB();
         $stmt = $db->prepare($sql);
         $stmt->bindValue(':id', $id, PDO::PARAM_INT);
-        $stmt->bindValue(':category_name', $category_name, PDO::PARAM_STR);
+        $stmt->bindValue(':categoryName', $categoryName, PDO::PARAM_STR);
 
         $stmt->execute();
 

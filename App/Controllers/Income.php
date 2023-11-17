@@ -80,7 +80,7 @@ class Income extends Authenticated
      */
     public function updateCategoryAction()
     {
-        $_POST["category_name"] = AuxiliaryMethods::upperCaseFirstLetter($_POST["category_name"]);
+        $_POST["categoryName"] = AuxiliaryMethods::upperCaseFirstLetter($_POST["categoryName"]);
         if (isset($_SESSION['user_id'])) {
             if (IncomeMenager::updateCategory($_POST))
                 echo json_encode('all good');
@@ -132,12 +132,12 @@ class Income extends Authenticated
         $object = json_decode($data);
         
         $category = array(
-            'category_name' => $object->category_name,
+            'categoryName' => $object->categoryName,
         );
 
-        $category_name = AuxiliaryMethods::upperCaseFirstLetter($category['category_name']);
+        $categoryName = AuxiliaryMethods::upperCaseFirstLetter($category['categoryName']);
  
-        if (IncomeMenager::isAvailable($_SESSION['user_id'], $category_name)) echo json_encode(true);
+        if (IncomeMenager::isAvailable($_SESSION['user_id'], $categoryName)) echo json_encode(true);
  
         else echo json_encode(false);
     }

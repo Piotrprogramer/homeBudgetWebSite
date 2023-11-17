@@ -7,8 +7,35 @@
 {% endblock %}
 
 {% block footer %}
-<script src="/js/hideShowPassword.min.js"></script>
+
 <script src="/js/edit.js"></script>
+
+<script src="/js/limitMethods.js"></script>
+
+<script>
+
+
+  const getLimit = async () => {
+    const res = await fetch(`https://catfact.ninja/fact/`);
+    const data = await res.json();
+    console.log(data);
+  }
+/*
+  const getLimitCategory = async () => {
+    try {
+      //const res = await fetch(`https://catfact.ninja/fact/`);
+      const res = await fetch(`../api/limit/testsad`);
+      const data = await res.json();
+      console.log(data);
+    }
+    catch (e) {
+      console.log('error', e);
+    }
+  }
+
+  getLimitCategory();*/
+
+</script>
 
 {% endblock %}
 
@@ -40,6 +67,13 @@
             <label for="category_name" class="col-form-label">Zamień na:</label>
             <input type="text" class="form-control" id="category_name" name="category_name" required>
             <input type="number" class="form-control" id="categoryId" name="categoryId" hidden>
+            <div id="limit_edit_div">
+              <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" name="edit_limit" id="edit_limit">
+                <label class="form-check-label" for="edit_limit">Dodaj limit</label>
+              </div>
+              <input class="form-control" type="number" name="edit_limit_value" id="edit_limit_value" disabled>
+            </div>
             <label class="col-form-label" id="edit_message" style="color:red"></label>
           </div>
         </div>
@@ -62,16 +96,16 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <form>
-        <div class="modal-body"  id="delte_with_positions">
+        <div class="modal-body" id="delte_with_positions">
           <div class="mb-3" hidden>
             <input type="number" class="form-control" id="categoryDeleteId" name="categoryDeleteId">
             <span style="text-align: center"> </span>
           </div>
           <div style="text-align: center; margin-bottom: 15px">
-            <i class='fas fa-skull-crossbones fa-fw me-2' style="color: rgb(195, 135, 6)"></i> 
+            <i class='fas fa-skull-crossbones fa-fw me-2' style="color: rgb(195, 135, 6)"></i>
             Usunięcie wybranej
             kategorii spowoduje usunięcie przypisanych do
-            niej pozycji, czy nadal chcesz usunąć kategorię? 
+            niej pozycji, czy nadal chcesz usunąć kategorię?
           </div>
         </div>
         <div class="modal-footer" id="delete_footer">
@@ -97,6 +131,13 @@
           <div class="mb-3">
             <label for="newName" class="col-form-label">Dodaj nową kategorie:</label>
             <input type="text" class="form-control" id="newName" name="newName" required>
+            <div id="limit_add_div">
+              <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" name="add_limit" id="add_limit">
+                <label class="form-check-label" for="add_limit">Dodaj limit</label>
+              </div>
+              <input class="form-control" type="number" name="add_limit_value" id="add_limit_value" disabled>
+            </div>
             <label class="col-form-label" id="add_message" style="color:red"></label>
           </div>
         </div>
@@ -112,7 +153,7 @@
 </div>
 
 <button id="edit-profile" type="button" class="btn my_button" style="width:100%">Edytuj profil</button>
-<form method="post" id="formProfile" action="/profile/update" style="display:none">
+<form class="list-group-item" method="post" id="formProfile"  action="/profile/update" style="display:none">
 
   <div class="form-group">
     <label for="inputName">Name</label>
@@ -131,7 +172,7 @@
   </div>
 
   <input type="checkbox" id="show-password">
-  <label for="show-password">Show Password</label>
+  <label for="show-password">Pokaż hasło</label>
 
   <div class="d-grid mx-auto edit" style="width:95%">
     <button type="submit" class="btn bg-success bg-gradient">Zapisz zmiany</button>

@@ -58,14 +58,6 @@ $(document).ready(function () {
             }
         },
     });
-
-    /**
-      * Show password toggle button
-      */
-    $('#inputPassword').hideShowPassword({
-        show: false,
-        innerToggle: 'focus'
-    });
 });
 
 /**
@@ -197,7 +189,6 @@ function createList(div_name_of_list, data, edit, deleteM, addNew, button_edit, 
     li.appendChild(newSettingButton(button_add, addNew, '', '',
         'btn-outline-success', "<i class='fas fa-square-plus fa-fw me-2'></i>Dodaj"));
 
-    editModal(edit);
     deleteModal(deleteM);
     addModal(addNew);
 
@@ -418,28 +409,6 @@ function addModalButtons(divName, buttonId) {
 }
 
 /**
- * Add modal hendlers to edit buttons
- * 
- */
-function editModal(name) {
-    var editModal = document.getElementById(name)
-    editModal.addEventListener('show.bs.modal', function (event) {
-        var button = event.relatedTarget
-
-        var categoryName = button.getAttribute('data-bs-categoryName')
-        var categoryId = button.getAttribute('data-bs-categoryId')
-
-        var modalTitle = editModal.querySelector('.modal-title')
-        var modalCategoryName = editModal.querySelector('.modal-body #category_name')
-        var modalIdValue = editModal.querySelector('.modal-body #categoryId')
-
-        modalTitle.textContent = 'Zamień "' + categoryName + '"'
-        modalCategoryName.value = categoryName
-        modalIdValue.value = categoryId
-    })
-}
-
-/**
  * Add modal hendlers to delete buttons
  * 
  */
@@ -495,7 +464,7 @@ $(document).ready(function () {
  */
 function updateIncome(category_name) {
     var form = {
-        category_name: category_name,
+        categoryName: category_name,
     };
 
     $.ajax({
@@ -508,7 +477,7 @@ function updateIncome(category_name) {
         success: function (response) {
             if (response == true) {
                 var editForm = {
-                    category_name: $("#category_name").val(),
+                    categoryName: $("#category_name").val(),
                     categoryId: $("#categoryId").val(),
                 };
                 $.ajax({
@@ -592,7 +561,7 @@ $(document).ready(function () {
  */
 function updateExpense(category_name) {
     var form = {
-        category_name: category_name,
+        categoryName: category_name,
     };
 
     $.ajax({
@@ -603,10 +572,15 @@ function updateExpense(category_name) {
         encode: true,
 
         success: function (response) {
+
+            const limit_input = document.querySelector('#edit_limit_value');
+            limit = ( limit_input.disabled == true ? null : $("#edit_limit_value").val() );
+            
             if (response == true) {
                 var editForm = {
-                    category_name: $("#category_name").val(),
+                    categoryName: $("#category_name").val(),
                     categoryId: $("#categoryId").val(),
+                    categoryLimit: limit,
                 };
                 $.ajax({
                     url: '/Expense/updateCategory',
@@ -656,8 +630,13 @@ $(document).ready(function () {
 
     $("#addExpenseButton").button().click(function () {
         if ($('#newName').val()) {
+
+            const limit_input = document.querySelector('#add_limit_value');
+            limit = ( limit_input.disabled == true ? null : $("#add_limit_value").val() );
+            
             var addForm = {
                 categoryName: $("#newName").val(),
+                categoryLimit: limit,
             };
 
             $.ajax({
@@ -690,7 +669,7 @@ $(document).ready(function () {
  */
 function updatePayment(category_name) {
     var form = {
-        category_name: category_name,
+        categoryName: category_name,
     };
 
     $.ajax({
@@ -703,7 +682,7 @@ function updatePayment(category_name) {
         success: function (response) {
             if (response == true) {
                 var editForm = {
-                    category_name: $("#category_name").val(),
+                    categoryName: $("#category_name").val(),
                     categoryId: $("#categoryId").val(),
                 };
 
