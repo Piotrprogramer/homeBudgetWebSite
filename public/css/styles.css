@@ -10,6 +10,12 @@ body {
     margin-bottom: 10px;
 }
 
+.oficial_form{
+    background-color: #DEDEDE;
+    padding: 15px;
+    padding-bottom: 53px;
+    border-radius: 4px;
+}
 #comentLabel {
     margin-top: 10px;
 }

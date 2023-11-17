@@ -96,6 +96,7 @@ class Expense extends Authenticated
         if (isset($_SESSION['user_id'])) {
             ExpenseMenager::updateCategory($_POST);
             if($_POST['categoryLimit']) ExpenseMenager::setLimit($_POST);
+            else ExpenseMenager::removeLimit($_POST);
                 echo json_encode('all good');
         }
     }

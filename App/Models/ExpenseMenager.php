@@ -484,6 +484,33 @@ class ExpenseMenager extends \Core\Model
     }
 
     /**
+     * Remove a expense limit
+     *
+     * @return void
+     */
+    public static function removeLimit($data)
+    {
+        $sql =
+            'UPDATE 
+                expenses_category_assigned_to_users 
+            SET 
+                expenses_limit = null
+            WHERE 
+                expenses_category_assigned_to_users.user_id = :id
+            AND
+                expenses_category_assigned_to_users.name = :categoryName';
+
+        $db = static::getDB();
+
+        $stmt = $db->prepare($sql);
+
+        $stmt->bindValue(':categoryName', $data["categoryName"], PDO::PARAM_STR);
+        $stmt->bindValue(':id', $_SESSION['user_id'], PDO::PARAM_INT);
+
+        $stmt->execute();
+    }
+
+    /**
      * Get expensse limit
      *
      * @return void 
