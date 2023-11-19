@@ -198,6 +198,7 @@ class Expense extends Authenticated
     public function getSpendedMoneyAction(){
         $userId = $_SESSION['user_id'];
         $category = $this->route_params['category'];
+        $date = $this->route_params['date'];
         
         //$month = $this->route_params['month'];
 

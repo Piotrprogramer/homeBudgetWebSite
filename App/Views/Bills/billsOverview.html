@@ -55,35 +55,30 @@
     </div>
 
     <div id="bilans-contetn" >
-        <div id="range-name" class="row" style="display:none"></div>
+        <div id="range-name" class="row border border-2 border-primary rounded expense-list" 
+        style="font-size: 15px; font-weight: bold; margin-bottom: 5px; margin-top: 5px; padding-left: 15px">Bilans</div>
 
-        <div id="content" class="row justify-content-center" style="display:none">
+        <div id="income" class="row border border-2 border-primary rounded income-list">
 
-            <div class="col-6">
-                <div class="d-flex justify-content-center">
-                    <label for="income-list">
-                        <h6>Przychody:</h6>
-                    </label>
-                </div>
+            <label for="income-list" style="font-size: 15px; font-weight: bold; margin-bottom: 5px; margin-top: 5px">Przychody</label>
+            <div id="income-list" name="income-list" class="col"></div>
+
+            <div id="diagram-container"class="col d-flex justify-content-end">
+                <div id="diagram_income" name="diagram_income" ></div>
             </div>
-
-            <div class="col-6">
-                <div class="d-flex justify-content-center">
-                    <label for="expense-list">
-                        <h6>Wydatki:</h6>
-                    </label>
-                </div>
-            </div>
-
-            <div id="income-list" name="income-list" class="col border border-2 border-primary rounded income-list">:Przychody</div>
-
-            <div id="expense-list" name="expense-list" class="col border border-2 border-primary rounded expense-list">Wydatki</div>
 
         </div>
 
-        <div id="diagram-container"class="d-flex justify-content-center" style="display:none">
-            <div id="diagram" name="diagram" class="border border-2 border-primary rounded diagram"></div>
+        <div id="expense" class="row border border-2 border-primary rounded expense-list">
+
+            <label for="expense-list" style="font-size: 15px; font-weight: bold; margin-bottom: 5px; margin-top: 5px">Wydatki</label>
+            <div id="expense-list" name="expense-list" class="col"></div>
+
+            <div id="diagram-container"class="col d-flex justify-content-end">
+                <div id="diagram_expense" name="diagram_expense" ></div>
+            </div>
         </div>
+
     </div>
 
 </div>

@@ -123,3 +123,7 @@ h3 > .fa-gear{
     color: rgba(88, 83, 83);
 }
 
+.part_list{
+    font-family: "Times New Roman", Times, serif;
+    padding-bottom: 5px;
+}

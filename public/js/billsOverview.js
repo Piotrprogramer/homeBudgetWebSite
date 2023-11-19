@@ -7,16 +7,16 @@ function show_content() {
     var x = document.getElementById("content");
 
     if (x.style.display === "none") {
-        $("#content").toggle(300);
-        $("#diagram-container").toggle(300);
+        $("#income").toggle(300);
+        $("#expense").toggle(300);
         $("#range-name").toggle(300);
     } else {
-        $("#content").toggle();
-        $("#diagram-container").toggle();
+        $("#income").toggle(300);
+        $("#expense").toggle();
         $("#range-name").toggle();
 
-        $("#content").toggle(300);
-        $("#diagram-container").toggle(300);
+        $("#income").toggle(300);
+        $("#expense").toggle(300);
         $("#range-name").toggle(300);
     }
 }
@@ -32,6 +32,7 @@ function createList(div_name_of_list, data) {
     for (let i = 0; i < data.length; i++) {
         const div = document.createElement("div");
         div.innerHTML = (i + 1) + '). ' + data[i].name + ' = ' + data[i].total_amount;
+        div.setAttribute('class', 'part_list')
         document.querySelector(div_name_of_list).appendChild(div);
     }
 
@@ -51,16 +52,11 @@ function createList(div_name_of_list, data) {
 /**
 * Creating chart pie from data
 */
-function createChartPie(diagramData) {
-    $("#diagram").html("");
-
-    var pie = new d3pie("diagram", {
-        header: {
-            title: {
-                text: "Twoje wydatki:",
-                fontSize: 30
-            }
-        },
+function createChartPie(diagramData,diagram_name) {
+    $("#"+diagram_name).html("");
+    var size = Math.min(innerHeight, innerWidth);
+    var pie = new d3pie(diagram_name, {
+        
         data: {
             content: diagramData.map(function (datum) {
                 return {
@@ -68,6 +64,10 @@ function createChartPie(diagramData) {
                     value: parseFloat(datum.total_amount)
                 };
             })
+        },
+        size: {
+          canvasHeight: 250,
+          canvasWidth: 250,
         }
     });
 }
@@ -160,6 +160,7 @@ $(document).ready(function () {
             method: 'POST',
             success: function (response) {
                 createList("#income-list", $.parseJSON(response));
+                createChartPie($.parseJSON(response), 'diagram_income');
             }, error: function () {
                 alert('error: ');
             }
@@ -170,7 +171,7 @@ $(document).ready(function () {
             method: 'POST',
             success: function (response) {
                 createList("#expense-list", $.parseJSON(response));
-                createChartPie($.parseJSON(response));
+                createChartPie($.parseJSON(response), 'diagram_expense');
             }, error: function () {
                 alert('error: ');
             }
@@ -200,6 +201,7 @@ $(document).ready(function () {
             method: 'POST',
             success: function (response) {
                 createList("#income-list", $.parseJSON(response));
+                createChartPie($.parseJSON(response), 'diagram_income');
             }, error: function () {
                 alert('error: ');
             }
@@ -210,7 +212,7 @@ $(document).ready(function () {
             method: 'POST',
             success: function (response) {
                 createList("#expense-list", $.parseJSON(response));
-                createChartPie($.parseJSON(response));
+                createChartPie($.parseJSON(response) , 'diagram_expense');
             }, error: function () {
                 alert('error: ');
             }
@@ -240,6 +242,7 @@ $(document).ready(function () {
             method: 'POST',
             success: function (response) {
                 createList("#income-list", $.parseJSON(response));
+                createChartPie($.parseJSON(response), 'diagram_income');
             }, error: function () {
                 alert('error: ');
             }
@@ -250,7 +253,7 @@ $(document).ready(function () {
             method: 'POST',
             success: function (response) {
                 createList("#expense-list", $.parseJSON(response));
-                createChartPie($.parseJSON(response));
+                createChartPie($.parseJSON(response), 'diagram_expense');
             }, error: function () {
                 alert('error: ');
             }
@@ -292,6 +295,7 @@ $(document).ready(function () {
 
             success: function (response) {
                 createList("#income-list", response);
+                createChartPie(response, 'diagram_income');
             }, error: function () {
                 alert('error: ');
             }
@@ -306,7 +310,7 @@ $(document).ready(function () {
 
             success: function (response) {
                 createList("#expense-list", response);
-                createChartPie(response);
+                createChartPie(response, 'diagram_expense');
             }, error: function () {
                 alert('error: ');
             }
