@@ -560,8 +560,12 @@ $(document).ready(function () {
  * 
  */
 function updateExpense(category_name) {
+    const limit_input = document.querySelector('#edit_limit_value');
+    const limit = ( limit_input.disabled == true ? null : $("#edit_limit_value").val() );
+
     var form = {
         categoryName: category_name,
+        categoryLimit: limit,
     };
 
     $.ajax({
@@ -573,9 +577,6 @@ function updateExpense(category_name) {
 
         success: function (response) {
 
-            const limit_input = document.querySelector('#edit_limit_value');
-            limit = ( limit_input.disabled == true ? null : $("#edit_limit_value").val() );
-            
             if (response == true) {
                 var editForm = {
                     categoryName: $("#category_name").val(),

@@ -96,6 +96,7 @@ class Expense extends Authenticated
         if (isset($_SESSION['user_id'])) {
             ExpenseMenager::updateCategory($_POST);
             if($_POST['categoryLimit']) ExpenseMenager::setLimit($_POST);
+            else ExpenseMenager::removeLimit($_POST);
                 echo json_encode('all good');
         }
     }
@@ -153,8 +154,8 @@ class Expense extends Authenticated
         );
 
         $categoryName = AuxiliaryMethods::upperCaseFirstLetter($category['categoryName']);
-
-        if (ExpenseMenager::isAvailable($_SESSION['user_id'], $categoryName))
+        
+        if (ExpenseMenager::isAvailable($_SESSION['user_id'], $categoryName) ||  $object->categoryLimit != null)
             echo json_encode(true);
         else
             echo json_encode(false);
@@ -187,5 +188,27 @@ class Expense extends Authenticated
         //echo json_encode('jestes w srodku chuju' , JSON_UNESCAPED_UNICODE);
 
         echo json_encode(ExpenseMenager::getLimit( $userId, $category ) , JSON_UNESCAPED_UNICODE );
+    }
+
+    /**
+     * return spended money of the mont
+     *
+     * @return string JSONencode
+     */
+    public function getSpendedMoneyAction(){
+        $userId = $_SESSION['user_id'];
+        $category = $this->route_params['category'];
+        
+        //$month = $this->route_params['month'];
+
+        echo json_encode($category, JSON_UNESCAPED_UNICODE );
+        //echo json_encode($month, JSON_UNESCAPED_UNICODE );
+        //$month = $this->route_params['month'];
+        //$year = $this->route_params['year'];
+        
+        
+        //echo json_encode('jestes w srodku chuju' , JSON_UNESCAPED_UNICODE);
+
+       // echo json_encode(ExpenseMenager::getSpendedMoney( $userId, $category,'11','2023' ) , JSON_UNESCAPED_UNICODE );
     }
 }
