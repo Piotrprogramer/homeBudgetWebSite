@@ -52,7 +52,7 @@ function createList(data, category) {
     for (let i = 0; i < data.length; i++) {
 
         if (i == 0) addButton(data[i].name, true, category);
-        
+
         else addButton(data[i].name, false, category);
     }
 }
@@ -107,4 +107,54 @@ $(document).ready(function () {
     });
 });
 
+
+const getLimitCategory = async () => {
+    try {
+        const category_name = document.querySelector('#Category').value;
+        const total_limit = await fetch(`../api/limit/${category_name}`);
+        const data = await total_limit.json();
+
+        return data[0];
+
+    }
+    catch (e) {
+        console.log('error', e);
+    }
+}
+
+const getSpendMoney = async () => {
+    try {
+        const category_name = document.querySelector('#Category').value;
+        const total_limit = await fetch(`../api/spendMoney/${category_name}`);
+        const data = await total_limit.json();
+
+        return data[0];
+    }
+    catch (e) {
+        console.log('error', e);
+    }
+}
+
+
+const category = document.querySelector('#Category');
+category.addEventListener('click', async () => {
+    const limit = await getLimitCategory();
+    const amount = document.querySelector('#amount').value;
+    let bilans = limit - amount;
+    const showLimit = document.querySelector('#show_limit');
+    showLimit.innerHTML = bilans;
+});
+
+const amount = document.querySelector('#amount');
+amount.addEventListener("input", async () => {
+    const limit = await getLimitCategory();
+    const amount = document.querySelector('#amount').value;
+    let bilans = limit - amount;
+    const showLimit = document.querySelector('#show_limit');
+    showLimit.innerHTML = bilans;
+    // console.log(limit);
+    //console.log(amount);
+    // console.log(bilans);
+});
+//const showLimit = document.querySelector('#show_limit');
 

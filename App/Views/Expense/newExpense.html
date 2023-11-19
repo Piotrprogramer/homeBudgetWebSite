@@ -9,11 +9,13 @@
 {% endblock %}
 
 {% block body %}
+
 <div class="d-flex justify-content-center">
     <h3><i class='fas fa-circle-dollar-to-slot fa-fw me-2'></i>Dodaj wydatek</h3>
 </div>
 
 <div class="oficial_form">
+    <div id="show_limit"></div>
     <form id="myform" action="/expense/addExpense" method="post">
 
         <div class="form-group">
@@ -45,7 +47,7 @@
             <label for="coment">Komentarz</label>
             <input type="text" id="coment" name="coment" class="form-control" />
         </div>
-        <button type="submit" class="btn my_button "  style="float: right">Dodaj wydatek</button>
+        <div><button type="submit" class="btn my_button "  style="float: right">Dodaj wydatek</button></div>
     </form>
 </div>
 

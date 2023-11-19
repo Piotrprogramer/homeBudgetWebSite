@@ -34,6 +34,8 @@ $router = new Core\Router();
 
 $router->add('api/limit/{category:[^\s^/]+$}', ['controller' => 'Expense', 'action' => 'limit']);
 
+$router->add('api/spendMoney/{category:[^\s^/]+$}', ['controller' => 'Expense', 'action' => 'getSpendedMoney']);
+
 $router->add('', ['controller' => 'Home', 'action' => 'index']);
 $router->add('login', ['controller' => 'Login', 'action' => 'new']);
 $router->add('logout', ['controller' => 'Login', 'action' => 'destroy']);

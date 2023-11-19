@@ -536,10 +536,52 @@ class ExpenseMenager extends \Core\Model
 
         $stmt->execute();
 
-        //return $stmt->fetch(PDO::FETCH_ASSOC);
         return $stmt->fetch(PDO::FETCH_NUM, PDO::FETCH_ORI_LAST);
     }
+ 
+    /**
+     * Get expensse limit
+     *
+     * @return void 
+     */
+    public static function getSpendedMoney($userId, $category, $month, $year)
+    {
+        $sql =
+            'SELECT
+            SUM(expenses.amount) AS total_amount
+        FROM
+            expenses
+        LEFT JOIN 
+            expenses_category_assigned_to_users 
+        ON 
+            expenses.expense_category_assigned_to_user_id = expenses_category_assigned_to_users.id
+        WHERE 
+            expenses.user_id = :user_id
+        AND 
+            expenses_category_assigned_to_users.name = :category
+        AND
+             MONTH(expenses.date_of_expense) = :month
+        and 
+            YEAR(expenses.date_of_expense) = :year
+        GROUP BY 
+            expenses.expense_category_assigned_to_user_id
+        ORDER BY 
+            total_amount DESC';
 
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+
+        $stmt->bindValue(':month', $month, PDO::PARAM_INT);
+        $stmt->bindValue(':year', $year, PDO::PARAM_INT);
+
+        $stmt->bindValue(':category', $category, PDO::PARAM_STR);
+
+        $stmt->bindValue(':user_id', $_SESSION["user_id"], PDO::PARAM_INT);
+
+        $stmt->execute();
+
+        return $stmt->fetch(PDO::FETCH_NUM, PDO::FETCH_ORI_LAST);
+    }
     /**
      * Check expensse category is available
      *
