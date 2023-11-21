@@ -52,8 +52,9 @@ $(document).ready(async () => {
     let limit = await getLimitCategory();
 
     let showLimit = document.querySelector('#set_limit');
-    showLimit.innerHTML = limit;
 
+    if (limit !== null) showLimit.innerHTML = limit;
+    else showLimit.innerHTML = 'brak';
     displayLimitInfo();
 
 });
@@ -163,19 +164,22 @@ showLimit = async () => {
 displayLimitInfo = async () => {
     let spend_money = await getSpendMoney();
 
+
+    if (!spend_money) spend_money = '0';
+
     let spend_money_info = document.querySelector('#already_spent');
     let limit_set = await getLimitCategory();
     let limit_info = document.querySelector('#limit');
     let set_amount = document.querySelector('#amount').value;
 
-    if (spend_money) {
+    if (limit_set) {
         spend_money_info.innerHTML = 'W tym miesiącu wydałeś już: ' + spend_money;
-        if (limit_set != 'brak') limit_info.innerHTML = (parseFloat(limit_set) - set_amount - spend_money).toFixed(2);
+        if (limit_set != 'brak') limit_info.innerHTML = (parseFloat(limit_set) - set_amount - parseFloat(spend_money)).toFixed(2);
         else limit_info.innerHTML = 'Brak limitu';
 
     } else {
         spend_money_info.innerHTML = 'Lista wydatków na wybrany produkt jest obecnie pusta';
-        limit_info.innerHTML =  limit_set;
+        limit_info.innerHTML = limit_set;
     }
     setLimitCollors();
 }
@@ -208,26 +212,17 @@ setLimitCollors = async () => {
     let left = document.getElementById("limit_box");
 
     if (limit == 'brak') {
-        limit_div.style.backgroundColor = '#f6f6f6';
-        spend.style.backgroundColor = '#f6f6f6';
-        left.style.backgroundColor = '#f6f6f6';
-
         limit_div.style.color = 'black';
-        spend.style.color = 'black';
         left.style.color = 'black';
     } else {
-        limit_div.style.backgroundColor = '#f6f6f6';
-        spend.style.backgroundColor = '#f6f6f6';
-        left.style.backgroundColor = '#f6f6f6';
 
-        limit_div.style.color = '#ff6629';
+        
         if (parseFloat(limit_box) >= 0) {
-            spend.style.color = '#c2b449';
+            limit_div.style.color = '#34b632';
             left.style.color = '#c2b449';
-            console.log(limit);
-        } else { 
-            console.log(limit);
-            spend.style.color = '#c2b449';
+
+        } else {
+            limit_div.style.color = '#da0202';
             left.style.color = '#da0202';
         }
     }

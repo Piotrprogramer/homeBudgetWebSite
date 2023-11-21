@@ -3,15 +3,36 @@
 {% block title %}Home{% endblock %}
 
 {% block body %}
+<div id="home_box">
 
 
-    <h2>Cześć</h2>
 
 
     {% if current_user %}
-        Hello {{ current_user.name }}.
+    <h2>Cześć {{ current_user.name }}!</h2>
     {% else %}
-        Create acount or log in 
+    Stwórz konto albo zaloguj się
     {% endif %}
 
+    <p style="tab-size:2px ;text-indent: 25px">
+        W dzisiejszych czasach coraz trudniej jest utrzymać budżet domowy. Stałe rosnące ceny, liczne wydatki i
+        niespodziewane sytuacje mogą sprawić,
+        że nasze finanse szybko wymkną się spod kontroli.
+        Ta aplikacja to łatwy i wygodny sposób na zarządzanie budżetem domowym.
+    </p>
+    <p style="tab-size:2px ;text-indent: 25px">
+    Dzięki niej:
+    Z łatwością utworzysz i utrzymasz budżet. Aplikacja oferuje wiele funkcji, które ułatwiają planowanie wydatków.
+    Możesz tworzyć kategorie wydatków, oraz określać limity.
+    Dowiesz się, gdzie idą Twoje pieniądze. Aplikacja śledzi Twoje wydatki i pomaga Ci zidentyfikować obszary, w których
+    możesz zaoszczędzić.
+    Utrzymasz kontrolę nad swoimi finansami. Aplikacja zapewnia aktualny obraz Twoich finansów,
+    dzięki czemu możesz podejmować świadome decyzje finansowe.
+
+    </p>
+    <p style="tab-size:2px ;text-indent: 25px">
+        Ta aplikacja to niezbędne narzędzie dla każdego, kto chce utrzymać kontrolę nad swoimi finansami.
+        Zarejestrój się już dziś i przekonaj się, jak może ułatwić Ci życie.
+    </p>
+</div>
 {% endblock %}

@@ -130,7 +130,10 @@ h3 > .fa-gear{
 }
 
 #limit_inf,#already_spent,#limit_box{
-    
+    background-color: #f6f6f6;
+    color: black;
+    min-height: 60px;
+
     margin-left: 15px;
     margin-right: 15px;
     margin-top: 5px;
@@ -139,3 +142,12 @@ h3 > .fa-gear{
     border-radius: 4px;
     padding: 5px;
 }
+
+#home_box{
+    background-color:  rgba(49, 175, 225, 0.3);
+    border-radius: 7px;
+    margin: 5px;
+    padding: 10px;
+  
+}
+

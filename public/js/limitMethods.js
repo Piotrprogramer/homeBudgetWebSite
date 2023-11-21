@@ -82,8 +82,9 @@ editModalWindow.addEventListener('show.bs.modal', async (e) => {
   const limitSwitch = document.querySelector('#edit_limit');
   const limitInput = document.querySelector('#edit_limit_value');
 
-  if (await getLimitCategory()) {
-    limitInput.value = await getLimitCategory();
+  var set_limit = await getLimitCategory();
+  if (set_limit) {
+    limitInput.value = set_limit;
     limitInput.removeAttribute("disabled");
     limitSwitch.checked = true;
 

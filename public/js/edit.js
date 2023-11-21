@@ -559,9 +559,10 @@ $(document).ready(function () {
  * Update expense function
  * 
  */
-function updateExpense(category_name) {
+ function updateExpense(category_name) {
     const limit_input = document.querySelector('#edit_limit_value');
     const limit = ( limit_input.disabled == true ? null : $("#edit_limit_value").val() );
+ 
 
     var form = {
         categoryName: category_name,
@@ -575,9 +576,11 @@ function updateExpense(category_name) {
         dataType: "json",
         encode: true,
 
-        success: function (response) {
+        success: async function (response) {
 
-            if (response == true) {
+            const close_limit = await getLimitCategory();
+
+            if (response == true || close_limit) {
                 var editForm = {
                     categoryName: $("#category_name").val(),
                     categoryId: $("#categoryId").val(),
