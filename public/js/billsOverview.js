@@ -12,8 +12,8 @@ function show_content() {
         $("#range-name").toggle(300);
     } else {
         $("#income").toggle(300);
-        $("#expense").toggle();
-        $("#range-name").toggle();
+        $("#expense").toggle(300);
+        $("#range-name").toggle(300);
 
         $("#income").toggle(300);
         $("#expense").toggle(300);

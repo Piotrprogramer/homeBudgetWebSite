@@ -3,7 +3,6 @@ body {
     margin-bottom: 2em;
     background-image: url('/img/beach.jpg');
     background-size: auto;
-
 }
 
 .form-control {
@@ -32,6 +31,8 @@ body {
 .diagram {
     background-color: rgb(205, 205, 205);
     margin: 1px;
+    margin-bottom: 5px;
+   
 }
 
 #edit-profile,
@@ -126,4 +127,15 @@ h3 > .fa-gear{
 .part_list{
     font-family: "Times New Roman", Times, serif;
     padding-bottom: 5px;
+}
+
+#limit_inf,#already_spent,#limit_box{
+    
+    margin-left: 15px;
+    margin-right: 15px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+
+    border-radius: 4px;
+    padding: 5px;
 }

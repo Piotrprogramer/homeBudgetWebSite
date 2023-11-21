@@ -199,17 +199,11 @@ class Expense extends Authenticated
         $userId = $_SESSION['user_id'];
         $category = $this->route_params['category'];
         $date = $this->route_params['date'];
-        
-        //$month = $this->route_params['month'];
 
-        echo json_encode($category, JSON_UNESCAPED_UNICODE );
-        //echo json_encode($month, JSON_UNESCAPED_UNICODE );
-        //$month = $this->route_params['month'];
-        //$year = $this->route_params['year'];
-        
-        
-        //echo json_encode('jestes w srodku chuju' , JSON_UNESCAPED_UNICODE);
+        $year = date('Y', strtotime($date));
 
-       // echo json_encode(ExpenseMenager::getSpendedMoney( $userId, $category,'11','2023' ) , JSON_UNESCAPED_UNICODE );
+        $month = date('m', strtotime($date));
+
+        echo json_encode(ExpenseMenager::getSpendedMoney( $userId, $category,$month,$year ) , JSON_UNESCAPED_UNICODE );
     }
 }

@@ -43,6 +43,20 @@ $(document).ready(function () {
     });
 });
 
+/**
+ * Create list for income
+ */
+$(document).ready(async () => {
+
+    await new Promise(resolve => setTimeout(resolve, 100));
+    let limit = await getLimitCategory();
+
+    let showLimit = document.querySelector('#set_limit');
+    showLimit.innerHTML = limit;
+
+    displayLimitInfo();
+
+});
 
 /**
  * Create list for income
@@ -61,7 +75,7 @@ function createList(data, category) {
  * Add select option to expense form with name and value
  */
 function addButton(name, isFirst, select_name) {
-    const option = document.createElement("option");
+    let option = document.createElement("option");
     option.textContent = name;
     option.setAttribute("value", name);
     option.selected = isFirst;
@@ -108,25 +122,26 @@ $(document).ready(function () {
 });
 
 
-const getLimitCategory = async () => {
-    try {
-        const category_name = document.querySelector('#Category').value;
-        const total_limit = await fetch(`../api/limit/${category_name}`);
-        const data = await total_limit.json();
-
-        return data[0];
-
-    }
-    catch (e) {
-        console.log('error', e);
-    }
-}
-
 const getSpendMoney = async () => {
     try {
-        const category_name = document.querySelector('#Category').value;
-        const total_limit = await fetch(`../api/spendMoney/${category_name}`);
-        const data = await total_limit.json();
+        let category_name = document.querySelector('#Category').value;
+        let date = document.querySelector('#date').value;
+
+        let res = await fetch(`../api/spendMoney/${category_name}/${date}`);
+        let data = await res.json();
+
+        return data;
+    }
+    catch (e) {
+        console.log('error', e);
+    }
+}
+
+const getLimitCategory = async () => {
+    try {
+        let category_name = document.querySelector('#Category').value;
+        let total_limit = await fetch(`../api/limit/${category_name}`);
+        let data = await total_limit.json();
 
         return data[0];
     }
@@ -135,26 +150,86 @@ const getSpendMoney = async () => {
     }
 }
 
+showLimit = async () => {
+    let limit = await getLimitCategory();
+    let showLimit = document.querySelector('#set_limit');
+    showLimit.innerHTML = limit;
+
+    if (limit) {
+        showLimit.innerHTML = limit;
+    } else showLimit.innerHTML = 'brak';
+}
+
+displayLimitInfo = async () => {
+    let spend_money = await getSpendMoney();
+
+    let spend_money_info = document.querySelector('#already_spent');
+    let limit_set = await getLimitCategory();
+    let limit_info = document.querySelector('#limit');
+    let set_amount = document.querySelector('#amount').value;
+
+    if (spend_money) {
+        spend_money_info.innerHTML = 'W tym miesiącu wydałeś już: ' + spend_money;
+        if (limit_set != 'brak') limit_info.innerHTML = (parseFloat(limit_set) - set_amount - spend_money).toFixed(2);
+        else limit_info.innerHTML = 'Brak limitu';
+
+    } else {
+        spend_money_info.innerHTML = 'Lista wydatków na wybrany produkt jest obecnie pusta';
+        limit_info.innerHTML =  limit_set;
+    }
+    setLimitCollors();
+}
 
 const category = document.querySelector('#Category');
-category.addEventListener('click', async () => {
-    const limit = await getLimitCategory();
-    const amount = document.querySelector('#amount').value;
-    let bilans = limit - amount;
-    const showLimit = document.querySelector('#show_limit');
-    showLimit.innerHTML = bilans;
+category.addEventListener('change', async () => {
+    showLimit();
+    displayLimitInfo();
 });
 
 const amount = document.querySelector('#amount');
 amount.addEventListener("input", async () => {
-    const limit = await getLimitCategory();
-    const amount = document.querySelector('#amount').value;
-    let bilans = limit - amount;
-    const showLimit = document.querySelector('#show_limit');
-    showLimit.innerHTML = bilans;
-    // console.log(limit);
-    //console.log(amount);
-    // console.log(bilans);
+    showLimit();
+    displayLimitInfo();
 });
-//const showLimit = document.querySelector('#show_limit');
+
+const date = document.querySelector('#date');
+date.addEventListener('change', async () => {
+    showLimit();
+    displayLimitInfo();
+});
+
+
+setLimitCollors = async () => {
+    let limit = document.querySelector('#set_limit').innerHTML;
+    let limit_box = document.querySelector('#limit').innerHTML;
+
+    let limit_div = document.getElementById("limit_inf");
+    let spend = document.getElementById("already_spent");
+    let left = document.getElementById("limit_box");
+
+    if (limit == 'brak') {
+        limit_div.style.backgroundColor = '#f6f6f6';
+        spend.style.backgroundColor = '#f6f6f6';
+        left.style.backgroundColor = '#f6f6f6';
+
+        limit_div.style.color = 'black';
+        spend.style.color = 'black';
+        left.style.color = 'black';
+    } else {
+        limit_div.style.backgroundColor = '#f6f6f6';
+        spend.style.backgroundColor = '#f6f6f6';
+        left.style.backgroundColor = '#f6f6f6';
+
+        limit_div.style.color = '#ff6629';
+        if (parseFloat(limit_box) >= 0) {
+            spend.style.color = '#c2b449';
+            left.style.color = '#c2b449';
+            console.log(limit);
+        } else { 
+            console.log(limit);
+            spend.style.color = '#c2b449';
+            left.style.color = '#da0202';
+        }
+    }
+}
 

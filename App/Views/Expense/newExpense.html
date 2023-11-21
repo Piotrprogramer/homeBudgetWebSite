@@ -6,6 +6,7 @@
 
 <script src="/js/addExpense.js"></script>
 
+
 {% endblock %}
 
 {% block body %}
@@ -15,7 +16,13 @@
 </div>
 
 <div class="oficial_form">
-    <div id="show_limit"></div>
+    <div class="d-flex justify-content-center" style="font-weight: 600">
+        <div  id="limit_inf" class="col-3" style="text-align: center">
+            Ustawiono limit na: <span  id="set_limit"></span>
+        </div>
+        <div  class="col-3" id="already_spent" style="text-align: center"></div>
+        <div  class="col-3" id="limit_box" style="text-align: center">Do osiągnięcia limitu zostało: <span  id="limit"></span></div>
+    </div>
     <form id="myform" action="/expense/addExpense" method="post">
 
         <div class="form-group">
@@ -47,7 +54,7 @@
             <label for="coment">Komentarz</label>
             <input type="text" id="coment" name="coment" class="form-control" />
         </div>
-        <div><button type="submit" class="btn my_button "  style="float: right">Dodaj wydatek</button></div>
+        <div><button type="submit" class="btn my_button " style="float: right">Dodaj wydatek</button></div>
     </form>
 </div>
 
