@@ -63,13 +63,13 @@ class Expense extends Authenticated
 
             Flash::addMessage('Wydatek dodany poprawnie', Flash::SUCCESS);
 
-            View::renderTemplate('Home/index.html');
+            View::renderTemplate('Expense/newExpense.html');
 
         } else {
 
             Flash::addMessage('Coś poszło nie tak', Flash::WARNING);
 
-            View::renderTemplate('Expense/newForm.html');
+            View::renderTemplate('Expense/newExpense.html');
         }
     }
 

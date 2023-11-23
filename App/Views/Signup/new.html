@@ -27,16 +27,22 @@
                 }
             },
             messages: {
+                name:{
+                    required: 'To pole jest wymagane'
+                },
                 email: {
-                    remote: 'email jest juz zajęty'
+                    remote: 'email jest juz zajęty',
+                    required: 'To pole jest wymagane',
+                    email: 'Niepoprawny format adresu email'
+                },
+                password:{
+                    required: 'To pole jest wymagane',
+                    minlength: 'Minimalna długość hasła to 6 znaków',
+                    validPassword: 'Musi zawierać conajmniej jedną litere i jedną liczbę'
                 }
             }
         });
 
-
-        /**
-          * Show password toggle button
-          */
         $('#inputPassword').hideShowPassword({
             show: false,
             innerToggle: 'focus'

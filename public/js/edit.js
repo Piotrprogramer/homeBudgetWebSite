@@ -113,6 +113,7 @@ function reloadExpense() {
             success: function (response) {
                 createList("#formExpense", $.parseJSON(response), 'editModal', 'deleteModal', 'addModal',
                     'edit_ex', 'delete_ex', 'add_ex');
+                displaCategoryLimits();
             }, error: function () {
                 alert('error: ');
             }
@@ -837,3 +838,32 @@ $(document).ready(function () {
 
     });
 });
+
+displaCategoryLimits = () => {
+  const elements = document.querySelectorAll('#formExpense > li > span'); // Array of elements
+  elements.forEach(async (element) => {
+    const limit = await displayTheLimite(element.innerHTML);
+
+    if (limit) {
+      const span = document.createElement("span");
+      span.setAttribute('style',"float: right; margin-right: 25px");
+      span.innerHTML = 'Ustawiony limit: '+limit;
+      element.parentNode.appendChild(span);
+      console.log(limit); // Access each element's innerHTML
+    }
+  });
+}
+
+displayTheLimite = async (category_name) => {
+  try {
+    if (category_name != '') {
+      let total_limit = await fetch(`../api/limit/${category_name}`);
+      let data = await total_limit.json();
+
+      return data[0];
+    } else return null;
+  }
+  catch (e) {
+    console.log('error', e);
+  }
+}
