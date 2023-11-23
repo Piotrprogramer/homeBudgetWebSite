@@ -34,7 +34,6 @@ $router = new Core\Router();
 
 $router->add('api/limit/{category:[a-zA-Z0-9żźćńółęąśŻŹĆĄŚĘŁÓŃ\s ]+}', ['controller' => 'Expense', 'action' => 'limit']);
 
-//$router->add('api/spendMoney/{category}/{date}', ['controller' => 'Expense', 'action' => 'getSpendedMoney']);
 $router->add('api/spendMoney/{category:[a-zA-Z0-9żźćńółęąśŻŹĆĄŚĘŁÓŃ\s ]+}/{date:[A-Za-z0-9\- ]+}', ['controller' => 'Expense', 'action' => 'getSpendedMoney']);
 
 $router->add('', ['controller' => 'Home', 'action' => 'index']);

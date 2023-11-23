@@ -704,7 +704,7 @@ function updatePayment(category_name) {
             }
             else displayInformMessage('edit_message', 'Wprowadzona kategoria jest już dodana');
         }, error: function () {
-            alert('error');
+            alert('error success');
         }
     });
 }
