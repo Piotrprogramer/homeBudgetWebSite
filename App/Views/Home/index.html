@@ -10,9 +10,6 @@
 
     {% if current_user %}
     <h2>Cześć {{ current_user.name }}!</h2>
-    {% else %}
-    Stwórz konto albo zaloguj się
-    {% endif %}
 
     <p style="tab-size:2px ;text-indent: 25px">
         W dzisiejszych czasach coraz trudniej jest utrzymać budżet domowy. Stałe rosnące ceny, liczne wydatki i
@@ -21,18 +18,63 @@
         Ta aplikacja to łatwy i wygodny sposób na zarządzanie budżetem domowym.
     </p>
     <p style="tab-size:2px ;text-indent: 25px">
-    Dzięki niej:
-    Z łatwością utworzysz i utrzymasz budżet. Aplikacja oferuje wiele funkcji, które ułatwiają planowanie wydatków.
-    Możesz tworzyć kategorie wydatków, oraz określać limity.
-    Dowiesz się, gdzie idą Twoje pieniądze. Aplikacja śledzi Twoje wydatki i pomaga Ci zidentyfikować obszary, w których
-    możesz zaoszczędzić.
-    Utrzymasz kontrolę nad swoimi finansami. Aplikacja zapewnia aktualny obraz Twoich finansów,
-    dzięki czemu możesz podejmować świadome decyzje finansowe.
+        Dzięki niej:
+        Z łatwością utworzysz i utrzymasz budżet. Aplikacja oferuje wiele funkcji, które ułatwiają planowanie wydatków.
+        Możesz tworzyć kategorie wydatków, oraz określać limity.
+        Dowiesz się, gdzie idą Twoje pieniądze. Aplikacja śledzi Twoje wydatki i pomaga Ci zidentyfikować obszary, w
+        których
+        możesz zaoszczędzić.
+        Utrzymasz kontrolę nad swoimi finansami. Aplikacja zapewnia aktualny obraz Twoich finansów,
+        dzięki czemu możesz podejmować świadome decyzje finansowe.
 
     </p>
     <p style="tab-size:2px ;text-indent: 25px">
         Ta aplikacja to niezbędne narzędzie dla każdego, kto chce utrzymać kontrolę nad swoimi finansami.
         Zarejestrój się już dziś i przekonaj się, jak może ułatwić Ci życie.
     </p>
+
+    {% else %}
+    <h5 style="text-align: center">Stwórz konto albo zaloguj się</h5>
+    <br>
+    <p style="tab-size:2px ;text-indent: 25px">
+        Oszczędzanie to umiejętność, która może przynieść wiele korzyści w życiu osobistym i zawodowym. Oto kilka
+        powodów,
+        dla których warto oszczędzać:
+    </p>
+
+    <p style="tab-size:2px ;text-indent: 25px">
+        Zabezpieczenie finansowe. Oszczędności mogą stanowić zabezpieczenie na wypadek nieprzewidzianych sytuacji,
+        takich jak utrata pracy, choroba czy nagły wydatek. Dzięki nim nie będziemy musieli martwić się o to, jak
+        sfinansować te wydatki.
+    </p>
+
+    <p style="tab-size:2px ;text-indent: 25px">
+        Realizacja celów. Oszczędności pozwalają nam realizować nasze cele, takie jak zakup domu, samochodu czy wyjazd
+        na wakacje.
+        Dzięki nim nie będziemy musieli zaciągać kredytów, które mogą obciążyć nasze finanse w przyszłości.
+    </p>
+
+    <p style="tab-size:2px ;text-indent: 25px">
+        Niezależność finansowa. Oszczędności dają nam większą niezależność finansową.
+        Dzięki nim nie będziemy uzależnieni od bieżących dochodów i będziemy mogli podejmować świadome decyzje życiowe,
+        takie jak zmiana pracy czy przeprowadzka.
+    </p>
+
+    <p style="tab-size:2px ;text-indent: 25px">
+        Dodatkowe źródło dochodu. Oszczędności mogą być również źródłem dodatkowego dochodu. Możemy je zainwestować w
+        bezpieczne
+        produkty finansowe, takie jak lokaty czy obligacje, lub w bardziej ryzykowne, takie jak akcje czy fundusze
+        inwestycyjne.
+    </p>
+
+    <p style="tab-size:2px ;text-indent: 25px">Oszczędzanie warto zacząć jak najwcześniej.
+        Im wcześniej zaczniemy odkładać pieniądze, tym więcej czasu będą miały one na pomnożenie się.
+        Nawet niewielkie kwoty odkładane regularnie mogą przynieść znaczne efekty w dłuższej perspektywie.
+    </p>
+
+
+    {% endif %}
+
+
 </div>
 {% endblock %}

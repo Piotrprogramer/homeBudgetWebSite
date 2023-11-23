@@ -51,8 +51,7 @@ class Income extends Authenticated
 
             Flash::addMessage('Przychód dodany poprawnie', Flash::SUCCESS);
 
-            View::renderTemplate('Home/index.html');
-
+            View::renderTemplate('Income/newForm.html');
         } else {
 
             Flash::addMessage('Coś poszło nie tak', Flash::WARNING);
